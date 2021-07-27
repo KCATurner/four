@@ -3,6 +3,7 @@ todo
 """
 from conwech.functions import number2text
 from conwech.lexicon import NATURAL_NUMBERS_LT_1000, ZILLION_PERIOD_PREFIXES
+
 from four._core import *
 
 
@@ -24,7 +25,7 @@ def letters_from_period_values(*periods):
         for period, repeat in periods))
 
 
-def letters_from_period_names(periods: list):
+def letters_from_period_names(*periods: list):
     """
     todo
 
@@ -54,7 +55,7 @@ def letters_from_period_names(periods: list):
     return from_names_in_range(0, zillion) - missing
 
 
-def letters_in_number_name(periods: list):
+def letters_in_number_name(*periods: list):
     """
     todo
 
@@ -65,11 +66,11 @@ def letters_in_number_name(periods: list):
 
     """
     letters = sum([
-        letters_from_period_values(periods),
-        letters_from_period_names(periods)])
+        letters_from_period_values(*periods),
+        letters_from_period_names(*periods)])
 
-    status(write_abbreviation_string(periods),
-           write_abbreviation_string(number_to_periods(letters)),
+    status(write_abbreviation_string(*periods),
+           write_abbreviation_string(*number_to_periods(letters)),
            end='\r')
 
     return letters
@@ -283,7 +284,7 @@ def main(length, start, **kwargs):
     while count < length:
         target = number_from_periods(prev_periods)
         curr_periods = number_from_name_length(target, **kwargs)
-        status(write_abbreviation_string(curr_periods),
-               write_abbreviation_string(prev_periods))
+        status(write_abbreviation_string(*curr_periods),
+               write_abbreviation_string(*prev_periods))
         prev_periods = curr_periods
         count += 1
