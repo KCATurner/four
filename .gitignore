@@ -1,2 +1,5 @@
+*.egg-info
+*.jpeg
 *.png
 *.svg
+.idea
