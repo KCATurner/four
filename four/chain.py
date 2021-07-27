@@ -15,6 +15,10 @@ parser = argparse.ArgumentParser(
 parser.set_defaults(
     func=four._fp_method.main)
 parser.add_argument(
+    '-q', '--quiet',
+    action='store_true',
+    help='only print numbers in chain')
+parser.add_argument(
     '-s', '--start',
     type=str,
     default='4',

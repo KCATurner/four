@@ -55,12 +55,13 @@ def letters_from_period_names(*periods: list):
     return from_names_in_range(0, zillion) - missing
 
 
-def letters_in_number_name(*periods: list):
+def letters_in_number_name(*periods: list, debug=False):
     """
     todo
 
     Args:
         periods:
+        debug:
 
     Returns:
 
@@ -69,19 +70,21 @@ def letters_in_number_name(*periods: list):
         letters_from_period_values(*periods),
         letters_from_period_names(*periods)])
 
-    status(write_abbreviation_string(*periods),
-           write_abbreviation_string(*number_to_periods(letters)),
-           end='\r')
+    if debug:
+        status(write_abbreviation_string(*periods),
+               write_abbreviation_string(*number_to_periods(letters)),
+               end='\r')
 
     return letters
 
 
-def number_from_brute_force(target: int):
+def number_from_brute_force(target: int, debug=False):
     """
     todo
 
     Args:
         target:
+        debug:
 
     Returns:
 
@@ -91,18 +94,20 @@ def number_from_brute_force(target: int):
 
     number = {3: 6, 4: 5, 5: 3}.get(target, 6)
     while letters(number2text(number)) != target:
-        status(number, letters(number2text(number)), end='\r')
+        if debug:
+            status(number, letters(number2text(number)), end='\r')
         number += 1
 
     return number_to_periods(number)
 
 
-def number_from_name_length(target: int, **kwargs):
+def number_from_name_length(target: int, debug=False):
     """
     todo
 
     Args:
         target:
+        debug:
 
     Returns:
 
@@ -115,23 +120,23 @@ def number_from_name_length(target: int, **kwargs):
         return [["005", 1], ]
 
     if target <= 32:
-        return number_from_brute_force(target)
+        return number_from_brute_force(target, debug=debug)
 
     base = 2
     max_periods = ["373", 1]
-    num_letters = letters_in_number_name(max_periods)
+    num_letters = letters_in_number_name(max_periods, debug=debug)
     while num_letters < target:
         max_periods[-1] *= base
-        num_letters = letters_in_number_name(max_periods)
+        num_letters = letters_in_number_name(max_periods, debug=debug)
 
     # variant of binary search
     for _, power in rebase(max_periods[-1], base, True):
         while num_letters > target:
             max_periods[-1] -= base ** power
-            num_letters = letters_in_number_name(max_periods)
+            num_letters = letters_in_number_name(max_periods, debug=debug)
         if num_letters < target:
             max_periods[-1] += base ** power
-            num_letters = letters_in_number_name(max_periods)
+            num_letters = letters_in_number_name(max_periods, debug=debug)
 
     min_periods = ["001", 0]
     min_periods[-1], remainder = divmod(num_letters - target, 21)
@@ -267,14 +272,14 @@ def parse_abbreviation_string(abbreviation: str):
     return result
 
 
-def main(length, start, **kwargs):
+def main(length, start, quiet=True):
     """
     todo
 
     Args:
         length:
         start:
-        **kwargs:
+        quiet:
 
     Returns:
 
@@ -283,7 +288,7 @@ def main(length, start, **kwargs):
     prev_periods = parse_abbreviation_string(str(start))
     while count < length:
         target = number_from_periods(prev_periods)
-        curr_periods = number_from_name_length(target, **kwargs)
+        curr_periods = number_from_name_length(target, debug=not quiet)
         status(write_abbreviation_string(*curr_periods),
                write_abbreviation_string(*prev_periods))
         prev_periods = curr_periods
