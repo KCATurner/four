@@ -1,17 +1,22 @@
 """
-todo
+generate four-chains
 """
 import argparse
 
 from four import chain, graph
 
 
-parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser(
+    formatter_class=argparse.RawTextHelpFormatter,
+    description=__doc__.replace('\n', ' '))
 commands = parser.add_subparsers(metavar='SUBCOMMAND')
 for module in (chain, graph):
     commands.add_parser(
-        module.parser.prog, parents=[module.parser],
-        help=module.parser.description, add_help=False)
+        module.parser.prog,
+        parents=[module.parser],
+        formatter_class=argparse.RawTextHelpFormatter,
+        help=module.parser.description,
+        add_help=False)
 
 
 def main():
