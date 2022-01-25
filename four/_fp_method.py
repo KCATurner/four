@@ -7,33 +7,35 @@ from conwech.lexicon import NATURAL_NUMBERS_LT_1000, ZILLION_PERIOD_PREFIXES
 from four._core import *
 
 
-def letters_from_period_values(*periods):
+def letters_from_period_values(*number: list):
     """
-    todo
+    Count the letters attributed to period values in number's numeral.
 
     Args:
-        *periods:
+        *number (list): A number as a list of (P, R) tuples.
 
     Returns:
-
+        The number of letters attributed to period values in number's
+        numeral.
     """
-    if all([int(period) == 0 for period, _ in periods]):
+    if all([int(period) == 0 for period, _ in number]):
         return len("zero")
 
     return sum((
         repeat * letters(NATURAL_NUMBERS_LT_1000[int(period)])
-        for period, repeat in periods))
+        for period, repeat in number))
 
 
-def letters_from_period_names(*periods: list):
+def letters_from_period_names(*number: list):
     """
-    todo
+    Count the letters attributed to period names in number's numeral.
 
     Args:
-        *periods:
+        *number (list): A number as a list of (P, R) tuples.
 
     Returns:
-
+        The number of letters attributed to period names in number's
+        numeral.
     """
     prefix_lengths = [
         len(f"{prefix}illi") for prefix in ZILLION_PERIOD_PREFIXES]
@@ -47,7 +49,7 @@ def letters_from_period_names(*periods: list):
             len("thousand") - len("nillion") if min_z <= 0 < max_z else 0])
 
     zillion, missing = -1, 0
-    for period, repeat in periods[::-1]:
+    for period, repeat in number[::-1]:
         zillion += repeat
         if int(period) == 0:
             missing += from_names_in_range(zillion - repeat, zillion)
@@ -55,39 +57,41 @@ def letters_from_period_names(*periods: list):
     return from_names_in_range(0, zillion) - missing
 
 
-def letters_in_number_name(*periods: list, debug=False):
+def letters_in_number_name(*number: list, debug: bool = False):
     """
-    todo
+    Count all the letters in number's numeral.
 
     Args:
-        periods:
-        debug:
+        *number (list): A number as a list of (P, R) tuples.
+        debug (bool): Print extra debug information when true.
 
     Returns:
-
+        The number of letters in number's numeral.
     """
     letters = sum([
-        letters_from_period_values(*periods),
-        letters_from_period_names(*periods)])
+        letters_from_period_values(*number),
+        letters_from_period_names(*number)])
 
     if debug:
-        status(write_abbreviation_string(*periods),
+        status(write_abbreviation_string(*number),
                write_abbreviation_string(*number_to_periods(letters)),
                end='\r')
 
     return letters
 
 
-def number_from_brute_force(target: int, debug=False):
+def number_from_brute_force(target: int, debug: bool = False):
     """
-    todo
+    Find the smallest positive integer with a name of target length.
 
     Args:
-        target:
-        debug:
+        target (int): The number of letters that should be in the name
+            of the number returned.
+        debug (bool): Print extra debug information when true.
 
     Returns:
-
+        A period list representing the smallest number with the target
+        number of letters in its name.
     """
     if target < 3:
         raise ValueError("No number names shorter than 3 letters!")
@@ -101,16 +105,18 @@ def number_from_brute_force(target: int, debug=False):
     return number_to_periods(number)
 
 
-def number_from_name_length(target: int, debug=False):
+def number_from_name_length(target: int, debug: bool = False):
     """
-    todo
+    Find the smallest positive integer with a name of target length.
 
     Args:
-        target:
-        debug:
+        target (int): The number of letters that should be in the name
+            of the number returned.
+        debug (bool): Print extra debug information when true.
 
     Returns:
-
+        A period list representing the smallest number with the target
+        number of letters in its name.
     """
     if target < 3:
         raise ValueError("No number names shorter than 3 letters!")
@@ -179,13 +185,13 @@ def number_from_name_length(target: int, debug=False):
 
 def number_to_periods(number: int) -> list:
     """
-    todo
+    Convert an integer to a list of (P, R) tuples.
 
     Args:
-        number:
+        number (int): The integer to convert.
 
     Returns:
-
+        A list of (P, R) tuples representing number.
     """
     periods = iter(f'{int(number):,}'.split(','))
     result = [[next(periods).zfill(3), 1]]
@@ -199,15 +205,17 @@ def number_to_periods(number: int) -> list:
 
 def number_from_periods(*periods: list) -> int:
     """
-    todo
+    Convert a list of (P, R) tuples to an integer.
+
+    Note:
+        Does not scale well!
 
     Args:
-        *periods:
+        *periods (list): The list of (period, repeat) tuples to convert.
 
     Returns:
-
+        The integer representation of periods.
     """
-    # todo: doesn't scale well...
     return int(''.join(v * c for v, c in periods))
 
 
@@ -216,9 +224,9 @@ def write_abbreviation_string(*periods: list, max_repeat: int = 1) -> str:
     Get a more legible abbreviation of the given periods.
 
     Args:
-        *periods (tuple): A list of tuples like (P, N) where P is the 3
-            digit string to be repeated N number of times before moving
-            on to the next tuple in the list.
+        *periods (tuple): A list of tuples like (P, R) representing a
+            number, where P is a period value to be repeated N number
+            of times before moving on to the next tuple in the list.
         max_repeat (int): Abbreviate a period tuple (P, N) as [P]{N}
             when N > min(max(max_repeat, 1), 1000); default = 1.
 
@@ -239,13 +247,17 @@ def write_abbreviation_string(*periods: list, max_repeat: int = 1) -> str:
 
 def parse_abbreviation_string(abbreviation: str):
     """
-    retrieve a list of periods from its string representation.
+    Retrieve a list of periods from its string representation.
 
     Args:
-        abbreviation:
+        abbreviation: A numeric string which may contain repeated
+            periods represented like [P]{R} where P is the period value
+            and N is the number of times the period is repeated.
 
     Returns:
-
+        A list of tuples like (P, R) representing a number, where P is
+        a period value to be repeated N number of times before moving on
+        to the next tuple in the list.
     """
     periods = []
 
@@ -269,17 +281,17 @@ def parse_abbreviation_string(abbreviation: str):
     return result
 
 
-def main(length, start, quiet=True):
+def main(length: int, start: str, quiet: bool = True):
     """
-    todo
+    Entry point for CLI functional method.
 
     Args:
-        length:
-        start:
-        quiet:
+        length (int): Length of the target chain.
+        start (str): Number from which to start.
+        quiet (bool): Only print numbers in chain when true.
 
     Returns:
-
+        None
     """
     count = 1
     prev_periods = parse_abbreviation_string(str(start))
