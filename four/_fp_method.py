@@ -119,9 +119,6 @@ def number_from_name_length(target: int, debug=False):
     if target == 4:
         return [["005", 1], ]
 
-    if target <= 32:
-        return number_from_brute_force(target, debug=debug)
-
     base = 2
     max_periods = ["373", 1]
     num_letters = letters_in_number_name(max_periods, debug=debug)
