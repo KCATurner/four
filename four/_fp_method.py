@@ -197,7 +197,7 @@ def number_to_periods(number: int) -> list:
     return [tuple(p) for p in result]
 
 
-def number_from_periods(periods: list) -> int:
+def number_from_periods(*periods: list) -> int:
     """
     todo
 
@@ -284,7 +284,7 @@ def main(length, start, quiet=True):
     count = 1
     prev_periods = parse_abbreviation_string(str(start))
     while count < length:
-        target = number_from_periods(prev_periods)
+        target = number_from_periods(*prev_periods)
         curr_periods = number_from_name_length(target, debug=not quiet)
         status(write_abbreviation_string(*curr_periods),
                write_abbreviation_string(*prev_periods))
