@@ -256,7 +256,7 @@ def parse_abbreviation_string(abbreviation: str):
         segment, value, repeat, error = match.groups()
         if segment.isdigit():
             periods.extend(
-                [str(period), 1]
+                [str(period).zfill(3), 1]
                 for period, _ in rebase(int(segment), 1000, True))
         else:
             periods.append([value, int(repeat)])
