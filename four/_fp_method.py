@@ -1,7 +1,7 @@
 """
-todo
+Functional programming approach to the 4-chain algorithm.
 """
-from conwech.functions import number2text
+
 from conwech.lexicon import NATURAL_NUMBERS_LT_1000, ZILLION_PERIOD_PREFIXES
 
 from four._core import *
@@ -16,13 +16,13 @@ def letters_from_period_values(*number: list):
 
     Returns:
         The number of letters attributed to period values in number's
-        numeral.
+            numeral.
     """
     if all([int(period) == 0 for period, _ in number]):
         return len("zero")
 
     return sum((
-        repeat * letters(NATURAL_NUMBERS_LT_1000[int(period)])
+        repeat * len(re.findall(r"[a-zA-Z]", NATURAL_NUMBERS_LT_1000[int(period)]))
         for period, repeat in number))
 
 
@@ -35,7 +35,7 @@ def letters_from_period_names(*number: list):
 
     Returns:
         The number of letters attributed to period names in number's
-        numeral.
+            numeral.
     """
     prefix_lengths = [
         len(f"{prefix}illi") for prefix in ZILLION_PERIOD_PREFIXES]
@@ -80,31 +80,6 @@ def letters_in_number_name(*number: list, debug: bool = False):
     return letters
 
 
-def number_from_brute_force(target: int, debug: bool = False):
-    """
-    Find the smallest positive integer with a name of target length.
-
-    Args:
-        target (int): The number of letters that should be in the name
-            of the number returned.
-        debug (bool): Print extra debug information when true.
-
-    Returns:
-        A period list representing the smallest number with the target
-        number of letters in its name.
-    """
-    if target < 3:
-        raise ValueError("No number names shorter than 3 letters!")
-
-    number = {3: 6, 4: 5, 5: 3}.get(target, 6)
-    while letters(number2text(number)) != target:
-        if debug:
-            status(number, letters(number2text(number)), end='\r')
-        number += 1
-
-    return number_to_periods(number)
-
-
 def number_from_name_length(target: int, debug: bool = False):
     """
     Find the smallest positive integer with a name of target length.
@@ -116,7 +91,7 @@ def number_from_name_length(target: int, debug: bool = False):
 
     Returns:
         A period list representing the smallest number with the target
-        number of letters in its name.
+            number of letters in its name.
     """
     if target < 3:
         raise ValueError("No number names shorter than 3 letters!")
@@ -240,8 +215,8 @@ def parse_abbreviation_string(abbreviation: str):
 
     Returns:
         A list of tuples like (P, R) representing a number, where P is
-        a period value to be repeated N number of times before moving on
-        to the next tuple in the list.
+            a period value to be repeated N number of times before
+            moving on to the next tuple in the list.
     """
     periods = []
 

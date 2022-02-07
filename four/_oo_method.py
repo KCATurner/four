@@ -1,10 +1,12 @@
 """
-todo
+Object-oriented approach to the 4-chain algorithm.
 """
+
 import warnings
 import itertools
 
 from conwech.lexicon import NATURAL_NUMBERS_LT_1000, ZILLION_PERIOD_PREFIXES
+
 from four._core import *
 
 
@@ -13,17 +15,15 @@ warnings.filterwarnings('always', category=ResourceWarning)
 
 
 class Period(list):
-    """
-    todo
-    """
 
     def __init__(self, value: int = 0, repeat: int = 1):
         """
-        todo
+        A Number as a tuple like (v, r) where v is a value in the range
+        [0, 1000), and r is the number of times v is repeated.
 
         Args:
-            value (int):
-            repeat (int):
+            value (int): The value of the period.
+            repeat (int): Number of times this period repeats.
         """
         super().__init__([0, 0])
         if repeat > 0:
@@ -33,17 +33,17 @@ class Period(list):
     @property
     def value(self) -> int:
         """
-        todo
+        Get the Period's value; identical to self[0].
         """
         return self[0]
 
     @value.setter
     def value(self, value: int):
         """
-        todo
+        Set the Period's value.
 
         Args:
-            value (int):
+            value (int): A new value.
 
         Returns:
             None
@@ -57,17 +57,17 @@ class Period(list):
     @property
     def repeat(self) -> int:
         """
-        todo
+        Get the Period's repeat; identical to self[1].
         """
         return self[1]
 
     @repeat.setter
     def repeat(self, repeat: int):
         """
-        todo
+        Set the period's repeat.
 
         Args:
-            repeat (int):
+            repeat (int): A new repeat.
 
         Returns:
             None
@@ -86,13 +86,11 @@ class Period(list):
 
 
 class PeriodList(list):
-    """
-    todo
-    """
 
     def __init__(self, periods=None, debug=False):
         """
-        todo
+        A number as a list of Periods like (v, r) where v is the value
+        of the period and r is the number of times that period repeats.
 
         Args:
             periods:
@@ -108,15 +106,15 @@ class PeriodList(list):
             self.extend(periods)
 
     @staticmethod
-    def _iter_from_int(periods):
+    def _iter_from_int(periods: int):
         """
-        todo
+        Create a PeriodList from an integer.
 
         Args:
-            periods:
+            periods (int): The integer to become a PeriodList.
 
         Yields:
-
+            Period objects for every period identified in periods.
         """
         if not isinstance(periods, int):
             raise TypeError(f"input must be of type {int}!")
@@ -124,15 +122,15 @@ class PeriodList(list):
         yield from (Period(period) for period, _ in rebase(periods, 1000, True))
 
     @staticmethod
-    def _iter_from_str(periods):
+    def _iter_from_str(periods: str):
         """
-        todo
+        Create a PeriodList from a string.
 
         Args:
-            periods:
+            periods (str): The string to become a PeriodList.
 
         Yields:
-
+            Period objects for every period parsed from periods.
         """
         if not isinstance(periods, str):
             raise TypeError(f"input must be of type {str}!")
@@ -149,14 +147,14 @@ class PeriodList(list):
     @property
     def zillion(self):
         """
-        todo
+        Number of periods in the number minus 1.
         """
         return max(sum((period.repeat for period in self)), 0) - 1
 
     @property
     def name_length(self):
         """
-        todo
+        Letters in the number's name.
         """
         length = PeriodList(self._value_letters + self._name_letters)
 
@@ -168,7 +166,7 @@ class PeriodList(list):
     @property
     def _value_letters(self):
         """
-        todo
+        Letters attributed to period values in the number's numeral.
         """
         if self.zillion == -1:
             return 0
@@ -180,6 +178,9 @@ class PeriodList(list):
 
     @property
     def _name_letters(self):
+        """
+        Letters attributed to period names in the number's numeral.
+        """
         if self.zillion < 0:
             return 0
 
@@ -223,13 +224,6 @@ class PeriodList(list):
                 f"{self} is exceedingly large! Casting to int may be impossible!",
                 ResourceWarning)
 
-        # # worse performance than str.join
-        # result = sum((
-        #     value * 1000 ** power
-        #     for value, power
-        #     in zip(*itertools.chain(itertools.repeat(*period) for period in self[::-1]),
-        #            range(self.zillion + 1))))
-
         return int(''.join(str(period.value).zfill(3) * period.repeat for period in self))
 
     def __str__(self):
@@ -249,13 +243,14 @@ class PeriodList(list):
 
     def _compare(self, other):
         """
-        todo
+        Compare two PeriodList objects.
 
         Args:
-            other:
+            other (PeriodList): The PeriodList to compare to self.
 
         Returns:
-
+            An integer; negative when self < other, positive when
+                self > other, and 0 when self == other.
         """
         if not isinstance(other, PeriodList):
             other = PeriodList(other)
@@ -264,7 +259,7 @@ class PeriodList(list):
 
         difference = self.zillion - other.zillion
         if difference != 0:
-            return difference
+            return difference / abs(difference)
 
         periods = zip(itertools.cycle(self), itertools.cycle(other))
         for slf, oth in periods:
@@ -278,7 +273,7 @@ class PeriodList(list):
 
     def _compress(self):
         """
-        todo
+        Housekeeping function for combining Periods when necessary.
 
         Returns:
             None
@@ -293,47 +288,47 @@ class PeriodList(list):
 
     def extend(self, iterable):
         """
-        todo
+        Append Periods from iterable to this PeriodList.
 
         Args:
-            iterable:
+            iterable: A list of Period objects.
 
         Returns:
             None
         """
         self.__setitem__(slice(len(self), None), list(iterable))
 
-    def append(self, period):
+    def append(self, period: Period):
         """
-        todo
+        Append the given period to this PeriodList.
 
         Args:
-            period:
+            period (Period): Period object to append.
 
         Returns:
             None
         """
         self.__setitem__(slice(len(self), None), [period])
 
-    def prepend(self, period):
+    def prepend(self, period: Period):
         """
-        todo
+        Append the given period to the front of this PeriodList.
 
         Args:
-            period:
+            period (Period): Period object to append.
 
         Returns:
             None
         """
         self.__setitem__(slice(None, 0), [period])
 
-    def insert(self, index, period):
+    def insert(self, index: int, period: Period):
         """
-        todo
+        Insert a Period object into the PeriodList at the given index.
 
         Args:
-            index:
-            period:
+            index (int): The index to put period.
+            period (Period): Period object to insert.
 
         Returns:
             None
@@ -342,14 +337,14 @@ class PeriodList(list):
 
     def inject(self, zillion, period):
         """
-        todo
+        Inject a Period object at a specific zillion value.
 
         Args:
-            zillion:
-            period:
+            zillion (int): The Zillion value of the period to inject.
+            period (Period): Period object to inject.
 
         Returns:
-
+            None
         """
         if zillion > self.zillion:
             self.insert(0, period)
@@ -373,15 +368,16 @@ class PeriodList(list):
 
 def number_from_name_length(target, debug: bool = False):
     """
-    todo
+    Find the smallest positive integer with a name of target length.
 
     Args:
-        target:
-        quiet:
-        **kwargs:
+        target (PeriodList): The number of letters that should be in
+            the name of the number returned.
+        debug (bool): Print extra debug information when true.
 
     Returns:
-
+        A PeriodList representing the smallest number with the target
+            number of letters in its name.
     """
     target = PeriodList(target)
     if target < PeriodList(3):
@@ -432,12 +428,12 @@ def number_from_name_length(target, debug: bool = False):
 
 def main(length: int = 2, start: str = "4", quiet: bool = True):
     """
-    todo
+    Entry point for CLI object-oriented method.
 
     Args:
-        length (int):
-        start (int):
-        **kwargs:
+        length (int): Length of the target chain.
+        start (str): Number from which to start.
+        quiet (bool): Only print numbers in chain when true.
 
     Returns:
         None

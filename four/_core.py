@@ -1,6 +1,7 @@
 """
-todo
+Common functions and artifacts shared between other submodules.
 """
+
 import re
 import math
 
@@ -48,13 +49,13 @@ Exceptions to KEY_PERIODS for numbers with more than two periods.
 PERIOD_PATTERN = re.compile(
     r"((?:^\d+)|(?<=\})(?:\d{3})+(?=\[|$)|\[(\d{3})\]\{(\d+)\})|(\d+)")
 """
-todo
+Regular expression for parsing string representations of period lists.
 """
 
 
 def rebase(decimal: int, base: int, generate: bool = False):
     """
-    Get base-b representation of decimal number n.
+    Get a tuple representation of decimal in the specified base.
 
     Args:
         decimal (int): Decimal number to rebase.
@@ -63,7 +64,7 @@ def rebase(decimal: int, base: int, generate: bool = False):
 
     Returns:
         Tuples of (c, p) pairs such that
-        ``sum(c*b**p for c, p in rebase(n, b)) == n``.
+            ``sum(c*b**p for c, p in rebase(n, b)) == n``.
 
     Examples:
         >>> rebase(123456789, 16)
@@ -72,7 +73,6 @@ def rebase(decimal: int, base: int, generate: bool = False):
         [(123, 2), (456, 1), (789, 0)]
         >>> type(rebase(123456789, 2, True))
         <class 'generator'>
-
     """
     digits = math.floor(math.log(abs(decimal) or 1, base))
     result = (((decimal // base**power) % base, power)
@@ -91,19 +91,18 @@ def occurs(digit: int, limit: int, start: int = 0, base: int = 10):
         base (int): The number system base for digit; default = 10.
 
     Returns:
-        The number of times digit occurs within the given range in a number
-            system with the given base.
+        The number of times digit occurs within the given range in a
+            number system with the given base.
 
     Examples:
         >>> occurs(0, 100)
         10
-        >>> occurs(2, 25, start=20)
-        6
+        >>> occurs(1, 25, start=16)
+        5
         >>> occurs(12, 100, base=16)
         6
         >>> occurs(123, 987654321, base=1000)
         2975655
-
     """
     if digit >= base or limit <= start:
         return 0

@@ -1,6 +1,7 @@
 """
 generate graphs of four-chain trees
 """
+
 import typing
 import pathlib
 import graphviz

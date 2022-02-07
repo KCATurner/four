@@ -1,6 +1,7 @@
 """
 generate four-chains
 """
+
 import argparse
 
 from four import chain, graph

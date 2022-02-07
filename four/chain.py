@@ -1,6 +1,7 @@
 """
 print four-chains of target lengths
 """
+
 import pathlib
 import argparse
 
