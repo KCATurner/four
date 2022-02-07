@@ -124,57 +124,41 @@ def number_from_name_length(target: int, debug: bool = False):
         return [["006", 1], ]
     if target == 4:
         return [["005", 1], ]
+    if target in KEY_PERIOD_VALUES.keys():
+        return [[str(KEY_PERIOD_VALUES[target]).zfill(3), 1]]
 
-    base = 2
-    max_periods = ["373", 1]
-    num_letters = letters_in_number_name(max_periods, debug=debug)
-    while num_letters < target:
-        max_periods[-1] *= base
-        num_letters = letters_in_number_name(max_periods, debug=debug)
+    n_max = 1
+    while letters_in_number_name(["373", n_max], debug=debug) < target:
+        n_max *= 2
 
-    # variant of binary search
-    for _, power in rebase(max_periods[-1], base, True):
-        while num_letters > target:
-            max_periods[-1] -= base ** power
-            num_letters = letters_in_number_name(max_periods, debug=debug)
-        if num_letters < target:
-            max_periods[-1] += base ** power
-            num_letters = letters_in_number_name(max_periods, debug=debug)
+    n_min = n_max // 2
+    while not (letters_in_number_name(["373", n_max - 1])
+               < target <=
+               letters_in_number_name(["373", n_max])):
+        n_mid = (n_min + n_max) // 2
+        if letters_in_number_name(["373", n_mid], debug=debug) < target:
+            n_min = n_mid
+        else:
+            n_max = n_mid
 
-    min_periods = ["001", 0]
-    min_periods[-1], remainder = divmod(num_letters - target, 21)
-    max_periods[-1] -= min_periods[-1]
+    num_letters = letters_in_number_name(["373", n_max], debug=debug)
+    min_periods = ["001", math.ceil((num_letters - target) / 21)]
+    max_periods = ["373", n_max - min_periods[-1]]
 
-    options = {
-        0:  [],
-        1:  [["323", 1], ], # three hundred twenty-three
-        2:  [["173", 1], ], # one hundred seventy-three
-        3:  [["123", 1], ], # one hundred twenty-three
-        4:  [["124", 1], ], # one hundred twenty-four
-        5:  [["117", 1], ], # one hundred seventeen
-        6:  [["113", 1], ], # one hundred thirteen
-        7:  [["115", 1], ], # one hundred fifteen
-        8:  [["111", 1], ], # one hundred eleven
-        9:  [["103", 1], ], # one hundred three
-        10: [["104", 1], ], # one hundred four
-        11: [["101", 1], ], # one hundred one
-        12: [["073", 1], ], # seventy-three
-        13: [["023", 1], ], # twenty-three
-        14: [["024", 1], ], # twenty-four
-        15: [["017", 1], ], # seventeen
-        16: [["013", 1], ], # thirteen
-        17: [["015", 1], ], # fifteen
-        18: [["011", 1], ], # eleven
-        19: [["003", 1], ], # three
-        20: [["004", 1], ], # four
-        21: [["001", 1], ], # one
-    }
+    mid_periods = []
+    num_letters = letters_in_number_name(
+        min_periods, max_periods, debug=debug)
+    if num_letters < target:
+        min_periods[-1] -= 1
+        mid_periods.append([str(min(
+            (period for letters, period in KEY_PERIOD_VALUES.items()
+             if letters - 3 >= target - num_letters))).zfill(3), 1])
 
-    mid_periods = options[remainder]
-    # exceptions where smaller value period has longer name
-    if remainder in [4, 7, 10, 14, 17, 20] and max_periods[-1] >= 2:
-        mid_periods = options[remainder - 1] + [["323", 1], ]
-    max_periods[-1] -= len(mid_periods)
+    num_letters = letters_in_number_name(
+        min_periods, *mid_periods, max_periods, debug=debug)
+    if num_letters > target:
+        max_periods[-1] -= 1
+        mid_periods.append(["323", 1])
 
     return [
         (period, repeat)

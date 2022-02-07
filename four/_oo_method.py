@@ -371,7 +371,7 @@ class PeriodList(list):
             last_zillion += self[index].repeat
 
 
-def number_from_name_length(target, quiet=True, **kwargs):
+def number_from_name_length(target, debug: bool = False):
     """
     todo
 
@@ -383,7 +383,7 @@ def number_from_name_length(target, quiet=True, **kwargs):
     Returns:
 
     """
-    target = PeriodList(str(target))
+    target = PeriodList(target)
     if target < PeriodList(3):
         raise ValueError("No number names shorter than 3 letters!")
     if target == PeriodList(3):
@@ -393,98 +393,44 @@ def number_from_name_length(target, quiet=True, **kwargs):
     if target <= PeriodList(24):
         return PeriodList(KEY_PERIOD_VALUES[int(target)])
 
-    base = 1000 # bigger is faster
-    periods = PeriodList(373, debug=not quiet)
-    while periods.name_length < target:
-        periods[0].repeat *= base
+    guess = 1 # = math.ceil(0.0032 * (math.e ** (6.8543 * sum(r for _, r in target))))
+    r_periods = PeriodList([Period(373, guess)], debug=debug)
+    while r_periods.name_length < target:
+        r_periods[0].repeat *= 2
 
-    base = 2 # 2 is optimal
-    # variant of binary search
-    for _, power in rebase(periods[-1].repeat, base, True):
-        while periods.name_length > target:
-            periods[0].repeat -= base ** power
-        if periods.name_length < target:
-            periods[0].repeat += base ** power
+    l_periods = PeriodList(373, debug=False)
+    m_periods = PeriodList(373, debug=debug)
+    r_oneless = PeriodList([Period(373, r_periods[0].repeat - 1)], debug=False)
+    while not (r_oneless.name_length < target <= r_periods.name_length):
+        m_periods[0].repeat = (l_periods[0].repeat + r_periods[0].repeat) // 2
+        if m_periods.name_length < target:
+            l_periods[0].repeat = m_periods[0].repeat
+        else:
+            r_periods[0].repeat = m_periods[0].repeat
+            r_oneless[0].repeat = r_periods[0].repeat - 1
 
-    limit = periods[0].repeat
-    periods.insert(0, Period(1, 1))
-    periods[1].repeat = limit - periods[0].repeat
-    while periods.name_length > target and periods[0].repeat < limit:
-        periods[0].repeat = min(periods[0].repeat * base, limit)
-        periods[1].repeat = limit - periods[0].repeat
+    periods = PeriodList(r_periods, debug=debug)
+    while periods.name_length > target:
+        periods.prepend(Period(1, 1))
+        periods[-1].repeat -= 1
 
-    # variant of binary search
-    for _, power in rebase(periods[0].repeat, base, True):
-        while periods.name_length < target:
-            periods[0].repeat -= base ** power
-            periods[1].repeat = limit - periods[0].repeat
-        if periods.name_length > target:
-            periods[0].repeat += base ** power
-            periods[1].repeat = limit - periods[0].repeat
+    if periods.name_length < target:
+        periods[0].repeat -= 1
+        periods.insert(1, Period(0, 1))
+        for period in [3, 11, 13, 17, 23, 73, 101, 103, 111, 113, 117, 123, 173, 323]:
+            periods[1].value = period
+            if periods.name_length >= target:
+                periods[1] = Period(period, 1)
+                break
 
-    if periods.name_length == target:
-        return periods
-
-    periods[0].repeat -= 1
-    periods.insert(1, Period(4, 1))
-    for value in KEY_PERIOD_VALUES.values():
-        periods[1].value = value
-        if periods.name_length == target:
-            break
-
-    if periods[1].value in KEY_PERIOD_EXCEPTIONS.keys() and periods[2].repeat > 0:
-        periods[1].value = KEY_PERIOD_EXCEPTIONS[periods[1].value]
+    if periods.name_length > target:
+        periods[-1].repeat -= 1
         periods.insert(2, Period(323, 1))
-        periods[3].repeat -= 1
 
-    if periods.name_length != target:
-        print(f"\n{periods.name_length} != {target}")
-
-    assert periods.name_length == target
     return periods
 
 
-# def number_from_name_length(target: PeriodList):
-#     if not isinstance(target, PeriodList):
-#         target = PeriodList(target)
-#
-#     if target < PeriodList(3):
-#         raise ValueError("No number names shorter than 3 letters!")
-#     if target == PeriodList(3):
-#         return PeriodList(6)
-#     if target == PeriodList(4):
-#         return PeriodList(5)
-#     if target <= PeriodList(24):
-#         return PeriodList(KEY_PERIODS[int(target)])
-#
-#     base = 2
-#     max_periods = PeriodList(373, debug=True)
-#     while max_periods.name_length < target:
-#         max_periods[-1].repeat *= base
-#
-#     # variant of binary search
-#     for _, power in rebase(max_periods[-1].repeat, base, True):
-#         while max_periods.name_length > target:
-#             max_periods[-1].repeat -= base ** power
-#         if max_periods.name_length < target:
-#             max_periods[-1].repeat += base ** power
-#
-#     # fixme: bottleneck!
-#     difference = int(max_periods.name_length) - int(target)
-#
-#     min_periods = PeriodList([Period(1, difference // 21), ])
-#     max_periods[-1].repeat -= max(min_periods[-1].repeat - 1, 0)
-#     offset = 24 - (difference % 21)
-#     mid_periods = PeriodList(KEY_PERIODS[offset])
-#     if offset in (4, 7, 10, 14, 17, 20) and max_periods.zillion >= 1:
-#         mid_periods = PeriodList(KEY_PERIODS[offset + 1])
-#         mid_periods.append(Period(323))
-#     max_periods[-1].repeat -= (mid_periods.zillion + 2)
-#
-#     return PeriodList([*min_periods, *mid_periods, *max_periods], debug=True)
-
-
-def main(length=2, start=4, **kwargs):
+def main(length: int = 2, start: str = "4", quiet: bool = True):
     """
     todo
 
@@ -499,7 +445,7 @@ def main(length=2, start=4, **kwargs):
     count = 1
     prev_periods = PeriodList(start)
     while count < length:
-        curr_periods = number_from_name_length(prev_periods, **kwargs)
+        curr_periods = number_from_name_length(prev_periods, debug=not quiet)
         status(curr_periods, prev_periods)
         prev_periods = curr_periods
         count += 1
