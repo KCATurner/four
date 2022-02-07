@@ -5,27 +5,30 @@ from four._oo_method import *
 
 if __name__ == '__main__':
 
-    repeats, lengths = [], []
-    for seed in range(1200):
-        repeat = seed*1
-        number = PeriodList([Period(373, repeat)])
-        length = number.name_length
-        repeats.append(int(repeat))
-        lengths.append(int(length))
+    target_zillions, number_zillions = [], []
+    for num_periods in range(1, 51):
+        target = PeriodList([Period(373, num_periods)])
+        number = number_from_name_length(target=target, debug=False)
+        number_zillions.append(sum((r for _, r in number)))
+        target_zillions.append(sum((r for _, r in target)))
 
-    x = np.array(repeats)
-    y = np.array(lengths)
-    c = np.poly1d(np.polyfit(x, y, 1))
-    e = y - c(x)
+        print(f"target: {target}\tnumber: {number}")
 
-    plt.errorbar(x, y, yerr=e, fmt='+', ecolor='r', label='data')
-    plt.plot(x, c(x), 'r-', label='trend')
+    x = np.array(target_zillions)
+    y = np.array(number_zillions)
+
+    print(x, y, sep="\n")
+    exit()
+
+    theta = np.polyfit(x, y, 2)
+    curve = np.poly1d(theta)
+    error = y - curve(x)
+
+    # print(theta)
+    # print(curve)
+
+    plt.errorbar(x, y, yerr=error, fmt='+', ecolor='r', label='data')
+    plt.plot(x, curve(x), 'r-', scalex=False, scaley=False, label=curve)
     plt.legend(loc='upper left')
-
-    # me = max(list(e.flatten())[200:])
-    # mei = list(e.flatten())[200:].index(me)
-    # mex = repeats.index(mei)
-    # mey = lengths[mex]
-    # plb.plot(np.array([mex, ]), np.array([mey, ]), label='max error',)
 
     plt.show()
