@@ -1,34 +1,63 @@
 import numpy as np
-import matplotlib.pyplot as plt
-from four._oo_method import *
+from scipy.optimize import curve_fit
+from matplotlib import pyplot as plt
+
+from four import infer
+
+
+def integer_exact(x, a):
+    return np.array([
+        float(('373' * int(i)) or 0.0) / a
+        for i in x])
+
+
+def integer_approx(x, a):
+    return np.array([
+        float(373 * (1000 ** int(i))) / a
+        for i in x])
+
+
+def float_exact(x, a, b):
+    return np.array([
+        a * (float(('373' * int(i)) or 0.0) ** b)
+        for i in x])
+
+
+def float_approx(x, a, b):
+    return np.array([
+        a * (float(373 * (1000 ** int(i))) ** b)
+        for i in x])
 
 
 if __name__ == '__main__':
+    xdata = np.arange(80)
+    ydata = np.array(infer.LENGTH_PERIODS_TO_TARGET_PERIODS)
 
-    target_zillions, number_zillions = [], []
-    for num_periods in range(1, 51):
-        target = PeriodList([Period(373, num_periods)])
-        number = number_from_name_length(target=target, debug=False)
-        number_zillions.append(sum((r for _, r in number)))
-        target_zillions.append(sum((r for _, r in target)))
+    fig, ax = plt.subplots(2, 2, sharex='all', sharey='all')
+    for index, func in enumerate([
+        integer_exact,
+        integer_approx,
+        float_exact,
+        float_approx,
+    ]):
+        axis = ax[divmod(index, 2)]
+        pivot = len(ydata)
 
-        print(f"target: {target}\tnumber: {number}")
+        popt, *_ = curve_fit(func, xdata[:pivot], ydata, full_output=True)
+        predictions = func(xdata, *popt)
+        error = abs(predictions[:pivot] - ydata)
 
-    x = np.array(target_zillions)
-    y = np.array(number_zillions)
+        axis.plot(xdata[:pivot], ydata, 'ko', label="Original Data", zorder=10)
+        axis.plot(xdata[pivot:], predictions[pivot:], 'bo', label="Predictions", zorder=10)
 
-    print(x, y, sep="\n")
-    exit()
+        axis.plot(xdata, predictions, 'k-', label=f"Fitted Curve (popt = {popt})", zorder=20)
+        axis.errorbar(xdata[:pivot], ydata, yerr=error, fmt="r|", label="Curve Error", zorder=0)
 
-    theta = np.polyfit(x, y, 2)
-    curve = np.poly1d(theta)
-    error = y - curve(x)
+        axis.set_title(func.__name__)
+        axis.set_xscale('log')
+        axis.set_yscale('log')
+        axis.legend()
 
-    # print(theta)
-    # print(curve)
-
-    plt.errorbar(x, y, yerr=error, fmt='+', ecolor='r', label='data')
-    plt.plot(x, curve(x), 'r-', scalex=False, scaley=False, label=curve)
-    plt.legend(loc='upper left')
-
+    mng = plt.get_current_fig_manager()
+    mng.window.state('zoomed')
     plt.show()

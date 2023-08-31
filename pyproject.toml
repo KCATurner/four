@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "four"
+version = "0.0"
+description = "A module for calculating four-chains."
+readme = {file = "README.md", content-type = "text/markdown"}
+requires-python = ">=3.8"
+keywords = ["four", "chain"]
+authors = [
+    {name = "Kevin Turner", email = "kct0004@auburn.edu"}
+]
+maintainers = [
+    {name = "Kevin Turner", email = "kct0004@auburn.edu"}
+]
+classifiers = [
+    "Operating System :: OS Independent"
+]
+dependencies = [
+    "conwech",
+    "numpy",
+    "scipy",
+    "matplotlib"
+]
+
+[project.urls]
+repository = "https://github.com/KCATurner/four"
+documentation = "https://kcaturner.github.io/four/docs/latest/index.html"
+
+[project.scripts]
+four = "four.__main__:_four"
