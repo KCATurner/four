@@ -39,7 +39,7 @@ Determines how verbose CLI output is for _number_from_name_length.
 
 
 def _first(
-        target: Union[int, str, List[Tuple[int, int]]]
+        target: Union[int, str, Sequence[Tuple[int, int]]]
 ) -> List[Tuple[int, int]]:
     """
     Find the first integer with a name of target length.

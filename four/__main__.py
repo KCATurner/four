@@ -6,7 +6,7 @@ Main CLI entry point.
 import argparse as _argparse
 
 # internal
-from four import chain as _chain, graph as _graph, infer as _infer
+from four import chain, graph, infer
 
 
 __all__ = [
@@ -18,7 +18,7 @@ parser = _argparse.ArgumentParser(
     formatter_class=_argparse.RawTextHelpFormatter,
     description="generate 4-chains")
 commands = parser.add_subparsers(metavar='SUBCOMMAND')
-for module in (_chain, _graph, _infer):
+for module in (chain, graph, infer):
     commands.add_parser(
         module.parser.prog,
         parents=[module.parser],

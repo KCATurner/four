@@ -38,6 +38,35 @@ Determines how verbose CLI output is for _number_from_name_length.
 """
 
 
+def C(length: int = 1, chain_index: int = 1): # noqa
+    """"""
+    this_rank = [[PNumber(4)]]
+    while any(len(c) < length for c in this_rank):
+        next_rank = []
+        for this_chain in this_rank:
+            count = 0
+            child = _first(this_chain[-1])
+            while child is not None and count < chain_index:
+                index = 0
+                for next_chain in next_rank:
+                    if child < next_chain[-1]:
+                        break
+                    index += 1
+                next_rank.insert(index, [*this_chain, child])
+                child = _next(child)
+                count += 1
+        if len(next_rank) == 0:
+            for this_chain in this_rank:
+                child = _next(this_chain[-1])
+                next_rank.append([*this_chain[:-1], child])
+        this_rank = next_rank[:chain_index]
+
+    if len(this_rank) < chain_index:
+        raise IndexError(f"C[{length}][{chain_index}] does not exist!")
+
+    return this_rank[chain_index - 1]
+
+
 def _first(target: PNumberLike) -> Union['PNumber', None]:
     """
     Find the first integer with a name of target length.
@@ -61,10 +90,7 @@ def _first(target: PNumberLike) -> Union['PNumber', None]:
 
     if target < 3:
         return None
-    # if target == 3:
-    #     return PNumber(6)
     if target == 4:
-        # return PNumber(5)
         return PNumber(0)
     if target <= 24:
         return PNumber(_KEY_PERIOD_VALUES[int(target)])
@@ -120,13 +146,6 @@ def _next(node: PNumberLike) -> Union['PNumber', None]:
     """"""
     node = node if isinstance(node, PNumber) else PNumber(node)
 
-    # period_value_lengths = dict.fromkeys(_KEY_PERIOD_VALUES.keys())
-    # for period, numeral in enumerate(_lexicon.NATURAL_NUMBERS_LT_1000[1:], start=1):
-    #     length = _letters(numeral)
-    #     if period_value_lengths.get(length) is None:
-    #         period_value_lengths[length] = []
-    #     period_value_lengths[length].append(period)
-
     if node == 0:
         return PNumber(5)
 
@@ -142,7 +161,8 @@ def _next(node: PNumberLike) -> Union['PNumber', None]:
 
     result = PNumber(str(node))
     if new_value is None:
-        return None # todo...
+        # todo...
+        return None
     else:
         if result[-1].repeat > 1:
             result[-1].repeat -= 1

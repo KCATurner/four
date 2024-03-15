@@ -17,7 +17,6 @@ from typing import (
 
 # external
 import argparse as _argparse
-from tqdm import tqdm as _tqdm
 from time import sleep as _sleep
 from pathlib import Path as _Path
 from itertools import cycle as _cycle
@@ -30,7 +29,7 @@ from four._core import status as _status
 
 __all__ = [
     "parser",
-    "iter_chain"]
+    "iter_first_chain"]
 
 
 API = Union[Literal["fp", "oo"], ModuleType]
@@ -83,88 +82,7 @@ class _Spinner:
         self._busy = False
 
 
-def C(length: int = 1, chain_index: int = 1): # noqa
-    """"""
-    this_rank = [[_oo_api.PNumber(4)]]
-    while any(len(c) < length for c in this_rank):
-        next_rank = []
-        for this_chain in this_rank:
-            count = 0
-            child = _oo_api._first(this_chain[-1])
-            while child is not None and count < chain_index:
-                index = 0
-                for next_chain in next_rank:
-                    if child < next_chain[-1]:
-                        break
-                    index += 1
-                next_rank.insert(index, [*this_chain, child])
-                child = _oo_api._next(child)
-                count += 1
-        if len(next_rank) == 0:
-            for this_chain in this_rank:
-                child = _oo_api._next(this_chain[-1])
-                next_rank.append([*this_chain[:-1], child])
-        this_rank = next_rank[:chain_index]
-
-    if len(this_rank) < chain_index:
-        raise IndexError(f"C[{length}][{chain_index}] does not exist!")
-
-    return this_rank[chain_index - 1]
-
-    # def iter_first(root, length):
-    #     chain = [_oo_api.PNumber(root), ]
-    #     yield chain[-1]
-    #     while len(chain) < length:
-    #         child = _oo_api._first(chain[-1])
-    #         while child is None or child == chain[-1]:
-    #             chain[-1] = _oo_api._next(chain[-1])
-    #             child = _oo_api._first(chain[-1])
-    #         chain.append(child)
-    #         yield chain[-1]
-    #
-    # first_chain = list(iter_first(4, length))
-    # chains = [first_chain, ]
-    # while len(chains) < chain_index:
-    #     chain = chains[-1][:-1]
-    #     chain.append(_oo_api._next(chains[-1][-1]))
-    #
-    # for node in first_chain[::-1]:
-    #     chains.append(first_chain)
-
-
-    # chains = [[_oo_api.PNumber(4), ], ]
-    # for rank in range(chain_index):
-    #     # update existing chains
-    #     for index in range(len(chains)):
-    #         child = _oo_api._first(chains[index][-1])
-    #         while child is None or child == chains[index][-1]:
-    #             chains[index][-1] = _oo_api._next(chains[index][-1])
-    #             child = _oo_api._first(chains[index][-1])
-    #         chains[index].append(child)
-    #     # add/replace chains
-    #     while len(chains) < chain_index:
-    #         chain = chains[-1][:-1]
-    #         sibling = _oo_api._next(chains[-1][-1])
-    #         if sibling is None:
-    #
-    #         chain.append()
-
-
-
-
-
-    # chains = [first_chain, ]
-    # for node in first_chain[::-1]:
-    #     while len(chains) < chain_index:
-    #         sibling = _oo_api._next(chains[-1][-1])
-    #         if sibling is not None:
-    #             chains.append(chains[-1])
-    #             chains[-1][-1] = sibling
-
-
-
-
-def iter_chain(
+def iter_first_chain(
         length: int,
         root: str,
         api: API = "fp"
@@ -191,7 +109,7 @@ def iter_chain(
             not impliment a _first() function.
 
     Examples:
-        >>> list(iter_chain(3, "21"))
+        >>> list(iter_first_chain(3, "21"))
         [[(21, 1)], [(123, 1)], [(001, 1), (113, 1), (373, 3)]]
 
     See Also:
@@ -213,7 +131,7 @@ def iter_chain(
         count += 1
 
 
-def _chain(
+def _first_chain(
         module: ModuleType,
         length: int = 2,
         root: Union[int, str] = 4,
@@ -228,21 +146,8 @@ def _chain(
         root: Number from which to start; default = 4.
         verbosity: Set level of output verbosity; default = 0.
     """
-
-    # result = dict.fromkeys(range(1, 32))
-    # from conwech.lexicon import ZILLION_PERIOD_PREFIXES
-    # for index, prefix in enumerate(ZILLION_PERIOD_PREFIXES):
-    #     result[len(prefix)] = (index, prefix)
-    #
-    # for length, (index, prefix) in result.items():
-    #     print(f"{length:>3}: ({index}, '{prefix}')")
-
     if hasattr(module, "_cli_verbosity"):
         module._cli_verbosity = int(verbosity)
-
-    x = _oo_api._last(target=root)
-    print(x)
-    exit()
 
     # show we're thinking...
     spinner = _Spinner()
@@ -250,7 +155,7 @@ def _chain(
         spinner.start()
 
     try:
-        chain = iter_chain(length, root, module)
+        chain = iter_first_chain(length, root, module)
         if verbosity == 0:
             print(next(chain), end="")
             count = 1
@@ -272,55 +177,39 @@ def _chain(
         spinner.stop()
 
 
-def __get_number_of_children(node: str):
-    ...
+def _chain(length: int, chain_index: int, module: ModuleType, verbosity: int = 0):
+    """"""
+    if hasattr(module, "_cli_verbosity"):
+        module._cli_verbosity = int(verbosity)
 
+    # show we're thinking...
+    spinner = _Spinner()
+    spinner.start()
 
-def __get_next_child(node: str, start: str) -> Union[str, None]:
-    node = _fp_api.parse_abbreviation(node)
-    # target =
+    try:
+        if hasattr(module, "C"):
+            chain = iter(module.C(length, chain_index))
+            if verbosity == 0:
+                print(next(chain), end="")
+                count = 1
+                while count < length:
+                    print(" <- ", end="", flush=True)
+                    print(f"{next(chain)}", end="")
+                    count += 1
+            else:
+                previous = next(chain)
+                for number in chain:
+                    _status(number, previous)
+                    previous = number
+        else:
+            print(f"Sequence C implementation missing from {module}")
 
+    except Exception as exception:
+        # catch and re-raise any exception, so we can stop spinner
+        raise exception
 
-def __iter_children(node: str, limit: int) -> Generator[str, None, None]:
-    child = __get_next_child(node, start="0")
-    yield child
-    count = 1
-    while count > limit:
-        child = __get_next_child(node, start=child)
-        yield child
-        count += 1
-
-
-def __c(length: int, chain_index: int, module: ModuleType, verbosity: int = 0):
-
-    C()
-
-
-    number = _fp_api.parse_abbreviation("4")
-    yield _fp_api.write_abbreviation(number)
-
-    count = 1
-    while count < length:
-        number = api._first(number)  # noqa
-        yield _fp_api.write_abbreviation(number)
-        count += 1
-
-
-    if len(chain) < 1:
-        raise ValueError()
-
-    if length == len(chain):
-        return chain[element_index]
-
-    if length > len(chain):
-        generator = __iter_children(node=chain[-1], limit=chain_index)
-        child = next(generator)
-        if child is None:
-            ...
-
-
-
-
+    finally:
+        spinner.stop()
 
 
 parser = _argparse.ArgumentParser(
@@ -328,20 +217,14 @@ parser = _argparse.ArgumentParser(
     formatter_class=_argparse.RawTextHelpFormatter,
     description="print four-chains of target lengths")
 parser.set_defaults(
-    func=C,
-    module=_fp_api)
+    func=_chain,
+    module=_oo_api)
 parser.add_argument(
     "-v", "--verbose",
     action="count",
     default=0,
     dest="verbosity",
     help="increase output verbosity")
-# parser.add_argument(
-#     "-r", "--root",
-#     type=str,
-#     default="4",
-#     help="number from which to start;"
-#          "\ndefault: %(default)s")
 parser.add_argument(
     "-l", "--length",
     type=int,
@@ -350,24 +233,10 @@ parser.add_argument(
          "\ndefault: %(default)s")
 parser.add_argument(
     "-c", "--chain",
-    type=lambda s: int(s) - 1,
-    default=2,
+    type=int,
+    default=1,
     dest="chain_index",
-    help="")
-methods = parser.add_mutually_exclusive_group(
-    required=False)
-methods.add_argument(
-    "--oo",
-    action="store_const",
-    dest="module",
-    const=_oo_api,
-    help=_argparse.SUPPRESS)
-methods.add_argument(
-    "--fp",
-    action="store_const",
-    dest="module",
-    const=_fp_api,
-    help=_argparse.SUPPRESS)
+    help="the target chain (by 1-based index)")
 
 
 if __name__ == "__main__":

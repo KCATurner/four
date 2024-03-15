@@ -631,7 +631,7 @@ That's still a lot of numbers; in almost all cases, still too many to search exh
 
 With `m` in hand, we can define a number that is guaranteed to have a length within 21 letters of `l_{t}`:
 
-.. math:: l_{t} - 21 < L(\overset{_{m}}{\overline{001}},\overset{_{n-m}}{\overline{373}}) <= l_{t}
+.. math:: l_{t} - 21 \lt L(\overset{_{m}}{\overline{001}},\overset{_{n-m}}{\overline{373}}) \le l_{t}
 
 We have but one step left from here. We must make up the difference in length (whatever it is) by modifying the last 001 period value (and potentially the first 373 period value). Our target LIN, `x`, must take the following form:
 
@@ -730,7 +730,7 @@ With `C_{7, 1}` in hand, we can search for `C_{8,1}` by following our process ab
 ***********************************
 `C_{9,1}` : Efficiency With Silicon
 ***********************************
-Repeating this process manually for `C_{9,1}` would take far too long. We're talking about finding a number with over a *nonillion* letters in it's name. So this is where this pseudo-paper of mine comes to an end. There's not much more to say. The best I can do is present you with the first occurring 4-chain containing nine numbers:
+Repeating this process manually for `C_{9,1}` would take far too long. Thankfully, it's not outside the realm of computation just yet. We're talking about finding a number with over a *nonillion* letters in it's name. So this is where this pseudo-paper of mine comes to an end. There's just not much to say, other than that I wrote some code to do this for us and found `C_{9,1}`. That is of course assuming I made no mistakes. The best I can do is present you with the result:
 
 .. math:: C_{9,1} = \bigl(4, 5, 3, 6, 11, 23, 323, 1103323\overset{_{8}}{\overline{373}}, \overset{_{5}}{\overline{001}}103323\overset{_{x}}{\overline{373}}\bigr), \text{where}\ x = 4664040982447497675590741019
 
