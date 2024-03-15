@@ -1,31 +1,40 @@
 """
-generate four-chains
+Main CLI entry point.
 """
 
-import argparse
+# external
+import argparse as _argparse
 
-from four import chain, graph
+# internal
+from four import chain, graph, infer
 
 
-parser = argparse.ArgumentParser(
-    formatter_class=argparse.RawTextHelpFormatter,
-    description=__doc__.replace('\n', ' '))
+__all__ = [
+    "parser"]
+
+
+parser = _argparse.ArgumentParser(
+    prog="four",
+    formatter_class=_argparse.RawTextHelpFormatter,
+    description="generate 4-chains")
 commands = parser.add_subparsers(metavar='SUBCOMMAND')
-for module in (chain, graph):
+for module in (chain, graph, infer):
     commands.add_parser(
         module.parser.prog,
         parents=[module.parser],
-        formatter_class=argparse.RawTextHelpFormatter,
+        formatter_class=_argparse.RawTextHelpFormatter,
         help=module.parser.description,
         add_help=False)
 
 
-def main():
-    """ For internal use only! """
+def _four():
+    """
+    Main entry point for four CLI.
+    """
     # call func with parsed args
     inputs = vars(parser.parse_args())
     inputs.pop('func', parser.print_help)(**inputs) # noqa
 
 
 if __name__ == '__main__':
-    main()
+    _four()

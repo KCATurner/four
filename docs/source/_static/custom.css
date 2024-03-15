@@ -1,0 +1,36 @@
+/* Wrap text in large table cells */
+.wy-table-responsive table td {
+    white-space: normal;
+}
+/* Edit here to increase default max width from 800px */
+.wy-nav-content {
+    max-width: 1000px !important;
+}
+
+/* Floating left/right-justified content */
+div.left-floating {
+    alignment: left;
+    float: left;
+    width: 50%;
+    padding-right: 5%;
+}
+div.right-floating {
+    alignment: right;
+    float: right;
+    width: 50%;
+    padding-left: 5%;
+}
+
+/* Two column content formatting */
+div.left-column {
+    alignment: left;
+    float: left;
+    width: 50%;
+    padding-right: 5%;
+}
+div.right-column {
+    alignment: right;
+    margin-left: 50%;
+    width: 50%;
+    padding-left: 5%;
+}

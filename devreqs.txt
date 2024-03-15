@@ -1,0 +1,10 @@
+virtualenv
+flake8
+flake8-html
+pytest
+pytest-cov
+sphinx
+sphinx-rtd-theme
+sphinxcontrib-autoprogram
+build
+twine

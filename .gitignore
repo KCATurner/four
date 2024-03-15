@@ -1,5 +1,28 @@
+# PyCharm project files
+/.idea
+
+# data files
+*.json
+*.csv
+
+# distribution / packaging
 *.egg-info
+*.egg
+/venv
+/dist
+
+# testing / coverage
+!/tests/resources/*.json
+!/tests/resources/*.csv
+/.coverage
+/.pytest
+/.flake8
+
+# documentation
+/docs/source/package
+/docs/build
+
+# images
 *.jpeg
 *.png
 *.svg
-.idea
