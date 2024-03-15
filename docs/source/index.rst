@@ -22,7 +22,6 @@ Eventually Four grew enough that I decided to make an effort to refactor the thi
     :caption: Math
 
     math.rst
-    glossary.rst
 
 .. toctree::
     :hidden:
@@ -36,8 +35,6 @@ Indices & Tables
 
 * :ref:`Modules <modindex>`
 * :ref:`Index <genindex>`
-* `Static Analysis <.flake8/index.html>`_
-* `Test Coverage <.coverage/index.html>`_
 
 .. _video: https://www.youtube.com/watch?v=LYKn0yUTIU4
 .. _conwech: https://kcaturner.github.io/conwech/docs/latest/

@@ -1,5 +1,5 @@
 .. default-role:: math
-
+.. attention:: This is first draft documentation, still being proofread and peer-reviewed.
 
 ############
 Introduction

@@ -28,8 +28,7 @@ from four._core import status as _status
 
 
 __all__ = [
-    "parser",
-    "iter_first_chain"]
+    "parser"]
 
 
 API = Union[Literal["fp", "oo"], ModuleType]
@@ -82,7 +81,7 @@ class _Spinner:
         self._busy = False
 
 
-def iter_first_chain(
+def _iter_first_chain(
         length: int,
         root: str,
         api: API = "fp"
@@ -131,7 +130,7 @@ def iter_first_chain(
         count += 1
 
 
-def _first_chain(
+def _print_first_chain(
         module: ModuleType,
         length: int = 2,
         root: Union[int, str] = 4,
@@ -155,7 +154,7 @@ def _first_chain(
         spinner.start()
 
     try:
-        chain = iter_first_chain(length, root, module)
+        chain = _iter_first_chain(length, root, module)
         if verbosity == 0:
             print(next(chain), end="")
             count = 1
