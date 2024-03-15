@@ -738,8 +738,7 @@ This number can also be expressed another way:
 
 .. math:: C_{9,1,9} = 1.001001001001103323 \times 1000^{4664040982447497675590741025} + \sum_{i=0}^{4664040982447497675590741018} 373 \times 1000^{i}
 
-To offer a bit of perspective, the general consensus in the scientific community seems to be that there are somewhere between `10^{78}` and `10^{82}` *atoms* in the observable universe...
-
+To offer a bit of perspective, the general consensus in the scientific community seems to be that there are somewhere between one quinquavigintillion (`10^{78}`) and one sesvigintillion (`10^{82}`) atoms in the observable universe. The name of `C_{9,1,9}` *begins* with *one quadrilliquattuorsexagintasescentilliquadragintilliduooctogintanongentilliseptenquadragintaquadringentilliseptenonagintaquadringentilli-quinquaseptuagintasescentillinonagintaquingentilliunquadragintaseptingentilliquinquavigintillion ...*
 
 .. _mixed radix: https://en.wikipedia.org/wiki/Mixed_radix
 
