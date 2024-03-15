@@ -70,11 +70,15 @@ We aren't finished with this base-1000 notation though. Eventually, we will be d
 
 .. math:: (1,001,345,345,345,345,345,345,789)_{1000} = \bigl( (1, 2), (345, 6), (789, 1) \bigr)
 
-For human readability, I may prefer something like a vinculum_ with explicit `r` values to denote the finitude of each repetition.
+We could represent this idea mathematically as a convoluted sum of repeating decimal products:
 
-.. math:: (1,001,345,345,345,345,345,345,789)_{1000} = \overset{2}{\overline{001}},\overset{6}{\overline{345}},789
+.. math:: (1,001,345,345,345,345,345,345,789)_{1000} = (.\overline{001})1000^{9} - (.\overline{001})1000^{7} + (.\overline{345})1000^{7} - (.\overline{345})1000^{1} + 789
 
-However, this isn't very computer-readable. In the Four package, I compromised on a more hybrid representation that could be typed in-line when taking numbers as input strings and printing these numbers as output.
+For human readability though, I may prefer something like a vinculum_ with explicit `r` values to denote the finitude of each repetition.
+
+.. math:: (1,001,345,345,345,345,345,345,789)_{1000} = \overset{_{2}}{\overline{001}},\overset{_{6}}{\overline{345}},789
+
+However, this neither of these are very computer-readable. In the Four package, I compromised on a more hybrid representation that could be typed in-line when taking numbers as input strings and printing these numbers as output.
 
 .. math:: (1,001,345,345,345,345,345,345,789)_{1000} = [001]\{2\}[345]\{6\}789
 
@@ -386,7 +390,7 @@ However, even though every number's name is *necessarily* unique, *no* number's 
 ****************************
 `C` : 4-Chain Index Notation
 ****************************
-Going forward it would be nice to have a standard notation by which we can quickly reference any 4-chain, whether we know it's members or not. What other properties of a 4-chain can we draw upon to identify it? In his video, Matt tried finding the longest 4-chain he could. To do that, he first computed the 4-chain for every number up to 100 and then just picked the longest of those with the smallest starting number, or more generically its first *unique* member.
+Going forward it would be nice to have a standard notation by which we can quickly reference any 4-chain, whether we know it's members or not. What other properties of a 4-chain can we draw upon to identify it? In his video, Matt tried finding the longest 4-chain he could. To do that, he first computed the 4-chain for every number up to 100 and then just picked the longest of those with the smallest starting number, or we might prefer to say (more generically) its first *unique* member.
 
 
 4-Chains Ordered by Their Values
@@ -403,7 +407,7 @@ Hopefully, since we aren't defining a function, a recurrence relation should be 
         (4), (4, 5), (4, 5, 3, 6), (4, 5, 7), \ldots
     \bigr)
 
-This is a start, but it still seems chaotic. We still can't really consistently discern valuable information about any 4-chain `C_{n}` from its notation which is the point.
+This is a start, but it still seems chaotic. We still can't really consistently discern valuable information about any 4-chain `C_{n}` from its notation, which is the point.
 
 
 4-Chains Grouped by Their Length
@@ -412,7 +416,7 @@ If we take this organization just a little further, we'll get what we want. Imag
 
 .. math:: C = \bigl(x_{l,m,n-1} = L(x_{l,m,n}) \mid l = n \bigr)_{(l, m) \in \mathbb{N}^{2}}
 
-With this definition, `C` becomes almost function-like. For example, indexing `C` like `C_{4,3,2}` returns the 2\ :sup:`nd` number of the 3\ :sup:`rd` 4-chain that is 4 numbers long:
+With this definition, `C` becomes almost function-like. And, just in case I *have* butchered this notation, a good example might clear things up. Indexing `C` like `C_{4,3,2}` gives the 2\ :sup:`nd` number of the 3\ :sup:`rd` 4-chain that is 4 numbers long:
 
 .. math::
     C = \Bigl(
@@ -458,7 +462,7 @@ So why exactly did we go to all this trouble defining and redefining infinite tr
 #################
 Hunting for 8 & 9
 #################
-Congrats! You've made it to the home stretch. Matt asked his viewers to find the first 4-chain with 8 members in it, and we finally have most of the tools we need to start searching. There are a few more odds and ends to cover first though.
+Congrats! You've made it to the home stretch. Matt asked his viewers to find the first 4-chain with 8 members in it (`C_{8,1}` using our new notation), and we finally have most of the tools we need to start searching. There are a few more odds and ends to cover first though.
 
 
 **************************
@@ -595,86 +599,146 @@ When we consider numerals associated with either of these new digits separately,
 
 Notice, we'll also exclude *four (hundred)* because there is no case where we will prefer it over *three hundred*, and this highlights a core aspect of LIN generation.
 
-Consider 473 and 323. Even though they are the same length, `F(23)` is 323 because 323 comes before 473. So, when finding the LIN that comes after 173, we don't simply take the next base-10 digit LIN (4) and append the same base-100 digit LIN (73). We prioritize the smaller value and roll back the base-100 digit accordingly for any extra letters added.
+Consider the case of 323 and 473. Despite being the same length, `F(23)` is 323 because 323 is less than 473, and therefore has a smaller `x : L(x)` ratio. So, when finding the LIN that comes after 173, we don't simply take the next base-10 digit LIN from the table (4) and append the same base-100 digit LIN (73). We prioritize the smaller value and roll back the base-100 digit accordingly to account for any extra letters added by the more significant base-10 digit.
 
-More generally speaking, when generating LINs, every time we add a more significant digit to produce the next LIN, we will prioritize the smallest possible value for that digit if we are able to compensate by adjusting less significant digits. This happens to be the only time this occurs in this context (LINs under 1000), but the same rule will apply later on as we generate larger LINs.
+More generally speaking, when generating LINs iteratively, every time we add a more significant digit to produce the next LIN, we will prioritize the smallest possible value for that digit, but only if we are able to compensate by adjusting less significant digits. This happens to be the only time this occurs in this context (LINs under 1000), but we will encounter similar behavior later on as we define the method for generating much larger LINs.
 
+So let's consider the other end of the problem space now and think big. If we need to know an arbitrarily large LIN, `x`, what would be the quickest way to at least *estimate* it? If we can define a process for reliably iterating between LINs *and* we can define an efficient method for estimating LINs to within an iterable distance, then we'll be in business.
 
+To start, we know that 373 is the largest LIN under 1000, meaning it's the largest *period value* LIN. Any LIN with a length greater than 24 will require more than one period. Additionally, beyond a certain threshold, as `x` goes to infinity the ratio of period value letters to period name letters goes to zero:
 
-You may have noticed a pattern in the first 22 LINs. That is, the first 10 LINs are used to define the next 10 by adding 100 to each of them. Think of this in terms of numerals. After 73, there are no more LINs without *hundred* in their name, and if we're forced to add *hundred* we're also forced to add a single-digit LIN to the front of it, the smallest of which is obviously 1. *one hundred* becomes our new floor with a minimum length of 10. The shortest LIN we can then append is again 1, making 101 with a length of 13. So now, if we want `F(l_{t})` for any `l_{t}` such that `12 < l_{t} < 22`
+.. math:: \lim_{x \to \infty} \frac{L_{V}(x)}{L_{N}(x)} = 0
 
-First, let's get something out of the way. 373 is the most important LIN. If I string together a bunch of 373 periods, I will always end up with an LIN. In fact these LINs are local maxima among all LINs
+This is important because it tells us that (most of the time at least) an overwhelming majority of the letters in a number's name will come from its period name numerals. This threshold by the way seems to be in the *decillibillibillibillions* (1000\ :sup:`10002002003`). *Decillibillibillibillion* is the last Conway-Wechsler period name that has 24 or fewer letters in it. Thus, adding any period of greater magnitude will *always* result in adding more period name letters than period value letters. Anyway, I digress...
 
-First, it's worth drawing attention to the fact that 373 is the largest LIN less than 1000. Also, notice that the ratio `x : L(x)` is less than 1 for only two LINs, 1 and 3.
+The fastest way to a minimal value estimate would be to find the smallest number of periods our target number *must* have. For any target length `l_{t}` we might begin by searching only numbers consisting of periods with the value 373. We can call this sequence of estimates `E`.
 
-that every LIN between 100 and 1000 are constructed from the LINs less than 100.
+.. math:: E = \Bigl( \overset{_{n}}{\overline{373}} \Bigr)_{n \in \mathbb{N}} = \left( \lfloor 0.\overline{373} \times 1000^{n} \rfloor \right)_{n \in \mathbb{N}} = (373, 373373, 373373373, \ldots)
 
-Every LIN *greater* than 1000 can be constructed by concatenating some combination of smaller LINs. Consider the next eleven.
+The goal here is actually pretty simple. Until we find a number longer than our target length, `l_{t}`, we want to maximize the number of letters we add with each period (not skipping any) while minimizing each period value. Mathematically, we could do this iteratively, but it's much more efficient to use some variation of `exponential search`_. We search until we find `n` such that the following inequality is true:
 
-.. csv-table::
-    :header: `x`, `S(x)`, `L(x)`
+.. math:: L\bigl(E_{n-1}\bigr) \lt l_{t} \le L\bigl(E_{n}\bigr)
+
+Given `L(x) = l_{t}`, when the above inequality is true, then the following must also be true:
+
+.. math:: E_{n-1} \lt x \le E_{n}
+
+So, once we find `n`, we know `x` must be one of exactly `373 \times 1000^{n}` integers in the interval `\bigl(E_{n-1}, E_{n}\bigr]`.
+
+That's still a lot of numbers; in almost all cases, still too many to search exhaustively. If at this point `L(E_{n}) = l_{t}`, then we've won a hyper-cosmic scale lottery and need do nothing more; `x = E_{n}`. However, in the slightly more likely event that `l_{t} \lt E_{n}`, then we can remove letters by converting some number, `m`, of the most significant 373 periods to 001. Each period we convert in this way removes 21 letters from our total length; 21 being the difference in length between *three hundred seventy-three* and *one*. Therefore, we can determine exactly how many leading periods we must convert:
+
+.. math:: m = \left\lceil \frac{L(E_{n}) - l_{t}}{21} \right\rceil
+
+With `m` in hand, we can define a number that is guaranteed to have a length within 21 letters of `l_{t}`:
+
+.. math:: l_{t} - 21 < L(\overset{_{m}}{\overline{001}},\overset{_{n-m}}{\overline{373}}) <= l_{t}
+
+We have but one step left from here. We must make up the difference in length (whatever it is) by modifying the last 001 period value (and potentially the first 373 period value). Our target LIN, `x`, must take the following form:
+
+.. math:: x = \overset{_{m-1}}{\overline{001}},\overset{_{1}}{\overline{y}},\overset{_{1}}{\overline{z}},\overset{_{n-m-1}}{\overline{373}}
+
+There are only so many possibilities in this problem space. It would be trivial for a modern computer, but we can do the work once and create a table mapping each offset/difference, `d`, to it's corresponding `y` & `z` values, both of which come from a subset of the LIN periods in our previous table.
+
+.. table::
     :align: center
 
-    1104,   one thousand one hundred four,            25
-    1103,   one thousand one hundred three,           26
-    1111,   one thousand one hundred eleven,          27
-    1115,   one thousand one hundred fifteen,         28
-    1113,   one thousand one hundred thirteen,        29
-    1117,   one thousand one hundred seventeen,       30
-    1124,   one thousand one hundred twenty-four,     31
-    1123,   one thousand one hundred twenty-three,    32
-    1173,   one thousand one hundred seventy-three,   33
-    1323,   one thousand three hundred twenty-three,  34
-    1373,   one thousand three hundred seventy-three, 35
+    +------------------------------------------------------------------------------+-----+-----+-----------------------------+-----------------------------+---------------+
+    | `l_{t} - L(\overset{_{m}}{\overline{001}},\overset{_{n-m}}{\overline{373}})` | `y` | `z` | `S(y)`                      | `S(z)`                      | `L(y) + L(z)` |
+    +==============================================================================+=====+=====+=============================+=============================+===============+
+    | 1                                                                            | 003 | 323 | three                       | three hundred twenty-three  | 28            |
+    +------------------------------------------------------------------------------+-----+-----+-----------------------------+-----------------------------+---------------+
+    | 2                                                                            | 003 | 373 | three                       | three hundred seventy-three | 29            |
+    +------------------------------------------------------------------------------+-----+-----+-----------------------------+-----------------------------+---------------+
+    | 3                                                                            | 011 | 373 | eleven                      | three hundred seventy-three | 30            |
+    +------------------------------------------------------------------------------+-----+-----+-----------------------------+-----------------------------+---------------+
+    | 4                                                                            | 013 | 323 | thirteen                    | three hundred twenty-three  | 31            |
+    +------------------------------------------------------------------------------+-----+-----+-----------------------------+-----------------------------+---------------+
+    | 5                                                                            | 013 | 373 | thirteen                    | three hundred seventy-three | 32            |
+    +------------------------------------------------------------------------------+-----+-----+-----------------------------+-----------------------------+---------------+
+    | 6                                                                            | 017 | 373 | seventeen                   | three hundred seventy-three | 33            |
+    +------------------------------------------------------------------------------+-----+-----+-----------------------------+-----------------------------+---------------+
+    | 7                                                                            | 023 | 323 | twenty-three                | three hundred twenty-three  | 34            |
+    +------------------------------------------------------------------------------+-----+-----+-----------------------------+-----------------------------+---------------+
+    | 8                                                                            | 023 | 373 | twenty-three                | three hundred seventy-three | 35            |
+    +------------------------------------------------------------------------------+-----+-----+-----------------------------+-----------------------------+---------------+
+    | 9                                                                            | 073 | 373 | seventy-three               | three hundred seventy-three | 36            |
+    +------------------------------------------------------------------------------+-----+-----+-----------------------------+-----------------------------+---------------+
+    | 10                                                                           | 101 | 373 | one hundred one             | three hundred seventy-three | 37            |
+    +------------------------------------------------------------------------------+-----+-----+-----------------------------+-----------------------------+---------------+
+    | 11                                                                           | 103 | 323 | one hundred three           | three hundred twenty-three  | 38            |
+    +------------------------------------------------------------------------------+-----+-----+-----------------------------+-----------------------------+---------------+
+    | 12                                                                           | 103 | 373 | one hundred three           | three hundred seventy-three | 39            |
+    +------------------------------------------------------------------------------+-----+-----+-----------------------------+-----------------------------+---------------+
+    | 13                                                                           | 111 | 373 | one hundred eleven          | three hundred seventy-three | 40            |
+    +------------------------------------------------------------------------------+-----+-----+-----------------------------+-----------------------------+---------------+
+    | 14                                                                           | 113 | 323 | one hundred thirteen        | three hundred twenty-three  | 41            |
+    +------------------------------------------------------------------------------+-----+-----+-----------------------------+-----------------------------+---------------+
+    | 15                                                                           | 113 | 373 | one hundred thirteen        | three hundred seventy-three | 42            |
+    +------------------------------------------------------------------------------+-----+-----+-----------------------------+-----------------------------+---------------+
+    | 16                                                                           | 117 | 373 | one hundred seventeen       | three hundred seventy-three | 43            |
+    +------------------------------------------------------------------------------+-----+-----+-----------------------------+-----------------------------+---------------+
+    | 17                                                                           | 123 | 323 | one hundred twenty-three    | three hundred twenty-three  | 44            |
+    +------------------------------------------------------------------------------+-----+-----+-----------------------------+-----------------------------+---------------+
+    | 18                                                                           | 123 | 373 | one hundred twenty-three    | three hundred seventy-three | 45            |
+    +------------------------------------------------------------------------------+-----+-----+-----------------------------+-----------------------------+---------------+
+    | 19                                                                           | 173 | 373 | one hundred seventy-three   | three hundred seventy-three | 46            |
+    +------------------------------------------------------------------------------+-----+-----+-----------------------------+-----------------------------+---------------+
+    | 20                                                                           | 323 | 373 | three hundred twenty-three  | three hundred seventy-three | 47            |
+    +------------------------------------------------------------------------------+-----+-----+-----------------------------+-----------------------------+---------------+
+    | 21                                                                           | 373 | 373 | three hundred seventy-three | three hundred seventy-three | 48            |
+    +------------------------------------------------------------------------------+-----+-----+-----------------------------+-----------------------------+---------------+
 
-At first glance, finding any LIN over 1000 seems fairly straightforward so long as we're given the previous LIN. We take the previous LIN and replace the last period with the LIN from our table of LINs under 1000.
-
-.. csv-table::
-    :header: `x`, `S(x)`, `L(x)`
-    :align: center
-
-    3323,   three thousand three hundred twenty-three, 36
-    3373,   three thousand three hundred seventy-three, 37
-    11373,  eleven thousand three hundred seventy-three, 38
-    13323,  thirteen thousand three hundred twenty-three, 39
-    13373,  thirteen thousand three hundred seventy-three, 40
-    17373,  seventeen thousand three hundred seventy-three, 41
-    23323,  twenty-three thousand three hundred twenty-three, 42
-    23373,  twenty-three thousand three hundred seventy-three, 43
-    73373,  seventy-three thousand three hundred seventy-three, 44
-
-.. csv-table::
-    :header: x, `S(x)`, `L(x)`
-    :align: center
-
-    1104,   one thousand one hundred four,            25
-    1103,   one thousand one hundred three,           26
-    1111,   one thousand one hundred eleven,          27
-    1115,   one thousand one hundred fifteen,         28
-    1113,   one thousand one hundred thirteen,        29
-    1117,   one thousand one hundred seventeen,       30
-    1124,   one thousand one hundred twenty-four,     31
-    1123,   one thousand one hundred twenty-three,    32
-    1173,   one thousand one hundred seventy-three,   33
-    101373, one hundred one thousand three hundred seventy-three, 45
-    103323, one hundred three thousand three hundred twenty-three, 46
-    103373, one hundred three thousand three hundred seventy-three, 47
-    111373, one hundred eleven thousand three hundred seventy-three, 48
-    113323, one hundred thirteen thousand three hundred twenty-three, 49
-    113373, one hundred thirteen thousand three hundred seventy-three, 50
-    117373, one hundred seventeen thousand three hundred seventy-three, 51
-    123373, one hundred twenty-three thousand three hundred twenty-three, 52
-    123373, one hundred twenty-three thousand three hundred seventy-three, 53
-    173373, one hundred seventy-three thousand three hundred seventy-three, 54
-    323373, three hundred twenty-three thousand three hundred seventy-three, 55
-    373373, three hundred seventy-three thousand three hundred seventy-three, 56
+And that's it... That's all we need to know in order to generate any LIN, and subsequently (given enough time and resources), we could generate any 4-chain, `C_{n,1}`. So what is `C_{8,1}`?
 
 
+*******************************
+`C_{8,1}` : The Manual Exercise
+*******************************
+Using everything we've covered to this point, we can walk through the generation of `C_{8,1}` as an example. Given only the chain Matt provided us in his video, `C_{6,1} = (4, 5, 3, 6, 11, 23)`, we can first find `C_{7,1}` by combining what we know about LICs with our table of LINs under 1000:
+
+.. math::
+
+    C_{7,1} &= C_{6,1} + (C_{7,1,7}) \\
+            &= C_{6,1} + \bigl(F(C_{6,1,6})\bigr) \\
+            &= \bigl(4, 5, 3, 6, 11, 23, F(23)\bigr) \\
+            &= \bigl(4, 5, 3, 6, 11, 23, 323\bigr) \\
+
+With `C_{7, 1}` in hand, we can search for `C_{8,1}` by following our process above with `l_{t} = L(C_{8,1,8}) = 323`:
+
+.. math::
+
+    C_{8,1} = \bigl(4, 5, 3, 6, 11, 23, 323 &, F(323)\bigr) \\
+    \\
+    L\bigl(\overset{_{0}}{\overline{373}}\bigr) = 0 \lt 323 &\gt L\bigl(\overset{_{1}}{\overline{373}}\bigr) = 24 \\
+    L\bigl(\overset{_{1}}{\overline{373}}\bigr) = 24 \lt 323 &\gt L\bigl(\overset{_{2}}{\overline{373}}\bigr) = 56 \\
+    L\bigl(\overset{_{2}}{\overline{373}}\bigr) = 56 \lt 323 &\gt L\bigl(\overset{_{4}}{\overline{373}}\bigr) = 118 \\
+    L\bigl(\overset{_{4}}{\overline{373}}\bigr) = 118 \lt 323 &\gt L\bigl(\overset{_{8}}{\overline{373}}\bigr) = 254 \\
+    L\bigl(\overset{_{8}}{\overline{373}}\bigr) = 254 \lt 323 &\lt L\bigl(\overset{_{16}}{\overline{373}}\bigr) = 535 \\
+    \\
+    L\bigl(\overset{_{8}}{\overline{373}}\bigr) = 254 \lt 323 &\lt L\bigl(\overset{_{12}}{\overline{373}}\bigr) = 387 \\
+    L\bigl(\overset{_{10}}{\overline{373}}\bigr) = 321 \lt 323 &\lt L\bigl(\overset{_{12}}{\overline{373}}\bigr) = 387 \\
+    L\bigl(\overset{_{10}}{\overline{373}}\bigr) = 321 \lt 323 &\lt L\bigl(\overset{_{11}}{\overline{373}}\bigr) = 354 \\
+    \\
+    323 &\gt L\bigl(\overset{_{2}}{\overline{001}},\!\overset{_{9}}{\overline{373}}\bigr) = 312 \gt 302 \\
+    323 &= L\bigl(\overset{_{1}}{\overline{001}},\!\overset{_{1}}{\overline{103}},\!\overset{_{1}}{\overline{323}},\!\overset{_{8}}{\overline{373}}\bigr) \\
+    F(323&) = 1103323\overset{_{8}}{\overline{373}} \\
+    \\
+    C_{8,1} = \bigl(4, 5, 3, 6, 11, 23, 323 &, 1103323\overset{_{8}}{\overline{373}}\bigr) \\
+    \\
 
 
-We're actually going to take a bit of a reverse approach and solve this problem at scale first. Generally speaking, the simplest approach to finding any
+***********************************
+`C_{9,1}` : Efficiency With Silicon
+***********************************
+Repeating this process manually for `C_{9,1}` would take far too long. We're talking about finding a number with over a *nonillion* letters in it's name. So this is where this pseudo-paper of mine comes to an end. There's not much more to say. The best I can do is present you with the first occurring 4-chain containing nine numbers:
 
-LINs beyond the first 21 can be generated systematically.
+.. math:: C_{9,1} = \bigl(4, 5, 3, 6, 11, 23, 323, 1103323\overset{_{8}}{\overline{373}}, \overset{_{5}}{\overline{001}}103323\overset{_{x}}{\overline{373}}\bigr), \text{where}\ x = 4664040982447497675590741019
+
+This number can also be expressed another way:
+
+.. math:: C_{9,1,9} = 1.001001001001103323 \times 1000^{4664040982447497675590741025} + \sum_{i=0}^{4664040982447497675590741018} 373 \times 1000^{i}
+
+To offer a bit of perspective, the general consensus in the scientific community seems to be that there are somewhere between `10^{78}` and `10^{82}` *atoms* in the observable universe...
 
 
 .. _mixed radix: https://en.wikipedia.org/wiki/Mixed_radix
@@ -687,6 +751,7 @@ LINs beyond the first 21 can be generated systematically.
 .. _recurrence relation: https://en.wikipedia.org/wiki/Recurrence_relation
 .. _ordered tree: https://en.wikipedia.org/wiki/Tree_(graph_theory)#Ordered_tree
 .. _arborescence: https://en.wikipedia.org/wiki/Arborescence_(graph_theory)
+.. _exponential search: https://en.wikipedia.org/wiki/Exponential_search
 
 .. function notation terms
 .. _bijection: https://en.wikipedia.org/wiki/Bijection
