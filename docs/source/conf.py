@@ -34,6 +34,7 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.viewcode',
     'sphinx.ext.graphviz',
+    'sphinx.ext.imgmath',
     'sphinx.ext.autosummary',
     'sphinxcontrib.autoprogram',
     'sphinx_rtd_theme',
@@ -57,6 +58,8 @@ thml_theme_options = {
 
 todo_include_todos = True
 graphviz_output_format = 'svg'
+imgmath_image_format = 'svg'
+imgmath_latex_preamble = r'\usepackage{newtxsf}'
 autosummary_generate = True
 autosummary_generate_overwrite = True
 autoclass_content = 'both'
