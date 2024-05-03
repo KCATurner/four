@@ -1,0 +1,42 @@
+﻿four.infer
+==========
+
+.. automodule:: four.infer
+
+   
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      LENGTH_PERIODS_TO_TARGET_PERIODS
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      exact_power_predictions
+      exact_quotient_predictions
+      iter_exact_targets
+      iter_quick_targets
+      metadata
+      prototype_predict
+      quick_power_predictions
+      quick_quotient_predictions
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

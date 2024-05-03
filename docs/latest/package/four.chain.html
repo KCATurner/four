@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>four.chain &mdash; Four 0.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=44496db0"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="four.graph" href="four.graph.html" />
+    <link rel="prev" title="Package Contents" href="../package.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Four
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Math</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../math.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../math.html#number-anatomy">Number Anatomy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../math.html#chain-concepts">4-Chain Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../math.html#hunting-for-8-9">Hunting for 8 &amp; 9</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../package.html">Package Contents</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">four.chain</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cli-subcommand">CLI Subcommand</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">four chain</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="four.graph.html">four.graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="four.infer.html">four.infer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="four._core.html">four._core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="four._fp_api.html">four._fp_api</a></li>
+<li class="toctree-l2"><a class="reference internal" href="four._oo_api.html">four._oo_api</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Four</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../package.html">Package Contents</a></li>
+      <li class="breadcrumb-item active">four.chain</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/package/four.chain.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-four.chain">
+<span id="four-chain"></span><h1>four.chain<a class="headerlink" href="#module-four.chain" title="Permalink to this heading"></a></h1>
+<p>Calculate and print 4-chains of specified target lengths from various
+root nodes.</p>
+<section id="cli-subcommand">
+<h2>CLI Subcommand<a class="headerlink" href="#cli-subcommand" title="Permalink to this heading"></a></h2>
+<section id="id1">
+<h3>four chain<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
+<p>print four-chains of target lengths</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: four chain [-h] [-v] [-l LENGTH] [-c CHAIN_INDEX]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-four-chain-h">
+<span id="cmdoption-four-chain-help"></span><span class="sig-name descname"><span class="pre">-h</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--help</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-four-chain-h" title="Permalink to this definition"></a></dt>
+<dd><p>show this help message and exit</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-four-chain-v">
+<span id="cmdoption-four-chain-verbose"></span><span class="sig-name descname"><span class="pre">-v</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--verbose</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-four-chain-v" title="Permalink to this definition"></a></dt>
+<dd><p>increase output verbosity</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-four-chain-l">
+<span id="cmdoption-four-chain-length"></span><span class="sig-name descname"><span class="pre">-l</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;length&gt;</span></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--length</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;length&gt;</span></span><a class="headerlink" href="#cmdoption-four-chain-l" title="Permalink to this definition"></a></dt>
+<dd><p>length of the target chain;   
+default: 1</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-four-chain-c">
+<span id="cmdoption-four-chain-chain"></span><span class="sig-name descname"><span class="pre">-c</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;chain_index&gt;</span></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--chain</span></span><span class="sig-prename descclassname"> <span class="pre">&lt;chain_index&gt;</span></span><a class="headerlink" href="#cmdoption-four-chain-c" title="Permalink to this definition"></a></dt>
+<dd><p>the target chain (by 1-based index)</p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../package.html" class="btn btn-neutral float-left" title="Package Contents" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="four.graph.html" class="btn btn-neutral float-right" title="four.graph" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

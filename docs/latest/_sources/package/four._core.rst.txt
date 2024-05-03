@@ -1,0 +1,41 @@
+﻿four.\_core
+===========
+
+.. automodule:: four._core
+
+   
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      PERIOD_PATTERN
+      KEY_PERIOD_VALUES
+      KEY_PERIOD_EXCEPTIONS
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      count
+      letters
+      occurs
+      rebase
+      status
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

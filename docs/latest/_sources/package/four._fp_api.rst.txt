@@ -1,0 +1,35 @@
+﻿four.\_fp\_api
+==============
+
+.. automodule:: four._fp_api
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      letters_in_number_name
+      letters_in_period_names
+      letters_in_period_values
+      number_to_periods
+      parse_abbreviation
+      periods_to_number
+      write_abbreviation
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

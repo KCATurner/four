@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Introduction &mdash; Four 0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=44496db0"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Package Contents" href="package.html" />
+    <link rel="prev" title="Developer’s Note" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Four
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Math</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#number-anatomy">Number Anatomy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#number-digits-and-radixes">Number Digits and Radixes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#rb-x-rebasing-a-number">R<sub>b</sub>(x) : Rebasing a Number</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#p-x-period-list-compression">P(x) : Period-List Compression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#od-b-a-z-digit-occurrences">O<sub>d,b</sub>(a, z) : Digit Occurrences</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#number-names-and-numerals">Number Names and Numerals</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#period-value-numerals">Period Value Numerals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#period-name-numerals">Period Name Numerals</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#z-x-period-zillion-values">Z(x) : Period Zillion Values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#l-x-the-length-of-a-number">L(x) : The Length of a Number</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#in-terms-of-s-x-the-easy-way">In Terms of S(x) / The Easy Way</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#as-the-sum-of-lv-x-and-ln-x">As The Sum of L<sub>V</sub>(x) and L<sub>N</sub>(x)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#lv-x-period-value-letters">L<sub>V</sub>(x) : Period Value Letters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ln-x-period-name-letters">L<sub>N</sub>(x) : Period Name Letters</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#chain-concepts">4-Chain Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#c-4-chain-index-notation">C : 4-Chain Index Notation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#chains-ordered-by-their-values">4-Chains Ordered by Their Values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#chains-grouped-by-their-length">4-Chains Grouped by Their Length</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#t-aggregating-4-chains">T : Aggregating 4-Chains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-case-for-c-and-t">The Case for C and T</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#hunting-for-8-9">Hunting for 8 &amp; 9</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#letter-inefficient-numbers">Letter-Inefficient Numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#letter-inefficient-4-chains">Letter-Inefficient 4-Chains</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#f-lt-generating-lins">F(l<sub>t</sub>) : Generating LINs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#c8-1-the-manual-exercise">C<sub>8,1</sub> : The Manual Exercise</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#c9-1-an-abrupt-conclusion">C<sub>9,1</sub> : An Abrupt Conclusion</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="package.html">Package Contents</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Four</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Introduction</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/math.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>This is draft documentation, still being proofread and peer-reviewed.</p>
+</div>
+<section id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h1>
+<p>The documentation for the Four package is littered with references to logical and mathematical concepts and terminology that are most likely pretty obscure to most. Although I do wonder just how true that is for anyone who would wind up here. I should probably give you more credit. Either way, I’ve done my best to explain these concepts and aggregate definitions alongside the package docs to serve as quick references.</p>
+<p>Also, of the ten or so of you who may actually be interested in this topic, I suspect somewhere between seven and eight have a background heavier in mathematics than in programming (although I may be failing to account for where and how I plan on publishing this). I wanted to try to lay everything out (at least as best as I know how) in mathematical terms, not just from the perspective of a programmer. If I was willing to settle for that, I would have stopped at documenting my code and been done with it, or perhaps if that still didn’t feel like enough, I might have just used some python-like notation or pseudo-code for everything.</p>
+<p>Having said that though, I’ll immediately buy it back a little. I’m a software engineer by trade, not a mathematician. I’ve never written a math paper. That’s not my world. I’m sure that much will become abundantly clear. I’ve <em>borrowed</em> (you mathematicians can definitely have it back when I’m done butchering it) notation from a number of math disciplines that may or may not actually make sense once I’m done clumsily cobbling them together; set-theory, predicate logic, etc… I also don’t have the first clue what to consider obvious or what level of detail to aim for, so even though I know you’re probably more than capable of putting everything together with less, when in doubt, I’ve erred on the side of <em>more</em> detail.</p>
+</section>
+<section id="number-anatomy">
+<h1>Number Anatomy<a class="headerlink" href="#number-anatomy" title="Permalink to this heading"></a></h1>
+<p>Numbers aren’t just collections of digits. While we are more likely to recognize a number by its digits, this isn’t a number’s only useful attribute. In fact, with no additional information, a sequence of digits alone does not sufficiently define a number. For example, either by context, convention, or explicit conveyance, to know what value a sequence of digits represents, we must first know the radix of the number, what base number system the digits belong to.</p>
+<div class="math">
+<p><img src="_images/math/59a0423eabf27597e43fbaae0bbe12ab856e8a62.svg" alt="10 \overset{?}{=} 10"/></p>
+</div><section id="number-digits-and-radixes">
+<h2>Number Digits and Radixes<a class="headerlink" href="#number-digits-and-radixes" title="Permalink to this heading"></a></h2>
+<p>It is true that in most contexts we would just assume a number is written in base-10 because that is the base number system we found most natural to use as a species. There are all sorts of explanations for that by the way, but I’m not an anthropologist either, so I won’t speculate. The point is, you don’t really <em>know</em> that 10 = 10 unless both numbers share a radix (are in the same base). It’s common to see the radix displayed in subscript when it needs to be made explicit (ironically enough we still <em>assume</em> the radix is a base-10 number, but that’s an assumption that has to make at some point).</p>
+<div class="math">
+<p><img src="_images/math/905e407169174251add30888df1b0f156aba9368.svg" alt="10_{2} \ne 10_{10}"/></p>
+</div><p>This is just one property of a number aside from its digits. In this context, there are some other (often less important) properties that I need to define clearly because I will reference them quite often moving forward.</p>
+<section id="rb-x-rebasing-a-number">
+<span id="rebase"></span><h3>R<sub>b</sub>(x) : Rebasing a Number<a class="headerlink" href="#rb-x-rebasing-a-number" title="Permalink to this heading"></a></h3>
+<p>Since we’re on the topic, going forward it will be useful at times to define numbers with a radix of 1000. As far as conversions go, this may be one of the most natural base-conversions we can make, seeing as we already do this to some extent when we denote periods with commas. If we treat each period as a unique digit, converting from base-10 to base-1000 becomes as simple as grouping every three base-10 digits together and calling that a new digit. In fact, all number systems with a base that is a power of 10 are equally as easy to “convert” in the same way. More generally speaking, you can actually switch between number systems for which the bases are both a power of any shared base in a similar manor as long as you only use digits from the shared base. For example, 152341 in base-6 is the same as three base-36 digits with base-6 values 15, 23, and 41 or two base-216 digits with base-6 values 152 and 341, etc…</p>
+<div class="math">
+<p><img src="_images/math/17ffe0f68b2993b88dce91a99e2259d5912b8305.svg" alt="152341_{6} = (15,23,41)_{36} = (152,341)_{216}"/></p>
+</div><p>As I’ve mentioned, I’m a software engineer by trade, so I have my share of experience converting between bases with powers of 2 this way, except we in the computer world tend to convert our digits when we get to base-16 (hexadecimal), where A-F are used as digits with values 10-15, respectively.</p>
+<div class="math">
+<p><img src="_images/math/9e791da045db79e3a6ce517d6ae8dbdc43d9c5f2.svg" alt="10110110_{2} = (10, 11, 01, 10)_{4} = (10, 110, 110)_{8} = (1011, 0110)_{16} = \text{B}6_{16}"/></p>
+</div><p>However, since I don’t feel like defining 984 more unique digits, when we convert between decimal (base-10) and base-1000, we’ll stick with the comma-delimited decimal values to represent base-1000 digits.</p>
+<div class="math">
+<p><img src="_images/math/8be825e1205b50e77132ccc32d893502733f2c46.svg" alt="123456789_{10} = (123,456,789)_{1000}"/></p>
+</div><p>Let <img class="math" src="_images/math/4c7e1df43a0be993842be497ffd6b4e648fef6be.svg" alt="R_{b}(x)"/> be defined as a generic function that takes any positive decimal integer <img class="math" src="_images/math/94fcc56ca238a59b43882583d2b64463a917182c.svg" alt="x"/> and returns a sequence of <img class="math" src="_images/math/a5c4bb7d5a2780968dfdaaf51e2fbafe0892c5ec.svg" alt="(c, p)"/> 2-tuples where each <img class="math" src="_images/math/7b25c0b464b4a14af512eabcb0908665313ccb85.svg" alt="c"/> is the decimal value of a digit in base-<img class="math" src="_images/math/9fb1ee42abe744f94a7a3bc212b0d16f3253653b.svg" alt="b"/> and <img class="math" src="_images/math/8bad9562e7fabeace0eea9647e85ffe117c6981e.svg" alt="p"/> is the power of <img class="math" src="_images/math/9fb1ee42abe744f94a7a3bc212b0d16f3253653b.svg" alt="b"/> for which <img class="math" src="_images/math/7b25c0b464b4a14af512eabcb0908665313ccb85.svg" alt="c"/> is the coefficient.</p>
+<div class="math">
+<p><img src="_images/math/39ea24d0d6e301487fb31c347b95f8826ee7dcb9.svg" alt="R_{b}\vert_{\mathbb{Z}^+}(x) = \Biggl(
+    \left(
+        \left\lfloor
+            \frac{x}{b^{\lfloor \log_{b} x \rfloor - i}} \bmod b
+        \right\rfloor,
+        \lfloor \log_{b} x \rfloor - i
+    \right)
+\Biggr)_{i=0}^{\lfloor \log_{b} x \rfloor}"/></p>
+</div><p>While including the power explicitly alongside each digit is unnecessary, it will make defining functions based on rebased numbers easier later. Combining this with the example we used above would return something like this:</p>
+<div class="math">
+<p><img src="_images/math/c6f5d079e95b31f3cde904b48b77b1360f668e4f.svg" alt="R_{1000}(123456789) = \bigl( (123, 2), (456, 1), (789, 0) \bigr)"/></p>
+</div></section>
+<section id="p-x-period-list-compression">
+<span id="period-list-compression"></span><h3>P(x) : Period-List Compression<a class="headerlink" href="#p-x-period-list-compression" title="Permalink to this heading"></a></h3>
+<p>We aren’t finished with this base-1000 notation though. Eventually, we will be dealing with some very highly <em>repetitive</em> numbers in base-1000. Not only will we rebase these, but we’re going to think of them explicitly as sequences of <img class="math" src="_images/math/40d712a49b6e94747239b85ac472fc575a37c9ec.svg" alt="(v, r)"/> 2-tuples, where <img class="math" src="_images/math/2fb27cd3cf06e91c9d2e7a1abeca630f78c00937.svg" alt="v"/> is a period value (a base-1000 digit), and <img class="math" src="_images/math/465571cefa7a21212571dd2613d6dd540e47aac6.svg" alt="r"/> is a number of times <img class="math" src="_images/math/2fb27cd3cf06e91c9d2e7a1abeca630f78c00937.svg" alt="v"/> repeats in place; again, both written as decimal values.</p>
+<div class="math">
+<p><img src="_images/math/0db2bfd415df9e2d0f720a07eafbaef35eccb688.svg" alt="(1,001,345,345,345,345,345,345,789)_{1000} = \bigl( (1, 2), (345, 6), (789, 1) \bigr)"/></p>
+</div><p>We could represent this idea mathematically as a convoluted sum of repeating decimal products:</p>
+<div class="math">
+<p><img src="_images/math/e981a5b39cb2ac8bbb4dad73946d7998b1b0eb8b.svg" alt="(1,001,345,345,345,345,345,345,789)_{1000} = (.\overline{001})1000^{9} - (.\overline{001})1000^{7} + (.\overline{345})1000^{7} - (.\overline{345})1000^{1} + 789"/></p>
+</div><p>For human readability though, I may prefer something like a <a class="reference external" href="https://en.wikipedia.org/wiki/Vinculum_(symbol)">vinculum</a> with explicit <img class="math" src="_images/math/465571cefa7a21212571dd2613d6dd540e47aac6.svg" alt="r"/> values to denote the finitude of each repetition.</p>
+<div class="math">
+<p><img src="_images/math/fc424d395d9c9f9d57ae6c9e442e31fcb873bad6.svg" alt="(1,001,345,345,345,345,345,345,789)_{1000} = \overset{_{2}}{\overline{001}},\overset{_{6}}{\overline{345}},789"/></p>
+</div><p>However, this neither of these are very computer-readable. In the Four package, I compromised on a more hybrid representation that could be typed in-line when taking numbers as input strings and printing these numbers as output.</p>
+<div class="math">
+<p><img src="_images/math/962fe9e0c0e51fa8ddc78aec2ec1abc6b912844b.svg" alt="(1,001,345,345,345,345,345,345,789)_{1000} = [001]\{2\}[345]\{6\}789"/></p>
+</div><p>Ordinarily, writing numbers this way would be extremely inefficient. A couple major factors make this representation more effective. First, as I stated above, we will be dealing with highly repetitive numbers, so the overhead we introduce with this representation is negligible compared to the gains we get from compression at scale. Second, on top of their repetitiveness, the numbers we’ll be working with are <em>inconceivably</em> large. While a seasoned mathematician might laugh at the notion of infinity, computers can’t handle it. We need a way of compressing these highly repetitive numbers without <em>any</em> loss of precision if we want to eventually use our math to compute results.</p>
+<p>Let <img class="math" src="_images/math/1372261a145c8555eeeaa78442e98dfa137524a7.svg" alt="P(x)"/> be defined as the function which takes any positive decimal integer <img class="math" src="_images/math/94fcc56ca238a59b43882583d2b64463a917182c.svg" alt="x"/> and returns the appropriate sequence of <img class="math" src="_images/math/40d712a49b6e94747239b85ac472fc575a37c9ec.svg" alt="(v, r)"/> tuples representing <img class="math" src="_images/math/94fcc56ca238a59b43882583d2b64463a917182c.svg" alt="x"/> as a period-list compression.</p>
+<div class="math">
+<p><img src="_images/math/c708570e4c6c4cd40a6b1d06e5db684c2e40c297.svg" alt="P\vert_{\mathbb{Z}^+}(x) = \left(
+    \bigr( v_{m}, r_{m} \bigl)\
+    \Bigg\vert\ v_{m} = c_{n} \land c_{n} \ne c_{n+1}
+    \land r_{m} = \bigl\lvert R_{1000}(x) \bigr\rvert - p_{n} - \sum_{i=1}^{m-1} r_{i}
+\right)_{(c_{n}, p_{n}) \in R_{1000}(x)}"/></p>
+</div></section>
+<section id="od-b-a-z-digit-occurrences">
+<span id="digit-occurrences"></span><h3>O<sub>d,b</sub>(a, z) : Digit Occurrences<a class="headerlink" href="#od-b-a-z-digit-occurrences" title="Permalink to this heading"></a></h3>
+<p>Unless you’re into some super niche combinatorics, you’ve probably never tried counting the number of times a digit occurs between two integers. Better yet, even if you have, you likely haven’t needed to do it in say base-42 or base-123 or anything other than decimal I would wager. Well, believe it or not, we’re going to need a function that does this later. This one’s a doozy, so we’ll take it in steps, starting with a specific case and then iterating our way to the more desirable generic function. Let’s say we want to know how many times the digit 5 occurs in all decimal integers within the interval <img class="math" src="_images/math/5704946425b3cd3ab8b707ece5111367c19894e7.svg" alt="[0, 100)"/>. If we just list them out we might see some sort of pattern.</p>
+<div class="math">
+<p><img src="_images/math/bb1af07c26faf9faa09baa2c8c12271f121f134e.svg" alt="\underbrace{5, 15, 25, 35, 45,
+    \overbrace{50, 51, 52, 53, 54, 55, 56, 57, 58, 59}^{\text{50's}},
+65, 75, 85, 95}_{\text{05's}}"/></p>
+</div><p>You might notice you can group the occurrences by placement. That is to say, 5 occurs 10 times as the first digit (in all the numbers 50-59) and 10 more times as the second digit in all the numbers 5-95. The pattern is quantifiable. We can break this problem down by asking how many times a digit occurs in each available position. I.e. the answer is the sum of the occurrences of 5 in the units place (10) and the occurrences of 5 in the tens place (10).</p>
+<p>Now, consider all the 5’s between 0 and 1000. We would see 5 in the hundreds place 100 times for every 1000 integers, in the tens place 10 times every 100 integers and the units place 1 time every 10 integers. Let’s rearrange these.</p>
+<div class="math">
+<p><img src="_images/math/caaec91982c6c0cc0ac3df4ee8fa10439e0b9d75.svg" alt="\underbrace{
+    500, 501, \ldots, 598, 599
+}_{\lvert \text{500's} \rvert = 100}
+\
+\underbrace{
+    \begin{matrix}
+        50     &amp; \cdots &amp; 59 \\
+        \vdots &amp; \ddots &amp; \vdots \\
+        950    &amp; \cdots &amp; 959
+    \end{matrix}
+}_{\lvert \text{050's} \rvert = 10 \times 10}
+\
+\underbrace{
+    5, 15, \ldots, 985, 995
+}_{\lvert \text{005's} \rvert = 100}"/></p>
+</div><p>Notice that some numbers will show up in multiple lists, those with multiple 5’s. These duplicates are a good thing. It means they get counted a number of times equal to the number of 5’s in them. That is how many lists they appear in. So if we simply take the magnitude of each of the original sequences, we’ll get our answer.</p>
+<div class="math">
+<p><img src="_images/math/5d804d69b66742d60bca8187cb32765b1dbe05dc.svg" alt="\lvert \text{500's} \rvert
++ \lvert \text{050's} \rvert
++ \lvert \text{005's} \rvert = 300"/></p>
+</div><p>Great! We’ve established a base pattern, but this is a really simple example. What happens when we pick a more complicated number; something more precise with respect to the base, i.e. a number that isn’t a perfect power of the base we’re counting in, say 5814? Well, let’s try listing them again.</p>
+<div class="math">
+<p><img src="_images/math/a63d8bfe6c404e813a3dc5051cfc2e414f54f3ee.svg" alt="\underbrace{
+    5000, 5001, \ldots, 5812, 5813
+}_{\lvert \text{5000's} \rvert = 814}
+\
+\underbrace{
+    \begin{matrix}
+        500    &amp; \cdots &amp; 599 \\
+        \vdots &amp; \ddots &amp; \vdots \\
+        5500   &amp; \cdots &amp; 5599
+    \end{matrix}
+}_{\lvert \text{0500's} \rvert = 6 \times 100}
+\
+\underbrace{
+    \begin{matrix}
+        50     &amp; \cdots &amp; 59 \\
+        \vdots &amp; \ddots &amp; \vdots \\
+        5750   &amp; \cdots &amp; 5759
+    \end{matrix}
+}_{\lvert \text{0050's} \rvert = 58 \times 10}
+\
+\underbrace{
+    5, 15, \ldots, 5795, 5805
+}_{\lvert \text{0005's} \rvert = 581}"/></p>
+</div><p>This is a more helpful example because it makes another pattern more apparent. The magnitude of each list or array can be described in terms of the digit 5 and powers of 10 (the base).</p>
+<div class="math">
+<p><img src="_images/math/fdfc23a8f2ae0e3f216461de8432d7d0c3a8ffd1.svg" alt="\lvert \text{5000's} \rvert &amp;= 814 = 10^{3} \left( \left\lfloor \frac{5814}{10^{4}} \right\rfloor \right) + (5814 \bmod 10^{3}) \\
+\lvert \text{0500's} \rvert &amp;= 600 = 10^{2} \left( \left\lfloor \frac{5814}{10^{3}} \right\rfloor + 1 \right) \\
+\lvert \text{0050's} \rvert &amp;= 580 = 10^{1} \left( \left\lfloor \frac{5814}{10^{2}} \right\rfloor \right) \\
+\lvert \text{0005's} \rvert &amp;= 581 = 10^{0} \left( \left\lfloor \frac{5814}{10^{1}} \right\rfloor \right)"/></p>
+</div><p>There are three distinct cases to be aware of for each digit in our upper boundary. Each digit can either be (1) less than, (2) greater than, or (3) equal to 5. In our example for 5814, we can see the first case applies to the last two digits, the second case applies to the second digit, and the last case applies to the first digit.</p>
+<p>This all looks suspiciously like the makings of a series, one we might be able to define as the sum of some expression for each digit in our number. If we use <img class="math" src="_images/math/bdaa3997052d1986d668644b63eebfa0b73c3120.svg" alt="R_{10}(x)"/> to retrieve the <img class="math" src="_images/math/a5c4bb7d5a2780968dfdaaf51e2fbafe0892c5ec.svg" alt="(c, p)"/> pairs for each base-10 digit, we could then express this as a summation by attaching <a class="reference external" href="https://en.wikipedia.org/wiki/Iverson_bracket">Iverson brackets</a> to portions of the formula so that it can be uniformly applied to each digit while still respecting each case.</p>
+<div class="math">
+<p><img src="_images/math/7e29f520c0298811f4258797bdd6959c6fe47445.svg" alt="O\vert_{\mathbb{Z}^+}(5814) = \sum \Biggl(
+    10^{p} \left(
+        \left\lfloor \frac{5814}{10^{p+1}} \right\rfloor + [c &gt; 5]
+    \right)
+    + (x \bmod 10^{p}) [c = 5]
+\Biggr)_{(c, p) \in R_{10}(5814)}"/></p>
+</div><p>With this specific formula in hand, it shouldn’t be too much of a leap to see how it can be generalized to describe a function <img class="math" src="_images/math/1433a011fd766374202cc39c14128ff910c72b38.svg" alt="O_{d, b}\vert_{\mathbb{Z}^+}(z)"/> which counts the occurrences of <em>any</em> digit <img class="math" src="_images/math/ad7b13a7d11b2130d8938019f90e855eb1b3dadc.svg" alt="d"/> in the desired base <img class="math" src="_images/math/9fb1ee42abe744f94a7a3bc212b0d16f3253653b.svg" alt="b"/> between 0 and some limit <img class="math" src="_images/math/a201539da7ff37ab3b9759e63075010add3eab1d.svg" alt="z"/>, assuming <img class="math" src="_images/math/5de5aade7252db713921ce0489eafdfaf63192eb.svg" alt="d &lt; b"/>.</p>
+<div class="math">
+<p><img src="_images/math/d50e5d01ab668eb543836ebd8234a52bf92ad579.svg" alt="O_{d, b}\vert_{\mathbb{Z}^+}(z) = \sum \biggl(
+    b^{p} \left(
+        \left\lfloor \frac{z}{b^{p+1}} \right\rfloor + [c &gt; d]
+    \right)
+    + (z \bmod b^{p}) [c = d]
+\biggr)_{(c, p) \in R_{b}(z)}"/></p>
+</div><p>One last thing this function doesn’t yet account for is the special case where <img class="math" src="_images/math/ad7b13a7d11b2130d8938019f90e855eb1b3dadc.svg" alt="d"/> is equal to 0. Leading 0’s shouldn’t be counted. So, regardless of the base, 0 will occur less often, proportional to the number of digits that are equal to 0 in <img class="math" src="_images/math/100f5044d93d9c5e0ce30270e542d3c2a64f4746.svg" alt="R_{b}(z)"/>. After we account for this we’ll be close to the final product.</p>
+<div class="math">
+<p><img src="_images/math/60479c73872bcaaea24adce8abbeb615861de62a.svg" alt="O_{d, b}\vert_{\mathbb{Z}^+}(z) = \sum \Biggl(
+    b^{p} \left(
+        \left\lfloor \frac{x}{b^{p+1}} \right\rfloor + [c &gt; d] - [d = 0]
+    \right)
+    + (x \bmod b^{p}) [c = d]
+\Biggr)_{(c, p) \in R_{b}(x)} + [d = 0]"/></p>
+</div><p>With this core function defined, it’s now fairly easy to get occurrences between <em>any</em> two positive integers, not just 0 and <img class="math" src="_images/math/a201539da7ff37ab3b9759e63075010add3eab1d.svg" alt="z"/>. Call this new starting point or lower boundary <img class="math" src="_images/math/4f9ae65dafce1543c63b1ea2d7e5ad6473516116.svg" alt="a"/> and let <img class="math" src="_images/math/8a3119cb93a14215b7198171a4fd103c19a86fef.svg" alt="O_{d, b}\vert_{\mathbb{Z}}(a, z)"/> be a recursive, piecewise function that returns the number of times <img class="math" src="_images/math/ad7b13a7d11b2130d8938019f90e855eb1b3dadc.svg" alt="d"/> occurs in all the base-<img class="math" src="_images/math/9fb1ee42abe744f94a7a3bc212b0d16f3253653b.svg" alt="b"/> integers in the interval <img class="math" src="_images/math/b53d133457407bb2b5bc73b462f1754f63f6cbca.svg" alt="[a, z)"/>. Notice we can expand the domain to include all integers so long as we provide cases for all possible permutations for the parodies of <img class="math" src="_images/math/4f9ae65dafce1543c63b1ea2d7e5ad6473516116.svg" alt="a"/> and <img class="math" src="_images/math/a201539da7ff37ab3b9759e63075010add3eab1d.svg" alt="z"/>.</p>
+<div class="math">
+<p><img src="_images/math/1b353bafb353c2aba71d3b973e77294fcce6d14c.svg" alt="O_{d, b}\vert_{\mathbb{Z}}(a, z) = \begin{cases}{}
+O_{d, b}\vert_{\mathbb{Z}}(\lvert z - 1 \rvert, \vert a - 1 \rvert)                  &amp; \text{ if } a &lt; z \le 0 \\
+O_{d, b}\vert_{\mathbb{Z}}(1, \lvert a - 1 \rvert) + O_{d, b}\vert_{\mathbb{Z}^+}(z) &amp; \text{ if } a &lt; 0 &lt; z \\
+O_{d, b}\vert_{\mathbb{Z}^+}(z) - O_{d, b}\vert_{\mathbb{Z}^+}(a)                    &amp; \text{ if } 0 \le a &lt; z \\
+0                                                                                    &amp; \text{ if } a \ge z \lor d \ge b
+\end{cases}"/></p>
+</div></section>
+</section>
+<section id="number-names-and-numerals">
+<h2>Number Names and Numerals<a class="headerlink" href="#number-names-and-numerals" title="Permalink to this heading"></a></h2>
+<p>When I reference a number’s name, what I am referring to specifically is the number’s English <a class="reference external" href="https://simple.wikipedia.org/wiki/Long_and_short_scales#Short_scale">short scale</a> spelling according to the <a class="reference external" href="https://www.mrob.com/pub/math/largenum.html#conway-wechsler">Conway-Wechsler System</a> conceived by John Conway and Alan Wechsler and published in <em>The Book of Numbers</em> by John Conway and Richard Guy. All number names by this definition are comprised of one to many numerals. Loosely speaking, the word numeral can be used to refer to any representation of a number, but in this context, I use numeral in the linguistic sense to reference a specific set of English words. Each numeral falls into one of two distinct categories: period value numerals, or period name numerals.</p>
+<section id="period-value-numerals">
+<span id="id1"></span><h3>Period Value Numerals<a class="headerlink" href="#period-value-numerals" title="Permalink to this heading"></a></h3>
+<p>Period value numerals are the finite set of English words that may be combined to convey the value of any number in the interval <img class="math" src="_images/math/a1bdce269051e313de7c6d533001471ced2a2e40.svg" alt="[1, 1000)"/>:</p>
+<blockquote>
+<div><p>one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen, twenty, thirty, forty, fifty, sixty, seventy, eighty, ninety, hundred</p>
+</div></blockquote>
+<p><a class="reference external" href="https://kcaturner.github.io/conwech/docs/latest/package/conwech.lexicon.html#conwech.lexicon.NATURAL_NUMBERS_LT_1000">NATURAL_NUMBERS_LT_1000</a> defines all 1000 of these numerals with one exception, an empty string as the zeroth element.</p>
+</section>
+<section id="period-name-numerals">
+<span id="id2"></span><h3>Period Name Numerals<a class="headerlink" href="#period-name-numerals" title="Permalink to this heading"></a></h3>
+<p>Period name numerals on the other hand are the infinite set of numerals that convey the <em>magnitude</em> of a period value as generated by the Conway-Wechsler naming system. That is, the set of unique numerals that label each period value in a number’s name:</p>
+<blockquote>
+<div><p>thousand, million, billion, trillion, quadrillion, quintillion, <em>etc…</em></p>
+</div></blockquote>
+<p><a class="reference external" href="https://kcaturner.github.io/conwech/docs/latest/package/conwech.lexicon.html#conwech.lexicon.ZILLION_PERIOD_PREFIXES">ZILLION_PERIOD_PREFIXES</a> defines the first 1000 prefixes for these names with one exception, <em>n</em> as the zeroth element.</p>
+</section>
+</section>
+<section id="z-x-period-zillion-values">
+<span id="zillion"></span><h2>Z(x) : Period Zillion Values<a class="headerlink" href="#z-x-period-zillion-values" title="Permalink to this heading"></a></h2>
+<p>In the Conway-Wechsler naming system, the magnitude or zillion value (sometimes also called a base-illion value) is the basis of the method used to generate unique names for each period; the period name numerals we just talked about. The zillion value for any number, <img class="math" src="_images/math/94fcc56ca238a59b43882583d2b64463a917182c.svg" alt="x"/>, is just two less than the number of periods in <img class="math" src="_images/math/94fcc56ca238a59b43882583d2b64463a917182c.svg" alt="x"/>. More precisely though, it is equal to one less than the floored <img class="math" src="_images/math/d8f8af4d1281cc6b7ea20162dd2b5fc8ce982ef4.svg" alt="\log_{1000}"/> of <img class="math" src="_images/math/94fcc56ca238a59b43882583d2b64463a917182c.svg" alt="x"/>.</p>
+<div class="math">
+<p><img src="_images/math/a6c8bfe9e06f15ba9948ca1e9154c56f6e5a6607.svg" alt="Z(x) = \bigl\lfloor \log_{1000}\ x \bigr\rfloor - 1"/></p>
+</div></section>
+<section id="l-x-the-length-of-a-number">
+<h2>L(x) : The Length of a Number<a class="headerlink" href="#l-x-the-length-of-a-number" title="Permalink to this heading"></a></h2>
+<p>I imagine if I asked most people to measure the <em>length</em> of a number with no additional context, the most common response I’d get would be a confused look. Herein, I will often refer to the length of numbers. This is a shorthand of sorts. More specifically, what I mean by the length of <img class="math" src="_images/math/94fcc56ca238a59b43882583d2b64463a917182c.svg" alt="x"/> or <img class="math" src="_images/math/953bbf5c89b3c4606a075ad19aa49c7ff9f07a5a.svg" alt="L(x)"/> is The <em>number of letters</em> in <img class="math" src="_images/math/94fcc56ca238a59b43882583d2b64463a917182c.svg" alt="x"/>’s name, but that can be a mouthful, especially while simultaneously trying to incorporate that into more complex descriptions or equations, so I’ve adopted this linguistic shortcut.</p>
+<section id="in-terms-of-s-x-the-easy-way">
+<h3>In Terms of S(x) / The Easy Way<a class="headerlink" href="#in-terms-of-s-x-the-easy-way" title="Permalink to this heading"></a></h3>
+<p>Imagine a function <img class="math" src="_images/math/4a3bf2357ab43506efbb0559182eed8f79372a45.svg" alt="S(x)"/>, which returns the Conway-Wechsler name/spelling as a sequence of English characters for any number <img class="math" src="_images/math/94fcc56ca238a59b43882583d2b64463a917182c.svg" alt="x"/>. When I wrote conwech, I called this function <a class="reference external" href="https://kcaturner.github.io/conwech/docs/latest/package/conwech.functions.html#conwech.functions.number2text">number2text</a>. Here I’ll stick with <img class="math" src="_images/math/4a3bf2357ab43506efbb0559182eed8f79372a45.svg" alt="S(x)"/>. Also, let <img class="math" src="_images/math/e33eb11142df965519c0756370a5937659a81f2d.svg" alt="A"/> be the set of all letters in the English alphabet.</p>
+<div class="math">
+<p><img src="_images/math/00dc95f6bf9b2dab1222759b73de8027fa0352f1.svg" alt="A = \{\text{a, b, c,} \ldots \text{, x, y, z}\}"/></p>
+</div><p>Given <img class="math" src="_images/math/e33eb11142df965519c0756370a5937659a81f2d.svg" alt="A"/> and a function like <img class="math" src="_images/math/4a3bf2357ab43506efbb0559182eed8f79372a45.svg" alt="S(x)"/>, one fairly straightforward method for finding the length of a number as I’ve defined it would be to simply spell it, remove any non-letter characters (like dashes and spaces), and then measure the length of the remaining sequence.</p>
+<div class="math">
+<p><img src="_images/math/e95eb2b18860da3d15ddba9faaaff3489ed9e73d.svg" alt="L(x) = \left\lvert (c \mid c \in A)_{c \in S(x)} \right\rvert"/></p>
+</div><p>This is fine from a purely mathematical perspective where time and resources are practically meaningless, but in the real world this is terribly inefficient for a computer to calculate at scale. Besides, the cool math is the efficient stuff. We can do better.</p>
+</section>
+<section id="as-the-sum-of-lv-x-and-ln-x">
+<h3>As The Sum of L<sub>V</sub>(x) and L<sub>N</sub>(x)<a class="headerlink" href="#as-the-sum-of-lv-x-and-ln-x" title="Permalink to this heading"></a></h3>
+<p>All number names are just sequences of numerals with a specific structure. We can exploit that structure to our advantage. Every number name is really just a combination of smaller number names; one for each period in the number. While each of these names represent numbers in their own right, when we stick them together what we’re actually doing is expressing their sum.</p>
+<div class="math">
+<p><img src="_images/math/37d33b2cb4420387bd7d16ecb44443089c90d7c7.svg" alt="\begin{array}{rccl}
+123,000,000: &amp; \text{ one hundred twenty-three million} &amp;                                         &amp; \\
+456,000:     &amp;                                          &amp; \text{ four hundred fifty-six thousand} &amp; \\
+789:         &amp;                                          &amp;                                         &amp; \text{ seven hundred eighty-nine}
+\end{array}"/></p>
+</div><p>Additionally, each of these smaller names, like all other number names, can be split into its period value numerals and its period name numerals. If we’re simply counting letters, then the order they appear in the name is unimportant, meaning we can express <img class="math" src="_images/math/953bbf5c89b3c4606a075ad19aa49c7ff9f07a5a.svg" alt="L(x)"/> as a sum of two sub-functions.</p>
+<div class="math">
+<p><img src="_images/math/06ddda62fbed66c47d2e3345617f04819b378a88.svg" alt="L(x) = L_{V}(x) + L_{N}(x)"/></p>
+</div><p>Where <img class="math" src="_images/math/f2d45d3649b48f2dae3b3befb11642dc5bdec762.svg" alt="L_{V}(x)"/> and <img class="math" src="_images/math/b65ac7f11c319e95c65a6268cf13a43aa98cde0c.svg" alt="L_{N}(x)"/> return the total number of letters in all the period value numerals and period name numerals in <img class="math" src="_images/math/94fcc56ca238a59b43882583d2b64463a917182c.svg" alt="x"/>, respectively.</p>
+<div class="math">
+<p><img src="_images/math/46cdab59d42b7389f88ec6c16a0cfab7285b7be9.svg" alt="L_{V}(123456789) = 62 \\
+L_{N}(123456789) = 15 \\
+L(123456789) = 77"/></p>
+</div><p>So how can we define these functions <em>efficiently</em>?</p>
+<section id="lv-x-period-value-letters">
+<h4>L<sub>V</sub>(x) : Period Value Letters<a class="headerlink" href="#lv-x-period-value-letters" title="Permalink to this heading"></a></h4>
+<p>In order to define <img class="math" src="_images/math/f2d45d3649b48f2dae3b3befb11642dc5bdec762.svg" alt="L_{V}(x)"/>, we can first define a useful sequence. Drawing on what we know about period value numerals, let’s define a sequence <img class="math" src="_images/math/174e9b3910d59afbfd89945c6d556d02e1e25eae.svg" alt="V"/> such that indexing it gives us the length of the index. Note that <img class="math" src="_images/math/174e9b3910d59afbfd89945c6d556d02e1e25eae.svg" alt="V"/>’s indexes are <a class="reference external" href="https://en.wikipedia.org/wiki/Zero-based_numbering">zero-based</a>.</p>
+<div class="math">
+<p><img src="_images/math/30b56ed1e261f8d5c0258680d8d1a79aabbc3e6d.svg" alt="V = \Bigl(
+    \left\lvert (c \mid c \in A)_{c \in S(x)} \right\rvert \times [x &gt; 0]
+\Bigr)_{x=0}^{999}"/></p>
+</div><p>We can do this because there are a finite number of period value numerals. Computationally, it is more efficient at larger scales to spell all of these once, count their letters, and then store their lengths at the appropriate index so that they can be retrieved any number of times without recalculation. <img class="math" src="_images/math/f2d45d3649b48f2dae3b3befb11642dc5bdec762.svg" alt="L_{V}(x)"/> can be defined as the sum of <img class="math" src="_images/math/174e9b3910d59afbfd89945c6d556d02e1e25eae.svg" alt="V"/> indexed by each period value in <img class="math" src="_images/math/94fcc56ca238a59b43882583d2b64463a917182c.svg" alt="x"/>.</p>
+<div class="math">
+<p><img src="_images/math/0c47747866f33b62d7ba232b838548d3a225452e.svg" alt="L_{V}(x) = \sum_{z=0}^{\left\lfloor \log_{1000} x \right\rfloor}
+V_{\left(\left\lfloor \frac{x}{1000^{z}} \right\rfloor \bmod 1000 \right)}"/></p>
+</div><p>In fact, while the equation above is sufficient, we can actually simplify this by first converting <img class="math" src="_images/math/94fcc56ca238a59b43882583d2b64463a917182c.svg" alt="x"/> into a period-list compression as we defined them earlier using <img class="math" src="_images/math/1372261a145c8555eeeaa78442e98dfa137524a7.svg" alt="P(x)"/> and then adding together the product of <img class="math" src="_images/math/e3f0048b8985db808a19be3148bc9235d4572ff3.svg" alt="V_{v}"/> and <img class="math" src="_images/math/465571cefa7a21212571dd2613d6dd540e47aac6.svg" alt="r"/> for every <img class="math" src="_images/math/40d712a49b6e94747239b85ac472fc575a37c9ec.svg" alt="(v, r)"/> period-repetition.</p>
+<div class="math">
+<p><img src="_images/math/aa32ae164552df89816bfd79456e682429c9c3b7.svg" alt="L_V(x) = \sum \bigl( V_v \times r \bigr)_{(v, r) \in P(x)}"/></p>
+</div></section>
+<section id="ln-x-period-name-letters">
+<h4>L<sub>N</sub>(x) : Period Name Letters<a class="headerlink" href="#ln-x-period-name-letters" title="Permalink to this heading"></a></h4>
+<p>This here is the tricky bit. Because there are an infinite number of unique periods, it may seem as if we are stuck spelling all of the period names for any given <img class="math" src="_images/math/94fcc56ca238a59b43882583d2b64463a917182c.svg" alt="x"/>. Spoiler alert: we’re not, but we need to think outside the box a little.</p>
+<p>At the core of the <a class="reference external" href="https://www.mrob.com/pub/math/largenum.html#conway-wechsler">Conway-Wechsler System</a> is a table of prefixes that, when combined, create a composite prefix if you will for any period name based on it’s zillion value. However, this table is obviously finite. Using the method described by the system, we can only generate 999 unique period names before we exhaust the table. In order to generate an infinite number of unique period names, the system recycles the table. For periods with zillion values greater than 999 we do this by breaking the zillion value itself into periods, creating a list of composite prefixes from the table for each period value in the zillion. With the addition of a special nilli prefix to represent zillion periods with a value of 0, we now have exactly 1000 unique composite prefixes (we’re ignoring thousand for now as a special case). We can do something similar to what we did with period value numerals (for efficiency at scale) and spell all of these period names once, count their letters, and then store their lengths at the appropriate index so that they can be retrieved any number of times without recalculation. We’ll call this sequence <img class="math" src="_images/math/695e1d1a54d4c3ed00e15c069edc673455ad8a5e.svg" alt="N"/>. Note that <img class="math" src="_images/math/695e1d1a54d4c3ed00e15c069edc673455ad8a5e.svg" alt="N"/>’s indexes are also <a class="reference external" href="https://en.wikipedia.org/wiki/Zero-based_numbering">zero-based</a>.</p>
+<div class="math">
+<p><img src="_images/math/2a60180b41acd70b147bc1e316fbad2906f21424.svg" alt="N = \Bigl(
+    \left\lvert (c \mid c \in A)_{c \in S(1000^{x+1})} \right\rvert - 5 - [x = 0]
+\Bigr)_{x=0}^{999}"/></p>
+</div><p>Notice too that since we’re using <img class="math" src="_images/math/4a3bf2357ab43506efbb0559182eed8f79372a45.svg" alt="S(x)"/> to define <img class="math" src="_images/math/695e1d1a54d4c3ed00e15c069edc673455ad8a5e.svg" alt="N"/>, and we only want the length of the composite prefix, we subtract 5 to account for the length of one before each period name and the trailing on at the end of each prefix. We also subtract 1 from the zeroth element to account for the difference in length between <em>thousand</em> and <em>nillion</em>. Now, for the epiphany (hopefully). We have a set of 1000 unique things. Each of these unique things is used to represent a value in a number system. So what do we really have here?</p>
+<p class="centered">
+<strong>Digits! We have digits!</strong></p><p>Each of these composite prefixes is no more than a unique digit in a base-1000 number system. As an example, take the number 10<sup>370370370</sup>. The zillion value for this number is 123456789, and the Conway-Wechsler name for this number is <em>one tresviginticentillisesquinquagintaquadringentillinovemoctogintaseptingentillion</em>. We can see the relationship clearly by breaking the name down into each of it’s composite prefixes.</p>
+<div class="math">
+<p><img src="_images/math/de7b8997b4497596bf75b1829e8bd21b893d499f.svg" alt="10^{370370370} = \text{one }\
+    \underbrace{\text{tresviginticentilli}}_{123}\
+    \underbrace{\text{sesquinquagintaquadringentilli}}_{456}\
+    \underbrace{\text{novemoctogintaseptingentilli}}_{789}\
+\text{on}"/></p>
+</div><p>This means the number of letters attributable to period names in any given number <img class="math" src="_images/math/94fcc56ca238a59b43882583d2b64463a917182c.svg" alt="x"/> can be expressed in terms of <img class="math" src="_images/math/695e1d1a54d4c3ed00e15c069edc673455ad8a5e.svg" alt="N"/>, <img class="math" src="_images/math/540c6128c1046007db6fefd05c467084e28f7192.svg" alt="Z(x)"/>, and <img class="math" src="_images/math/cc5ebd92f82b6cba72b002f80e772cfb908f6027.svg" alt="O_{d,1000}(a, z)"/> for all digits, <img class="math" src="_images/math/ad7b13a7d11b2130d8938019f90e855eb1b3dadc.svg" alt="d"/>, in <img class="math" src="_images/math/1af244fc8761c405d5ea886d6296dc3bb7bbc416.svg" alt="[0, 1000)"/>.</p>
+<div class="math">
+<p><img src="_images/math/8b1ca3b1971a9a3c1b9470e68740067202ad8ed6.svg" alt="L_{N}(x) = 2Z(x) + 1
++ \sum_{d=0}^{999} N_{d} \times O_{d,1000}(0, Z(x))"/></p>
+</div><p>Before the sum, we add 2 times the zillion value to account for the <em>on</em> at the end of the each period name. We also and add back 1 extra letter for the difference between <em>nillion</em> and <em>thousand</em>. However, there’s still one issue we need to address. When a period value is 0, we don’t include the period name in that number’s spelling. This summation is only correct for numbers that have no 0-periods. We can account for it by subtracting the lengths of those missing periods from the total. This is easier done when <img class="math" src="_images/math/94fcc56ca238a59b43882583d2b64463a917182c.svg" alt="x"/> is a period-list compression. First though, we’ll generalize <img class="math" src="_images/math/b65ac7f11c319e95c65a6268cf13a43aa98cde0c.svg" alt="L_{N}(x)"/> similar to how we did <img class="math" src="_images/math/f44499fda062275e373ab98e67ea5a96f36d3a6c.svg" alt="O_{d,b}(x)"/> by defining <img class="math" src="_images/math/a5244710c4cd74998e06ca9603d1b4b5be439a7d.svg" alt="L_{Z}"/> as a function of some starting point, <img class="math" src="_images/math/4f9ae65dafce1543c63b1ea2d7e5ad6473516116.svg" alt="a"/>, and some limit, <img class="math" src="_images/math/a201539da7ff37ab3b9759e63075010add3eab1d.svg" alt="z"/>, and say that <img class="math" src="_images/math/f2e742fa26dc4d8e4b22614f2117a8d2b7c9102b.svg" alt="L_{Z}(a, z)"/> returns the number of letters attributable to period names for all periods with zillion values within the interval <img class="math" src="_images/math/b53d133457407bb2b5bc73b462f1754f63f6cbca.svg" alt="[a, z)"/>.</p>
+<div class="math">
+<p><img src="_images/math/ee8303f94b49e74627ca2ae427111b6b6c453ee8.svg" alt="L_{Z}(a, z) = 2\bigl( z - a[a &gt; 0] \bigr) + [a \le 0 &lt; z]
++ \sum_{d=0}^{999} N_{d} \times O_{d,1000}(a, z)"/></p>
+</div><p>Now, we can refine our definition of <img class="math" src="_images/math/47c07206638f74f6b89075eb4bea8f1c59bab9b4.svg" alt="L_{N}"/> in terms of <img class="math" src="_images/math/7491ea613145055a0698c2338cb5f62f46a9abf7.svg" alt="Z"/>, <img class="math" src="_images/math/c9be225b57f2d8ad33f8be7e69e810fcb2a4377b.svg" alt="P"/>, and <img class="math" src="_images/math/a5244710c4cd74998e06ca9603d1b4b5be439a7d.svg" alt="L_{Z}"/>, completing everything we need to finalize our definition of <img class="math" src="_images/math/953bbf5c89b3c4606a075ad19aa49c7ff9f07a5a.svg" alt="L(x)"/>. We no longer have to spell a number to know exactly how long it is.</p>
+<div class="math">
+<p><img src="_images/math/53f2dd8c74f87b0c7226232939925bc1e15919e1.svg" alt="L_{N}(x) = L_{Z}(0, Z(x)) - \sum \left(
+    L_{Z}(z - r_{n}, z)\
+    \Bigg\vert\
+    v_{n} = 0 \land z = Z(x) - \sum_{i=1}^{n-1} r_{i}
+\right)_{(v_{n}, r_{n}) \in P(x)}"/></p>
+</div></section>
+</section>
+</section>
+</section>
+<section id="chain-concepts">
+<h1>4-Chain Concepts<a class="headerlink" href="#chain-concepts" title="Permalink to this heading"></a></h1>
+<p>As Matt describes them in his video, 4-chains are sequences of numbers for which each element is equal to the length of the previous element. We can represent this rather succinctly with a <a class="reference external" href="https://en.wikipedia.org/wiki/Recurrence_relation">recurrence relation</a>:</p>
+<div class="math">
+<p><img src="_images/math/20aacbd340d2d3852d0fe0b2357a1242a61e52c2.svg" alt="x_{n+1} = L(x_{n})"/></p>
+</div><p>By this measure, the sequence I defined at the beginning of my developer’s note is an incomplete 4-chain. The complete chain would look something like this:</p>
+<div class="math">
+<p><img src="_images/math/bdb245902ddaa01b907c3cbb2ac2a49a1d702aab.svg" alt="123,456,789 \to 77 \to 12 \to 6 \to 3 \to 5 \to 4"/></p>
+</div><p>Matt tasked his viewers with finding longer 4-chains. If <img class="math" src="_images/math/953bbf5c89b3c4606a075ad19aa49c7ff9f07a5a.svg" alt="L(x)"/> had a proper inverse this wouldn’t be very difficult. Instead of our recurrence relation defining <img class="math" src="_images/math/48ff4b7ada1000f8096dd3276ecfc62409e34157.svg" alt="x_{n+1}"/> in terms of <img class="math" src="_images/math/266fc9a8090cc6a14961e3713daffbdb37e8afcd.svg" alt="L(x_{n})"/>, we could use <img class="math" src="_images/math/c8da7fe4bdac20e408ae520a0853166993809c1d.svg" alt="L^{-1}(x_{n})"/>.</p>
+<div class="math">
+<p><img src="_images/math/0453a9881ce8e5023a7a9fb17cef78410ed91809.svg" alt="x_{n+1} = L^{-1}(x_{n})"/></p>
+</div><p>This would effectively reverse all 4-chains, causing them to iterate upward to infinity. Our example above would then look something like this:</p>
+<div class="math">
+<p><img src="_images/math/8ac1603681074c52d4ca35deed93f601a7764922.svg" alt="4 \to 5 \to 3 \to 6 \to 12 \to 77 \to 123,456,789 \to \cdots"/></p>
+</div><p>However, even though every number’s name is <em>necessarily</em> unique, <em>no</em> number’s name has a unique <em>length</em>. This means <img class="math" src="_images/math/953bbf5c89b3c4606a075ad19aa49c7ff9f07a5a.svg" alt="L(x)"/> is a many-to-one function; a <a class="reference external" href="https://en.wikipedia.org/wiki/Surjective_function">surjection</a>, but not an <a class="reference external" href="https://en.wikipedia.org/wiki/Injective_function">injection</a>, and thus <em>not</em> a <a class="reference external" href="https://en.wikipedia.org/wiki/Bijection">bijection</a>, meaning it is <em>not</em> invertible. <img class="math" src="_images/math/925225e2d5f86db8dc88c52e9a6bb1307fd02c1f.svg" alt="L^{-1}(x)"/> is in fact a <a class="reference external" href="https://en.wikipedia.org/wiki/Multivalued_function">multifunction</a>, which (despite the misnomer) really isn’t a <em>function</em> in the strictest sense, meaning neither too is <img class="math" src="_images/math/48ff4b7ada1000f8096dd3276ecfc62409e34157.svg" alt="x_{n+1}"/> as a function of <em>only</em> <img class="math" src="_images/math/438d4fec659517628284b9b026650a523c64e0c8.svg" alt="x_{n}"/>. We may be able to define <img class="math" src="_images/math/48ff4b7ada1000f8096dd3276ecfc62409e34157.svg" alt="x_{n+1}"/> in other terms though. In fact we’ll still reverse the order. We just won’t change the method.</p>
+<div class="math">
+<p><img src="_images/math/a29c3ad10c56cd1a2aa69525761820d2a909a2c3.svg" alt="x_{n-1} = L(x_{n})"/></p>
+</div><section id="c-4-chain-index-notation">
+<h2>C : 4-Chain Index Notation<a class="headerlink" href="#c-4-chain-index-notation" title="Permalink to this heading"></a></h2>
+<p>Going forward it would be nice to have a standard notation by which we can quickly reference any 4-chain, whether we know it’s members or not. What other properties of a 4-chain can we draw upon to identify it? In his video, Matt tried finding the longest 4-chain he could. To do that, he first computed the 4-chain for every number up to 100 and then just picked the longest of those with the smallest starting number, or we might prefer to say (more generically) its first <em>unique</em> member.</p>
+<section id="chains-ordered-by-their-values">
+<h3>4-Chains Ordered by Their Values<a class="headerlink" href="#chains-ordered-by-their-values" title="Permalink to this heading"></a></h3>
+<p>We can draw on that intuition to formally define a collection of all 4-chains as a sequence, where each member chain is ordered in turn by its first unique element.</p>
+<div class="math">
+<p><img src="_images/math/ba30b30bece297c3add194e089fdfa911aff7b96.svg" alt="C = \bigl( x_{m,n-1} = L(x_{m,n}) \bigr)_{m \in \mathbb{Z}^{+}}"/></p>
+</div><p>Hopefully, since we aren’t defining a function, a recurrence relation should be sufficient to get the point across. We’ve dropped in our reversal of the original relation so that chains appear in the desired order, meaning their first unique element is their <em>last</em> element. If we represent 4-chains this way we end up with a sequence of sequences like:</p>
+<div class="math">
+<p><img src="_images/math/90e3c12b6a8be9ef3b150a71fd49e7e96df3326c.svg" alt="C = \bigl(
+    (4, 0), (4, 5, 3, 1), (4, 5, 3, 2), (4, 5, 3),
+    (4), (4, 5), (4, 5, 3, 6), (4, 5, 7), \ldots
+\bigr)"/></p>
+</div><p>This is a start, but it still seems chaotic. We still can’t really consistently discern valuable information about any 4-chain <img class="math" src="_images/math/e9c958086a9ea557d9bbc51c80e3a8a2f69e6f60.svg" alt="C_{n}"/> from its notation, which is the point.</p>
+</section>
+<section id="chains-grouped-by-their-length">
+<h3>4-Chains Grouped by Their Length<a class="headerlink" href="#chains-grouped-by-their-length" title="Permalink to this heading"></a></h3>
+<p>If we take this organization just a little further, we’ll get what we want. Imagine now that all 4-chains in <img class="math" src="_images/math/efd41e9b70993ac105af50943e84cd6dc1a3138d.svg" alt="C"/> are grouped by their length. This adds another dimension to our sequence. Call these new groupings of 4-chains sequences as well, and within <img class="math" src="_images/math/efd41e9b70993ac105af50943e84cd6dc1a3138d.svg" alt="C"/>, order them by the length of the 4-chains they contain. Assuming I haven’t butchered the notation too much, <img class="math" src="_images/math/efd41e9b70993ac105af50943e84cd6dc1a3138d.svg" alt="C"/> can now be defined as follows:</p>
+<div class="math">
+<p><img src="_images/math/483cf4b576b5d255cd9ed47ad17c245d3b353c23.svg" alt="C = \bigl(x_{l,m,n-1} = L(x_{l,m,n}) \mid l = n \bigr)_{(l, m) \in \mathbb{N}^{2}}"/></p>
+</div><p>With this definition, <img class="math" src="_images/math/efd41e9b70993ac105af50943e84cd6dc1a3138d.svg" alt="C"/> becomes almost function-like. And, just in case I <em>have</em> butchered this notation, a good example might clear things up. Indexing <img class="math" src="_images/math/efd41e9b70993ac105af50943e84cd6dc1a3138d.svg" alt="C"/> like <img class="math" src="_images/math/6124bce62acb2f97fc0c4987b11a8c7a77f5ab4c.svg" alt="C_{4,3,2}"/> gives the 2<sup>nd</sup> number of the 3<sup>rd</sup> 4-chain that is 4 numbers long:</p>
+<div class="math">
+<p><img src="_images/math/9a35fc9be1163799bd1fffed117aabc12f49a02f.svg" alt="C = \Bigl(
+    \bigl( (4) \bigr),
+    \bigl( (4, 0),(4, 5),(4, 9) \bigr),
+    \bigl( (4, 5, 3), (4, 5, 7), (4, 5, 8), (4, 9, 17), \ldots \bigr),
+    \bigl( (4, 5, 3, 1), (4, 5, 3, 2), (4, 5, 3, 6) \ldots \bigr),
+\ldots\Bigr)"/></p>
+</div><div class="math">
+<p><img src="_images/math/98559ab95c1c6c7b989523dc5e1e4bc941f17a50.svg" alt="C_{4} = \bigl(
+    (4, 5, 3, 1), (4, 5, 3, 2), (4, 5, 3, 6), (4, 5, 3, 10), (4, 5, 7, 15),
+\ldots\bigr)"/></p>
+</div><div class="math">
+<p><img src="_images/math/a5dc9d9c189cbd66ce8410b6941720e7a28c6a41.svg" alt="C_{4,3} = (4, 5, 3, 6)"/></p>
+</div><div class="math">
+<p><img src="_images/math/9f79f2136c40c614a8f9bb6ca61087bddd671781.svg" alt="C_{4,3,2} = 5"/></p>
+</div><p>Also, note that <img class="math" src="_images/math/efd41e9b70993ac105af50943e84cd6dc1a3138d.svg" alt="C"/> is indexed from 1, not 0. While zero-indexing made more sense above, it does not here, where (1) there are no 0-length chains, and (2) I’ll more likely refer to chains or their elements as the first, second, third, etc… Here, natural numbers seem more… natural.</p>
+</section>
+</section>
+<section id="t-aggregating-4-chains">
+<h2>T : Aggregating 4-Chains<a class="headerlink" href="#t-aggregating-4-chains" title="Permalink to this heading"></a></h2>
+<p>Why stop at one <a class="reference external" href="https://en.wikipedia.org/wiki/Supertask">supertask</a> though? In some ways it may be more helpful if we can visualize <img class="math" src="_images/math/efd41e9b70993ac105af50943e84cd6dc1a3138d.svg" alt="C"/> as a more searchable structure. We can also use this same relation to define a graph. More specifically, we can define <em>the 4-Tree</em> or <img class="math" src="_images/math/78f8ea5263a9b8454d1eb8075afba3ed19c11820.svg" alt="T"/> as the infinite <a class="reference external" href="https://en.wikipedia.org/wiki/Tree_(graph_theory)#Ordered_tree">ordered tree</a> of all <img class="math" src="_images/math/13852f4bc17a9fed169a63720c94a5292946ccdc.svg" alt="(x, L(x))"/> pairs such that <img class="math" src="_images/math/94fcc56ca238a59b43882583d2b64463a917182c.svg" alt="x"/> is a positive integer:</p>
+<div class="math">
+<p><img src="_images/math/b21083c26821d4a089d010f36a5781286a0ba0b4.svg" alt="T = \bigl\{ (x, L(x)) \mid x \in \mathbb{Z}^+ \bigr\}"/></p>
+</div><div class="graphviz"><object data="_images/graphviz-6073059f5cd2e86ee3bf813a1009e826e1d1d3f3.svg" type="image/svg+xml" class="graphviz">
+<p class="warning">graph {
+    graph [
+        mode=hier
+        rankdir=TB
+        splines=spline
+        concentrate=true
+        bgcolor=transparent
+        label=&quot;First 100 nodes of T&quot;
+        fontname=&quot;sans-serif&quot;
+        fontsize=28
+        nodesep=0.0
+        ranksep=0.6
+    ]
+    node [
+        fontsize=18
+        fontname=&quot;sans-serif&quot;
+        fixedsize=shape
+        shape=circle
+    ]
+
+    subgraph 3 {
+        3 -- 1   [weight=1]
+        3 -- 2   [weight=1]
+        3 -- 6   [weight=1]
+        3 -- 10  [weight=100]
+    }
+    subgraph 4 {
+        4 -- 0   [weight=1]
+        4 -- 5   [weight=100]
+        4 -- 9   [weight=1]
+        4 -- r9  [style=invisible]
+        r9 [style=invisible]
+    }
+    subgraph 5 {
+        5 -- 3   [weight=100]
+        5 -- 7   [weight=100]
+        5 -- 8   [weight=100]
+        5 -- 40  [weight=1]
+        5 -- 50  [weight=1]
+        5 -- 60  [weight=1]
+    }
+    subgraph 6 {
+        l11 [style=invisible]
+        6 -- l11 [style=invisible]
+        6 -- 11  [weight=1]
+        6 -- 12  [weight=1]
+        6 -- 20  [weight=1]
+        6 -- 30  [weight=1]
+        6 -- 80  [weight=1]
+        6 -- 90  [weight=100]
+    }
+    subgraph 7 {
+        7 -- 15  [weight=1]
+        7 -- 16  [weight=100]
+        7 -- 70  [weight=1]
+    }
+    subgraph 8 {
+        8 -- 13  [weight=100]
+        8 -- 14  [weight=1]
+        8 -- 18  [weight=1]
+        8 -- 19  [weight=1]
+        8 -- 41  [weight=1]
+        8 -- 42  [weight=1]
+        8 -- 46  [weight=1]
+        8 -- 51  [weight=1]
+        8 -- 52  [weight=1]
+        8 -- 56  [weight=1]
+        8 -- 61  [weight=1]
+        8 -- 62  [weight=1]
+        8 -- 66  [weight=1]
+    }
+    subgraph 9 {
+        9 -- 17  [weight=100]
+        9 -- 21  [weight=1]
+        9 -- 22  [weight=1]
+        9 -- 26  [weight=1]
+        9 -- 31  [weight=1]
+        9 -- 32  [weight=1]
+        9 -- 36  [weight=1]
+        9 -- 44  [weight=1]
+        9 -- 45  [weight=1]
+        9 -- 49  [weight=1]
+        9 -- 54  [weight=1]
+        9 -- 55  [weight=1]
+        9 -- 59  [weight=1]
+        9 -- 64  [weight=1]
+        9 -- 65  [weight=1]
+        9 -- 69  [weight=1]
+        9 -- 81  [weight=1]
+        9 -- 82  [weight=1]
+        9 -- 86  [weight=1]
+        9 -- 91  [weight=1]
+        9 -- 92  [weight=1]
+        9 -- 96  [weight=1]
+    }
+    subgraph 10 {
+        10 -- 24 [weight=100]
+        10 -- 25 [weight=1]
+        10 -- 29 [weight=1]
+        10 -- 34 [weight=1]
+        10 -- 35 [weight=1]
+        10 -- 39 [weight=1]
+        10 -- 43 [weight=1]
+        10 -- 47 [weight=1]
+        10 -- 48 [weight=1]
+        10 -- 53 [weight=1]
+        10 -- 57 [weight=1]
+        10 -- 58 [weight=1]
+        10 -- 63 [weight=1]
+        10 -- 67 [weight=1]
+        10 -- 67 [weight=1]
+        10 -- 71 [weight=1]
+        10 -- 72 [weight=1]
+        10 -- 76 [weight=1]
+        10 -- 84 [weight=1]
+        10 -- 85 [weight=1]
+        10 -- 89 [weight=1]
+        10 -- 94 [weight=1]
+        10 -- 95 [weight=1]
+        10 -- 99 [weight=1]
+        // 10 -- 100
+    }
+    subgraph 11 {
+        11 -- 23 [weight=1]
+        11 -- 27 [weight=1]
+        11 -- 28 [weight=1]
+        11 -- 33 [weight=1]
+        11 -- 37 [weight=1]
+        11 -- 38 [weight=1]
+        11 -- 74 [weight=1]
+        11 -- 75 [weight=1]
+        11 -- 79 [weight=1]
+        11 -- 83 [weight=1]
+        11 -- 87 [weight=0]
+        11 -- 88 [weight=1]
+        11 -- 93 [weight=1]
+        11 -- 97 [weight=1]
+        11 -- 98 [weight=100]
+    }
+    subgraph 12 {
+        12 -- 73 [weight=100]
+        12 -- 77 [weight=1]
+        12 -- 78 [weight=1]
+    }
+}</p></object></div>
+<p>We can clearly see that every 4-chain is simply a traversal from a given starting point to the root (4) of the 4-Tree. Right away, you might notice the three vertices 0, 1, and 2. If we could graph all of <img class="math" src="_images/math/78f8ea5263a9b8454d1eb8075afba3ed19c11820.svg" alt="T"/>, we would see that these vertices are the only vertices with a degree of 1. This is because every number’s name is at least three letters long. I.e. There are <em>no</em> numbers with names shorter than three letters.</p>
+<div class="math">
+<p><img src="_images/math/78ded8861dac77df661c413e91505d13d85efb3b.svg" alt="\forall x \in \mathbb{Z}^+, L(x) \ge 3
+\equiv
+\nexists x \in \mathbb{Z}^+, L(x) &lt; 3"/></p>
+</div><p>If <img class="math" src="_images/math/78f8ea5263a9b8454d1eb8075afba3ed19c11820.svg" alt="T"/> is an out-tree or <a class="reference external" href="https://en.wikipedia.org/wiki/Arborescence_(graph_theory)">arborescence</a>, these vertices are dead ends. Alternatively, if <img class="math" src="_images/math/78f8ea5263a9b8454d1eb8075afba3ed19c11820.svg" alt="T"/> is an in-tree or anti-arborescence these vertices are unreachable. I will sometimes refer to these as sterile numbers.</p>
+</section>
+<section id="the-case-for-c-and-t">
+<h2>The Case for C and T<a class="headerlink" href="#the-case-for-c-and-t" title="Permalink to this heading"></a></h2>
+<p>So why exactly did we go to all this trouble defining and redefining infinite triple-nested sequences and a never-ending polytree? Well, I wanted the rest of this to go a little smother, especially since I’m going to start blending math and pseudo-code. <img class="math" src="_images/math/efd41e9b70993ac105af50943e84cd6dc1a3138d.svg" alt="C"/> and <img class="math" src="_images/math/78f8ea5263a9b8454d1eb8075afba3ed19c11820.svg" alt="T"/> are both powerful conceptual tools. I’ll use <img class="math" src="_images/math/efd41e9b70993ac105af50943e84cd6dc1a3138d.svg" alt="C"/> to reference specific chains in terms of their <img class="math" src="_images/math/efd41e9b70993ac105af50943e84cd6dc1a3138d.svg" alt="C"/> indices as I did earlier in the example above, and <img class="math" src="_images/math/78f8ea5263a9b8454d1eb8075afba3ed19c11820.svg" alt="T"/> will be useful from an algorithmic perspective when we start searching for specific 4-chains.</p>
+</section>
+</section>
+<section id="hunting-for-8-9">
+<h1>Hunting for 8 &amp; 9<a class="headerlink" href="#hunting-for-8-9" title="Permalink to this heading"></a></h1>
+<p>Congrats! You’ve made it to the home stretch. Matt asked his viewers to find the first 4-chain with 8 members in it (<img class="math" src="_images/math/f574cb67f6f47c09a1d33a4fdb5f0fe934a603ab.svg" alt="C_{8,1}"/> using our new notation), and we finally have most of the tools we need to start searching. There are a few more odds and ends to cover first though.</p>
+<section id="letter-inefficient-numbers">
+<h2>Letter-Inefficient Numbers<a class="headerlink" href="#letter-inefficient-numbers" title="Permalink to this heading"></a></h2>
+<div class="right-floating docutils container">
+<table class="docutils align-left" style="width: 90%">
+<thead>
+<tr class="row-odd"><th class="head" colspan="2"><p><img class="math" src="_images/math/94fcc56ca238a59b43882583d2b64463a917182c.svg" alt="x"/></p></th>
+<th class="head"><p><img class="math" src="_images/math/953bbf5c89b3c4606a075ad19aa49c7ff9f07a5a.svg" alt="L(x)"/></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>6<a class="footnote-reference brackets" href="#id5" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>4<a class="footnote-reference brackets" href="#id5" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p></td>
+<td><p>4</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>3</p></td>
+<td><p>5</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>11</p></td>
+<td><p>6</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>15</p></td>
+<td><p>7</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>13</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>17</p></td>
+<td><p>9</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>24</p></td>
+<td><p>10</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>23</p></td>
+<td><p>11</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>73</p></td>
+<td><p>12</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>101</p></td>
+<td><p>13</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>104</p></td>
+<td><p>14</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>103</p></td>
+<td><p>15</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>111</p></td>
+<td><p>16</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>115</p></td>
+<td><p>17</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>113</p></td>
+<td><p>18</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>117</p></td>
+<td><p>19</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>124</p></td>
+<td><p>20</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>123</p></td>
+<td><p>21</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>173</p></td>
+<td><p>22</p></td>
+</tr>
+<tr class="row-even"><td colspan="2"><p>323</p></td>
+<td><p>23</p></td>
+</tr>
+<tr class="row-odd"><td colspan="2"><p>373</p></td>
+<td><p>24</p></td>
+</tr>
+</tbody>
+</table>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id5" role="note">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id3">1</a>,<a role="doc-backlink" href="#id4">2</a>)</span>
+<p>Although 6 and 4 are not LINs as we’ve defined them strictly, it is useful to include them here as they are the <em>most</em> letter-inefficient numbers of their respective lengths that are not also <em>sterile</em> numbers.</p>
+</aside>
+</aside>
+</div>
+<p>Let’s talk about efficiency for a second. Consider the ratio <img class="math" src="_images/math/da5bd10237520b6019a16b290d06cfb71ccd9977.svg" alt="x : L(x)"/> for every positive integer <img class="math" src="_images/math/94fcc56ca238a59b43882583d2b64463a917182c.svg" alt="x"/>. Imagine we grouped all of these ratios by their denominator, <img class="math" src="_images/math/953bbf5c89b3c4606a075ad19aa49c7ff9f07a5a.svg" alt="L(x)"/>. In every group, there would be some minimum for which <img class="math" src="_images/math/94fcc56ca238a59b43882583d2b64463a917182c.svg" alt="x"/> is what I like to refer to as a letter-inefficient number or LIN. They use more letters with respect to their value than any other number of their length.</p>
+<p>Put another way, LINs are the first occurring positive integers of any particular length; the minimum <img class="math" src="_images/math/94fcc56ca238a59b43882583d2b64463a917182c.svg" alt="x"/> for each natural number <img class="math" src="_images/math/fc729fead6bec27951ef585c282df762def63d1c.svg" alt="n"/> such that <img class="math" src="_images/math/6ebe8badc96c62cd9198fa612e16baaf4431b51b.svg" alt="L(x) = n"/>. Due to the nature of English numerals, the set of all LINs ordered by <img class="math" src="_images/math/953bbf5c89b3c4606a075ad19aa49c7ff9f07a5a.svg" alt="L(x)"/> is also only <em>approximately</em> ordered by <img class="math" src="_images/math/94fcc56ca238a59b43882583d2b64463a917182c.svg" alt="x"/>. There are a finite number of exceptions, but they are important. All of them occur within the set of LINs less than 1000 (table on right).</p>
+<p>The LINs 4, 15, 24, 104, 115, and 124 all come before 3, 13, 23, 103, 113, and 123 respectively. Wherever it shows up, it seems the numerals for 3 are abnormally long for its value.</p>
+</section>
+<section id="letter-inefficient-4-chains">
+<h2>Letter-Inefficient 4-Chains<a class="headerlink" href="#letter-inefficient-4-chains" title="Permalink to this heading"></a></h2>
+<p>Notice that all of the numbers in <img class="math" src="_images/math/0bf489be55f9317fd2232eea9db373b71d8701e1.svg" alt="C_{5,1}"/> appear in the table (when we account for sterile numbers). This makes sense. The first occurring 4-chain of any length <img class="math" src="_images/math/d4d541d702b75f098707ab94bce7263cb72164f2.svg" alt="l"/> will always be comprised entirely of LINs (and/or 4 and 6). This is due to the fact that the first occurring 4-chain of any length <img class="math" src="_images/math/d4d541d702b75f098707ab94bce7263cb72164f2.svg" alt="l"/> is merely a continuation of the first occurring 4-chain of length <img class="math" src="_images/math/06fe72706b8b2956a5edd506e78dadb5792fbd98.svg" alt="l-1"/> with exceptions made for 4-chains ending with sterile numbers, <img class="math" src="_images/math/9ab68db01652c40dfa8eaab1b5ba6c76d54762a5.svg" alt="C_{2,1}"/> and <img class="math" src="_images/math/a9b61480d5cfd7cd9f41710ca9455c1fac048e5b.svg" alt="C_{4,1}"/>.</p>
+<div class="math">
+<p><img src="_images/math/40247e79660496a4378da90e1459c72bc2b95981.svg" alt="C_{l,1} = \begin{cases}
+    (4, 3, 5),               &amp; \text{if}\ l = 3 \\
+    (4, 3, 5, 6, 11),        &amp; \text{if}\ l = 5 \\
+    C_{l-1,1} + (C_{l,1,l}), &amp; \text{otherwise}
+\end{cases}"/></p>
+</div><p>You might then call 4-chains like <img class="math" src="_images/math/02a6e2709c6e0ae9022c8b883e13fd942a89b5cc.svg" alt="C_{l,1}"/> letter-inefficient chains or LICs. These LICs are the only 4-chains we’re currently interested in, meaning the only numbers we need to check in our search are a limited subset of LINs. If we can generate LINs, then we can generate LICs.</p>
+</section>
+<section id="f-lt-generating-lins">
+<h2>F(l<sub>t</sub>) : Generating LINs<a class="headerlink" href="#f-lt-generating-lins" title="Permalink to this heading"></a></h2>
+<p>Finally, it’s time for some algorithms. We’re going to define a function <img class="math" src="_images/math/4cba81661cc8fe2f1a301051559194486a1b25ab.svg" alt="F(l_{t})"/> that finds the first number (LIN) of the given target length <img class="math" src="_images/math/0e1f163fa8cddac56b538b46090ae347c9fa24a0.svg" alt="l_{t}"/>. It may help to begin by thinking of how we might generate LINs in order. To do that, we’re going to break the first few LINs into their building blocks.</p>
+<p>Similar to how we label every period with a period name, we have conventions that label every digit in a period. The only problem is that these conventions are inconsistent. We don’t call 111 <em>one hundred one ten one unit</em>. No, like the first period, the units place has no name. We just say <em>one</em>. However, that’s not the biggest problem with this system. English is messy. The main issue is derived from how we express double digit numbers. Because of this, it’s easier to think of period values as <a class="reference external" href="https://en.wikipedia.org/wiki/Mixed_radix">mixed radix</a> numbers in this context with base-10 and base-100 digits <img class="math" src="_images/math/58ab56599aa549affaeceeb7b7944a53aad76e61.svg" alt="h_{10}"/> and <img class="math" src="_images/math/5d1bd948f86e5c61b02561e2be28d2b02282cdc0.svg" alt="s_{100}"/> representing the hundreds and sub-hundred values.</p>
+<div class="math">
+<p><img src="_images/math/697d4eb0d8683f92de082d04bd9a24f667bb411f.svg" alt="111 = 1_{10}11_{100}"/></p>
+</div><p>When we consider numerals associated with either of these new digits separately, we can isolate some new LIN building blocks. The tens are a bit tricky and there are some patterns we could more thoroughly examine, but it’s not too much to just check these exhaustively. We’ll exclude <em>zero</em> and <em>six</em> here because neither will appear anywhere after <img class="math" src="_images/math/dce7e1de5e29e9394ce820d79a7d79a21fa8f16d.svg" alt="F(3)"/> and <img class="math" src="_images/math/f02d736c740576d88a94a2ae6d768d0e0af2ed16.svg" alt="F(4)"/>, respectively. The hundreds mimic the single digit LINs because they are based directly on the decimal digits, the only difference being the name <em>hundred</em> tacked on to the end of each and the absence of a <em>zero hundred</em> all together. What we end up with is a subset of the digits for both positions in our mixed radix system from above.</p>
+<div class="left-floating docutils container">
+<table class="docutils align-right" style="width: 100%">
+<thead>
+<tr class="row-odd"><th class="head"><p><img class="math" src="_images/math/58ab56599aa549affaeceeb7b7944a53aad76e61.svg" alt="h_{10}"/></p></th>
+<th class="head"><p><img class="math" src="_images/math/9b6310464e45ab05146bd60199c3c8be1c1c9ac9.svg" alt="L(h_{10})"/></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>5</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-right" style="width: 100%">
+<thead>
+<tr class="row-odd"><th class="head"><p><img class="math" src="_images/math/5d1bd948f86e5c61b02561e2be28d2b02282cdc0.svg" alt="s_{100}"/></p></th>
+<th class="head"><p><img class="math" src="_images/math/c6782cf90b4e1bfa4152fcb2d0b089db8e9bf961.svg" alt="L(s_{100})"/></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>4</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>5</p></td>
+</tr>
+<tr class="row-odd"><td><p>11</p></td>
+<td><p>6</p></td>
+</tr>
+<tr class="row-even"><td><p>15</p></td>
+<td><p>7</p></td>
+</tr>
+<tr class="row-odd"><td><p>13</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-even"><td><p>17</p></td>
+<td><p>9</p></td>
+</tr>
+<tr class="row-odd"><td><p>24</p></td>
+<td><p>10</p></td>
+</tr>
+<tr class="row-even"><td><p>23</p></td>
+<td><p>11</p></td>
+</tr>
+<tr class="row-odd"><td><p>73</p></td>
+<td><p>12</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Notice, we’ll also exclude <em>four (hundred)</em> because there is no case where we will prefer it over <em>three hundred</em>, and this highlights a core aspect of LIN generation.</p>
+<p>Consider the case of 323 and 473. Despite being the same length, <img class="math" src="_images/math/139953a28baa4ed8966edc072ca89204b0023bff.svg" alt="F(23)"/> is 323 because 323 is less than 473, and therefore has a smaller <img class="math" src="_images/math/da5bd10237520b6019a16b290d06cfb71ccd9977.svg" alt="x : L(x)"/> ratio. So, when finding the LIN that comes after 173, we don’t simply take the next base-10 digit LIN from the table (4) and append the same base-100 digit LIN (73). We prioritize the smaller value and roll back the base-100 digit accordingly to account for any extra letters added by the more significant base-10 digit.</p>
+<p>More generally speaking, when generating LINs iteratively, every time we add a more significant digit to produce the next LIN, we will prioritize the smallest possible value for that digit, but only if we are able to compensate by adjusting less significant digits. This happens to be the only time this occurs in this context (LINs under 1000), but we will encounter similar behavior later on as we define the method for generating much larger LINs.</p>
+<p>So let’s consider the other end of the problem space now and think big. If we need to know an arbitrarily large LIN, <img class="math" src="_images/math/94fcc56ca238a59b43882583d2b64463a917182c.svg" alt="x"/>, what would be the quickest way to at least <em>estimate</em> it? If we can define a process for reliably iterating between LINs <em>and</em> we can define an efficient method for estimating LINs to within an iterable distance, then we’ll be in business.</p>
+<p>To start, we know that 373 is the largest LIN under 1000, meaning it’s the largest <em>period value</em> LIN. Any LIN with a length greater than 24 will require more than one period. Additionally, beyond a certain threshold, as <img class="math" src="_images/math/94fcc56ca238a59b43882583d2b64463a917182c.svg" alt="x"/> goes to infinity the ratio of period value letters to period name letters goes to zero:</p>
+<div class="math">
+<p><img src="_images/math/a6d6bae1896b9148c41e3958994b4a32477d4509.svg" alt="\lim_{x \to \infty} \frac{L_{V}(x)}{L_{N}(x)} = 0"/></p>
+</div><p>This is important because it tells us that (most of the time at least) an overwhelming majority of the letters in a number’s name will come from its period name numerals. This threshold by the way seems to be in the <em>decillibillibillibillions</em> (1000<sup>10002002003</sup>). <em>Decillibillibillibillion</em> is the last Conway-Wechsler period name that has 24 or fewer letters in it. Thus, adding any period of greater magnitude will <em>always</em> result in adding more period name letters than period value letters. Anyway, I digress…</p>
+<p>The fastest way to a minimal value estimate would be to find the smallest number of periods our target number <em>must</em> have. For any target length <img class="math" src="_images/math/0e1f163fa8cddac56b538b46090ae347c9fa24a0.svg" alt="l_{t}"/> we might begin by searching only numbers consisting of periods with the value 373. We can call this sequence of estimates <img class="math" src="_images/math/98e2fb8d1015f41d1f2126e74350f0411e05d150.svg" alt="E"/>.</p>
+<div class="math">
+<p><img src="_images/math/15d22c3a26980fa4ad2484ab527f956bc973fc59.svg" alt="E = \Bigl( \overset{_{n}}{\overline{373}} \Bigr)_{n \in \mathbb{N}} = \left( \lfloor 0.\overline{373} \times 1000^{n} \rfloor \right)_{n \in \mathbb{N}} = (373, 373373, 373373373, \ldots)"/></p>
+</div><p>The goal here is actually pretty simple. Until we find a number longer than our target length, <img class="math" src="_images/math/0e1f163fa8cddac56b538b46090ae347c9fa24a0.svg" alt="l_{t}"/>, we want to maximize the number of letters we add with each period (not skipping any) while minimizing each period value. Mathematically, we could do this iteratively, but it’s much more efficient to use some variation of <a class="reference external" href="https://en.wikipedia.org/wiki/Exponential_search">exponential search</a>. We search until we find <img class="math" src="_images/math/fc729fead6bec27951ef585c282df762def63d1c.svg" alt="n"/> such that the following inequality is true:</p>
+<div class="math">
+<p><img src="_images/math/e6e66df1e03a9aab9836855511fecdc1867deb32.svg" alt="L\bigl(E_{n-1}\bigr) &lt; l_{t} \le L\bigl(E_{n}\bigr)"/></p>
+</div><p>Given <img class="math" src="_images/math/22fdb6692e6854d8bbd9ddffdb4f80c0b708fe4d.svg" alt="L(x) = l_{t}"/>, when the above inequality is true, then the following must also be true:</p>
+<div class="math">
+<p><img src="_images/math/9eed93ab50e25c681c712126c20ebe5f23eb8d8c.svg" alt="E_{n-1} &lt; x \le E_{n}"/></p>
+</div><p>So, once we find <img class="math" src="_images/math/fc729fead6bec27951ef585c282df762def63d1c.svg" alt="n"/>, we know <img class="math" src="_images/math/94fcc56ca238a59b43882583d2b64463a917182c.svg" alt="x"/> must be one of exactly <img class="math" src="_images/math/6b30b0bc6359e80603a143d6b0744f364076c3e1.svg" alt="373 \times 1000^{n}"/> integers in the interval <img class="math" src="_images/math/c5eae6cc2346cb5e4399255938b82f17647eace9.svg" alt="\bigl(E_{n-1}, E_{n}\bigr]"/>.</p>
+<p>That’s still a lot of numbers; in almost all cases, still too many to search exhaustively. If at this point <img class="math" src="_images/math/eb7437a5517965be122ce4e7b80c0ec510c72659.svg" alt="L(E_{n}) = l_{t}"/>, then we’ve won a hyper-cosmic scale lottery and need do nothing more; <img class="math" src="_images/math/a812aebc78883ada1bbd5f81dd583084472bb40d.svg" alt="x = E_{n}"/>. However, in the slightly more likely event that <img class="math" src="_images/math/4f25fe9ad701f8e9e03300861b11213626aa575a.svg" alt="l_{t} &lt; E_{n}"/>, then we can remove letters by converting some number, <img class="math" src="_images/math/5b11502ea854d276e15e27af1bc4848932266a34.svg" alt="m"/>, of the most significant 373 periods to 001. Each period we convert in this way removes 21 letters from our total length; 21 being the difference in length between <em>three hundred seventy-three</em> and <em>one</em>. Therefore, we can determine exactly how many leading periods we must convert:</p>
+<div class="math">
+<p><img src="_images/math/4507b8c7421c54c58370241e5d6bceb375989feb.svg" alt="m = \left\lceil \frac{L(E_{n}) - l_{t}}{21} \right\rceil"/></p>
+</div><p>With <img class="math" src="_images/math/5b11502ea854d276e15e27af1bc4848932266a34.svg" alt="m"/> in hand, we can define a number that is guaranteed to have a length within 21 letters of <img class="math" src="_images/math/0e1f163fa8cddac56b538b46090ae347c9fa24a0.svg" alt="l_{t}"/>:</p>
+<div class="math">
+<p><img src="_images/math/bfd9f87582eaf0b60ceae96a8a1450879f6acfe1.svg" alt="l_{t} - 21 &lt; L(\overset{_{m}}{\overline{001}},\overset{_{n-m}}{\overline{373}}) \le l_{t}"/></p>
+</div><p>We have but one step left from here. We must make up the difference in length (whatever it is) by modifying the last 001 period value (and potentially the first 373 period value). Our target LIN, <img class="math" src="_images/math/94fcc56ca238a59b43882583d2b64463a917182c.svg" alt="x"/>, must take the following form:</p>
+<div class="math">
+<p><img src="_images/math/ffd889c0be4200788ec346a3a2d973455ab8ff3e.svg" alt="x = \overset{_{m-1}}{\overline{001}},\overset{_{1}}{\overline{y}},\overset{_{1}}{\overline{z}},\overset{_{n-m-1}}{\overline{373}}"/></p>
+</div><p>There are only so many possibilities in this problem space. It would be trivial for a modern computer, but we can do the work once and create a table mapping each offset/difference, <img class="math" src="_images/math/ad7b13a7d11b2130d8938019f90e855eb1b3dadc.svg" alt="d"/>, to it’s corresponding <img class="math" src="_images/math/953e06b9249fa123df6bc548213389f1b9561245.svg" alt="y"/> &amp; <img class="math" src="_images/math/a201539da7ff37ab3b9759e63075010add3eab1d.svg" alt="z"/> values, both of which come from a subset of the LIN periods in our previous table.</p>
+<table class="docutils align-center" style="width: 100%">
+<thead>
+<tr class="row-odd"><th class="head"><p><img class="math" src="_images/math/425978cc4ce6ef5d2f7e90572623c74b329acae2.svg" alt="l_{t} - L(\overset{_{m}}{\overline{001}},\overset{_{n-m}}{\overline{373}})"/></p></th>
+<th class="head"><p><img class="math" src="_images/math/953e06b9249fa123df6bc548213389f1b9561245.svg" alt="y"/></p></th>
+<th class="head"><p><img class="math" src="_images/math/a201539da7ff37ab3b9759e63075010add3eab1d.svg" alt="z"/></p></th>
+<th class="head"><p><img class="math" src="_images/math/a4373f7cce562e6890083ce7aab9b01f0fb24078.svg" alt="L(y) + L(z)"/></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>003</p></td>
+<td><p>323</p></td>
+<td><p>28</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>003</p></td>
+<td><p>373</p></td>
+<td><p>29</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>011</p></td>
+<td><p>373</p></td>
+<td><p>30</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>013</p></td>
+<td><p>323</p></td>
+<td><p>31</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>013</p></td>
+<td><p>373</p></td>
+<td><p>32</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>017</p></td>
+<td><p>373</p></td>
+<td><p>33</p></td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>023</p></td>
+<td><p>323</p></td>
+<td><p>34</p></td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>023</p></td>
+<td><p>373</p></td>
+<td><p>35</p></td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>073</p></td>
+<td><p>373</p></td>
+<td><p>36</p></td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>101</p></td>
+<td><p>373</p></td>
+<td><p>37</p></td>
+</tr>
+<tr class="row-even"><td><p>11</p></td>
+<td><p>103</p></td>
+<td><p>323</p></td>
+<td><p>38</p></td>
+</tr>
+<tr class="row-odd"><td><p>12</p></td>
+<td><p>103</p></td>
+<td><p>373</p></td>
+<td><p>39</p></td>
+</tr>
+<tr class="row-even"><td><p>13</p></td>
+<td><p>111</p></td>
+<td><p>373</p></td>
+<td><p>40</p></td>
+</tr>
+<tr class="row-odd"><td><p>14</p></td>
+<td><p>113</p></td>
+<td><p>323</p></td>
+<td><p>41</p></td>
+</tr>
+<tr class="row-even"><td><p>15</p></td>
+<td><p>113</p></td>
+<td><p>373</p></td>
+<td><p>42</p></td>
+</tr>
+<tr class="row-odd"><td><p>16</p></td>
+<td><p>117</p></td>
+<td><p>373</p></td>
+<td><p>43</p></td>
+</tr>
+<tr class="row-even"><td><p>17</p></td>
+<td><p>123</p></td>
+<td><p>323</p></td>
+<td><p>44</p></td>
+</tr>
+<tr class="row-odd"><td><p>18</p></td>
+<td><p>123</p></td>
+<td><p>373</p></td>
+<td><p>45</p></td>
+</tr>
+<tr class="row-even"><td><p>19</p></td>
+<td><p>173</p></td>
+<td><p>373</p></td>
+<td><p>46</p></td>
+</tr>
+<tr class="row-odd"><td><p>20</p></td>
+<td><p>323</p></td>
+<td><p>373</p></td>
+<td><p>47</p></td>
+</tr>
+<tr class="row-even"><td><p>21</p></td>
+<td><p>373</p></td>
+<td><p>373</p></td>
+<td><p>48</p></td>
+</tr>
+</tbody>
+</table>
+<p>And that’s it… That’s all we need to know in order to generate any LIN, and subsequently (given enough time and resources), we could generate any 4-chain, <img class="math" src="_images/math/b6d62a8fb1d71f52edf6cffd41b6258f4db6da67.svg" alt="C_{n,1}"/>. So what is <img class="math" src="_images/math/f574cb67f6f47c09a1d33a4fdb5f0fe934a603ab.svg" alt="C_{8,1}"/>?</p>
+</section>
+<section id="c8-1-the-manual-exercise">
+<h2>C<sub>8,1</sub> : The Manual Exercise<a class="headerlink" href="#c8-1-the-manual-exercise" title="Permalink to this heading"></a></h2>
+<p>Using everything we’ve covered to this point, we can walk through the generation of <img class="math" src="_images/math/f574cb67f6f47c09a1d33a4fdb5f0fe934a603ab.svg" alt="C_{8,1}"/> as an example. Given only the chain Matt provided us in his video, <img class="math" src="_images/math/befeb34f0b15abb7ad4e306484fe9130f68b6e16.svg" alt="C_{6,1} = (4, 5, 3, 6, 11, 23)"/>, we can first find <img class="math" src="_images/math/017431170f6ddc8183d6aa4629705bf746d4a572.svg" alt="C_{7,1}"/> by combining what we know about LICs with our table of LINs under 1000:</p>
+<div class="math">
+<p><img src="_images/math/0bd587843510f96ffd81552a981bb0b55881027d.svg" alt="C_{7,1} &amp;= C_{6,1} + (C_{7,1,7}) \\
+        &amp;= C_{6,1} + \bigl(F(C_{6,1,6})\bigr) \\
+        &amp;= \bigl(4, 5, 3, 6, 11, 23, F(23)\bigr) \\
+        &amp;= \bigl(4, 5, 3, 6, 11, 23, 323\bigr) \\"/></p>
+</div><p>With <img class="math" src="_images/math/af62da09a6ccd50e2aadf6b6c65927691c0227a4.svg" alt="C_{7, 1}"/> in hand, we can search for <img class="math" src="_images/math/f574cb67f6f47c09a1d33a4fdb5f0fe934a603ab.svg" alt="C_{8,1}"/> by following our process above with <img class="math" src="_images/math/035d9d72059eead5be2eddbf1ccf21f3971c6025.svg" alt="l_{t} = L(C_{8,1,8}) = 323"/>:</p>
+<div class="math">
+<p><img src="_images/math/b9d7459316871b0d64deeec29c27bc25c41fcfc7.svg" alt="\begin{array}{rll}
+C_{8,1} = \bigl(4, 5, 3, 6, 11, 23, &amp; 323, &amp; F(323)\bigr) \\
+\\
+L\bigl(\overset{_{0}}{\overline{373}}\bigr) = 0 &lt;    &amp; 323 &amp; &gt; L\bigl(\overset{_{1}}{\overline{373}}\bigr) = 24 \\
+L\bigl(\overset{_{1}}{\overline{373}}\bigr) = 24 &lt;   &amp; 323 &amp; &gt; L\bigl(\overset{_{2}}{\overline{373}}\bigr) = 56 \\
+L\bigl(\overset{_{2}}{\overline{373}}\bigr) = 56 &lt;   &amp; 323 &amp; &gt; L\bigl(\overset{_{4}}{\overline{373}}\bigr) = 118 \\
+L\bigl(\overset{_{4}}{\overline{373}}\bigr) = 118 &lt;  &amp; 323 &amp; &gt; L\bigl(\overset{_{8}}{\overline{373}}\bigr) = 254 \\
+L\bigl(\overset{_{8}}{\overline{373}}\bigr) = 254 &lt;  &amp; 323 &amp; &lt; L\bigl(\overset{_{16}}{\overline{373}}\bigr) = 535 \\
+\\
+L\bigl(\overset{_{8}}{\overline{373}}\bigr) = 254 &lt;  &amp; 323 &amp; &lt; L\bigl(\overset{_{12}}{\overline{373}}\bigr) = 387 \\
+L\bigl(\overset{_{10}}{\overline{373}}\bigr) = 321 &lt; &amp; 323 &amp; &lt; L\bigl(\overset{_{12}}{\overline{373}}\bigr) = 387 \\
+L\bigl(\overset{_{10}}{\overline{373}}\bigr) = 321 &lt; &amp; 323 &amp; &lt; L\bigl(\overset{_{11}}{\overline{373}}\bigr) = 354 \\
+\\
+  &amp; 323 &amp;&gt; L\bigl(\overset{_{2}}{\overline{001}},\!\overset{_{9}}{\overline{373}}\bigr) = 312 &gt; 302 \\
+  &amp; 323 &amp;= L\bigl(\overset{_{1}}{\overline{001}},\!\overset{_{1}}{\overline{103}},\!\overset{_{1}}{\overline{323}},\!\overset{_{8}}{\overline{373}}\bigr) \\
+F(&amp; 323 &amp;) = 1103323\overset{_{8}}{\overline{373}} \\
+\\
+C_{8,1} = \bigl(4, 5, 3, 6, 11, 23, &amp; 323, &amp; 1103323\overset{_{8}}{\overline{373}}\bigr) \\
+\\
+\end{array}"/></p>
+</div></section>
+<section id="c9-1-an-abrupt-conclusion">
+<h2>C<sub>9,1</sub> : An Abrupt Conclusion<a class="headerlink" href="#c9-1-an-abrupt-conclusion" title="Permalink to this heading"></a></h2>
+<p>Repeating this process manually for <img class="math" src="_images/math/d4924fdaa75e0b99e7d491a5d97487e6cbea4699.svg" alt="C_{9,1}"/> would be unreasonable. We’re talking about finding a number with over a <em>nonillion</em> letters in it’s name. Thankfully, it’s not outside the realm of computation just yet. So I guess this is where this pseudo-paper of mine comes to an end and where my code must speak for itself. There’s just not much more to say, other than that this package was written with the express purpose of finding numbers like <img class="math" src="_images/math/d4924fdaa75e0b99e7d491a5d97487e6cbea4699.svg" alt="C_{9,1}"/>. Feel free to install four and try it out for yourself. The best I can do at this point here is cut to the chase and present you with the result. Assuming I’ve made no mistakes…</p>
+<div class="math">
+<p><img src="_images/math/6dff02d2c8ac7ef113a4d9e36790dfe8565db8ad.svg" alt="C_{9,1} = \bigl(4, 5, 3, 6, 11, 23, 323, 1103323\overset{_{8}}{\overline{373}}, \overset{_{5}}{\overline{001}}103323\overset{_{x}}{\overline{373}}\bigr), \text{where}\ x = 4664040982447497675590741019"/></p>
+</div><p>Expressing this number in more traditional mathematical terms might look something like this:</p>
+<div class="math">
+<p><img src="_images/math/66a46d741e0cfd8201173b5edfeb7978cc69f65b.svg" alt="C_{9,1,9} = 1.001001001001103323 \times 1000^{4664040982447497675590741025} + \sum_{i=0}^{4664040982447497675590741018} 373 \times 1000^{i}"/></p>
+</div><p>To offer a bit of perspective, the current general consensus in the scientific community seems to be that there are somewhere between one quinquavigintillion (10<sup>78</sup>) and one sesvigintillion (10<sup>82</sup>) atoms in the observable universe. The name of <img class="math" src="_images/math/75e8f088236c1dd552e20c3c0063d2e127e308fa.svg" alt="C_{9,1,9}"/> merely begins with <em>one quadrilli-quattuorsexagintasescentilli-quadragintilli-duooctogintanongentilli-septenquadragintaquadringentilli-septenonagintaquadringentilli-quinquaseptuagintasescentilli-nonagintaquingentilli-unquadragintaseptingentilli-quinquavigintillion …</em></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Developer’s Note" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="package.html" class="btn btn-neutral float-right" title="Package Contents" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

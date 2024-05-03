@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>four.infer &mdash; Four 0.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=44496db0"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Four
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Math</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../math.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../math.html#number-anatomy">Number Anatomy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../math.html#chain-concepts">4-Chain Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../math.html#hunting-for-8-9">Hunting for 8 &amp; 9</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../package.html">Package Contents</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Four</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">four.infer</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for four.infer</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Estimate the number of periods in letter-efficient numbers given a</span>
+<span class="sd">target name length.</span>
+
+<span class="sd">CLI Subcommand</span>
+<span class="sd">==============</span>
+
+<span class="sd">.. autoprogram:: four.infer:parser</span>
+<span class="sd">   :prog: four infer</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># annotations</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Tuple</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">Callable</span><span class="p">)</span>
+
+<span class="c1"># external</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">_numpy</span>
+<span class="kn">import</span> <span class="nn">argparse</span> <span class="k">as</span> <span class="nn">_argparse</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span> <span class="k">as</span> <span class="n">_Path</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span> <span class="k">as</span> <span class="n">_wraps</span>
+<span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span> <span class="k">as</span> <span class="n">_Decimal</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">curve_fit</span> <span class="k">as</span> <span class="n">_curve_fit</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">_plt</span>
+
+<span class="c1"># internal</span>
+<span class="kn">from</span> <span class="nn">four._oo_api</span> <span class="kn">import</span> <span class="n">PNumber</span><span class="p">,</span> <span class="n">PNumberLike</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;parser&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;metadata&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LENGTH_PERIODS_TO_TARGET_PERIODS&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;iter_quick_targets&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;iter_exact_targets&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;quick_quotient_predictions&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;quick_power_predictions&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;exact_quotient_predictions&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;exact_power_predictions&quot;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="metadata"><a class="viewcode-back" href="../../package/four.infer.html#four.infer.metadata">[docs]</a><span class="k">def</span> <span class="nf">metadata</span><span class="p">(</span><span class="o">**</span><span class="n">attributes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Add a metadata dict with the given attributes to a function.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        **attributes: keyword arguments for the metadata dict to</span>
+<span class="sd">            be added to any functions decorated by the resulting</span>
+<span class="sd">            decorator.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Callable: A function decorator.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">function</span><span class="p">):</span>
+        <span class="n">function</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="o">**</span><span class="n">attributes</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">function</span>
+    <span class="k">return</span> <span class="n">decorator</span></div>
+
+
+<span class="n">_NUM_PERIODS_LIMIT</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">80</span>
+
+
+<span class="c1"># flake8: noqa E501</span>
+<span class="n">_LENGTH_PERIODS_TO_TARGETS</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="s1">&#39;PNumber&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">),</span>  <span class="c1"># special case</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;23323[373]</span><span class="si">{10}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;1113323[373]</span><span class="si">{6813}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;[001]</span><span class="si">{2}</span><span class="s2">101[373]</span><span class="si">{4871694}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;[001]</span><span class="si">{5}</span><span class="s2">123323[373]</span><span class="si">{3791494971}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;[001]</span><span class="si">{3}</span><span class="s2">[373]</span><span class="si">{3092853994989}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;1111[373]</span><span class="si">{2606002475064901}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;1023[373]</span><span class="si">{2254991260552259193}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;[001]</span><span class="si">{4}</span><span class="s2">011[373]</span><span class="si">{1979011924519216258099}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;[001]</span><span class="si">{6}</span><span class="s2">023[373]</span><span class="si">{1769139951254665665194745}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;13[373]</span><span class="si">{1599094619904847217338965998}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;[001]</span><span class="si">{11}</span><span class="s2">113323[373]</span><span class="si">{1459597675004987823940303423468}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;1023323[373]</span><span class="si">{1342630260718287677471881486112769}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;1[373]</span><span class="si">{1241974586839600506950334186979234030}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;[001]</span><span class="si">{9}</span><span class="s2">103[373]</span><span class="si">{1154822795145947607586005151997230900878}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;1173[373]</span><span class="si">{1078536012673848841885528843874391056212397}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;[001]</span><span class="si">{10}</span><span class="s2">003[373]</span><span class="si">{1011368893462550309303348839638098831508521905}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;[001]</span><span class="si">{15}</span><span class="s2">023[373]</span><span class="si">{952298907634362342715309199373403290388424993440}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;[001]</span><span class="si">{6}</span><span class="s2">013323[373]</span><span class="si">{899582009592966764742145990168693237057157169096767}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;[001]</span><span class="si">{9}</span><span class="s2">323[373]</span><span class="si">{853016277682649080751443513223200504054031722089945126}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;1111[373]</span><span class="si">{810842244143078230207178526848445570765639452671396053015}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;[001]</span><span class="si">{9}</span><span class="s2">003323[373]</span><span class="si">{772629157016700279190079590303687484322902672529866859284805}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;[001]</span><span class="si">{11}</span><span class="s2">113323[373]</span><span class="si">{738108150896247048761949783579790129077024324473713590411617993}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;[001]</span><span class="si">{23}</span><span class="s2">113[373]</span><span class="si">{706250496598018934045305116753208728479925160646619335762356070482}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;[001]</span><span class="si">{24}</span><span class="s2">111[373]</span><span class="si">{676991714116884157849439377675579051317959756266912472332511840499179}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;[001]</span><span class="si">{26}</span><span class="s2">103323[373]</span><span class="si">{650187289137337413741767935402059560884890228828331276190907287787851105}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;[001]</span><span class="si">{12}</span><span class="s2">323[373]</span><span class="si">{625370743334828808769672391164150624787772897946318093436104159473006135911}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;323[373]</span><span class="si">{602161787945501785691808024798459898599267734515983437405811022825770582378182}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;[001]</span><span class="si">{17}</span><span class="s2">111[373]</span><span class="si">{580790728347595654231718547425758831837688847497539541197768262761298377335527995}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;[001]</span><span class="si">{29}</span><span class="s2">003323[373]</span><span class="si">{560950519157670543253128955152083170154477733834327522851337826267419549587212730810}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;[001]</span><span class="si">{19}</span><span class="s2">103323[373]</span><span class="si">{542469293934532238342458452769793933320365718251515987735582372390744898849938747523698}</span><span class="s2">&quot;</span><span class="p">),</span>
+    <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;[001]</span><span class="si">{22}</span><span class="s2">103323[373]</span><span class="si">{525077457265377517240598187599087087743988499027922875261418908490442649634380496044544852}</span><span class="s2">&quot;</span><span class="p">))</span>
+
+
+<span class="n">LENGTH_PERIODS_TO_TARGET_PERIODS</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">num_periods</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">_LENGTH_PERIODS_TO_TARGETS</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Tuple mapping the number of periods `P` in the length `L` of a</span>
+<span class="sd">number `N`&#39;s name, to the number of periods in `N` for the first</span>
+<span class="sd">32 most letter-efficient numbers with names of length `L`, where</span>
+<span class="sd">:math:`L = \\sum_{x=0}^{P} 373 \\times 1000^x` when :math:`P \\ne 0`.</span>
+<span class="sd">When `P = 0`, `L = 1` since no number can have fewer than 1 period.</span>
+
+<span class="sd">Example:</span>
+<span class="sd">    &gt;&gt;&gt; n = PNumber(&quot;1113323[373]{6813}&quot;)</span>
+<span class="sd">    &gt;&gt;&gt; n.name_length == PNumber(&quot;[373]{2}&quot;)</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; LENGTH_PERIODS_TO_TARGET_PERIODS[2] == n.num_periods</span>
+<span class="sd">    True</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">_iter_x_as_period_lists</span><span class="p">(</span>
+        <span class="n">X</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">PNumberLike</span><span class="p">]</span> <span class="c1"># noqa</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="s1">&#39;PNumber&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Iterate over each value x in X and yield x as a PNumber.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        X: Values to cast to PNumbers.</span>
+
+<span class="sd">    Yields:</span>
+<span class="sd">        PNumber: Each value in X cast to a PNumber.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">yield from</span> <span class="p">(</span>
+        <span class="n">number</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">PNumber</span><span class="p">)</span>
+        <span class="k">else</span> <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;373&quot;</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="n">X</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="iter_exact_targets"><a class="viewcode-back" href="../../package/four.infer.html#four.infer.iter_exact_targets">[docs]</a><span class="k">def</span> <span class="nf">iter_exact_targets</span><span class="p">(</span>
+        <span class="n">X</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">PNumberLike</span><span class="p">]</span> <span class="c1"># noqa</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Iterate over X yielding the exact value of each PNumber.</span>
+
+<span class="sd">    While the exact value of a PNumber is calculated using string</span>
+<span class="sd">    multiplication and concatenations for performance reasons,</span>
+<span class="sd">    mathematically it is a nested summation:</span>
+
+<span class="sd">    .. math:: x = \\sum_{i=0}^{L}\\sum_{j=L-R}^{R}</span>
+
+<span class="sd">    int(&#39;&#39;.join(str(value).zfill(3) * repeat for value, repeat in self))</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        X: todo</span>
+
+<span class="sd">    Yields:</span>
+<span class="sd">        int: The Exact value of each PNumber in X.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">yield from</span> <span class="p">(</span>
+        <span class="nb">int</span><span class="p">(</span><span class="n">periods</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">periods</span> <span class="ow">in</span> <span class="n">_iter_x_as_period_lists</span><span class="p">(</span><span class="n">X</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="iter_quick_targets"><a class="viewcode-back" href="../../package/four.infer.html#four.infer.iter_quick_targets">[docs]</a><span class="k">def</span> <span class="nf">iter_quick_targets</span><span class="p">(</span>
+        <span class="n">X</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">PNumberLike</span><span class="p">]</span> <span class="c1"># noqa</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Iterate over X yielding the approximate value of each PNumber.</span>
+
+<span class="sd">    Each PNumber x in X is approximated by multiplying the value of the</span>
+<span class="sd">    leading period by the power of 1000 equal to the total number of</span>
+<span class="sd">    periods in the number x.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        X: todo</span>
+
+<span class="sd">    Yields:</span>
+<span class="sd">        int: Approximation for the value of each PNumber in X.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">yield from</span> <span class="p">(</span>
+        <span class="n">periods</span><span class="o">.</span><span class="n">approximate</span><span class="p">(</span><span class="n">num_periods</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">periods</span> <span class="ow">in</span> <span class="n">_iter_x_as_period_lists</span><span class="p">(</span><span class="n">X</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="quick_quotient_predictions"><a class="viewcode-back" href="../../package/four.infer.html#four.infer.quick_quotient_predictions">[docs]</a><span class="nd">@metadata</span><span class="p">(</span><span class="n">equation_template</span><span class="o">=</span><span class="s2">&quot;F(x) ≈ x / </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">quick_quotient_predictions</span><span class="p">(</span>
+        <span class="n">X</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">PNumberLike</span><span class="p">],</span> <span class="c1"># noqa</span>
+        <span class="n">a</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">712275</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Use integer division :math:`p \\approx x \\div a` to predict the</span>
+<span class="sd">    number of periods `p` in the smallest number `n` with a name `x`</span>
+<span class="sd">    letters long for each target length in `X` such that</span>
+<span class="sd">    :math:`n \\approx 373 \\times 1000^p`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        X: Target name lengths.</span>
+<span class="sd">        a: Integer division denominator.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List[int]: Predictions for each target length x in X.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">//</span> <span class="n">a</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">iter_quick_targets</span><span class="p">(</span><span class="n">X</span><span class="p">)]</span></div>
+
+
+<div class="viewcode-block" id="exact_quotient_predictions"><a class="viewcode-back" href="../../package/four.infer.html#four.infer.exact_quotient_predictions">[docs]</a><span class="nd">@metadata</span><span class="p">(</span><span class="n">equation_template</span><span class="o">=</span><span class="s2">&quot;F(x) ≈ x / </span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">exact_quotient_predictions</span><span class="p">(</span>
+        <span class="n">X</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">PNumberLike</span><span class="p">],</span> <span class="c1"># noqa</span>
+        <span class="n">a</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">711</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Use integer division :math:`p \\approx x \\div a` to predict the</span>
+<span class="sd">    number of periods `p` in the smallest number `n` with a name `x`</span>
+<span class="sd">    letters long for each target length in `X` such that</span>
+<span class="sd">    :math:`n \\approx \\sum_{i=0}^{p} 373 \\times 1000^i`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        X: Target name lengths.</span>
+<span class="sd">        a: integer division denominator.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List[int]: Predictions for each target length x in X.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">//</span> <span class="n">a</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">iter_exact_targets</span><span class="p">(</span><span class="n">X</span><span class="p">)]</span></div>
+
+
+<div class="viewcode-block" id="quick_power_predictions"><a class="viewcode-back" href="../../package/four.infer.html#four.infer.quick_power_predictions">[docs]</a><span class="nd">@metadata</span><span class="p">(</span><span class="n">equation_template</span><span class="o">=</span><span class="s2">&quot;F(x) ≈ </span><span class="si">{:e}</span><span class="s2"> * x^</span><span class="si">{:e}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">quick_power_predictions</span><span class="p">(</span>
+        <span class="n">X</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">PNumberLike</span><span class="p">],</span> <span class="c1"># noqa</span>
+        <span class="n">a</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">3.964551835037818e-06</span><span class="p">,</span>
+        <span class="n">b</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">9.952827374375254e-01</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Use power equation :math:`p \\approx ax^b` to predict the number of</span>
+<span class="sd">    periods `p` in the smallest number `n` with a name `x` letters long</span>
+<span class="sd">    for each target length in `X` such that</span>
+<span class="sd">    :math:`n \\approx\\ 373 \\times 1000^{p}`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        X: Target name lengths.</span>
+<span class="sd">        a: power equation base coefficient.</span>
+<span class="sd">        b: power equation exponent.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List[float]: Predictions for each target length x in X.</span>
+
+<span class="sd">    Todo:</span>
+<span class="sd">        - See if Decimals will work in place of floats.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="nb">float</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">**</span> <span class="n">b</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">iter_quick_targets</span><span class="p">(</span><span class="n">X</span><span class="p">)]</span></div>
+
+
+<div class="viewcode-block" id="exact_power_predictions"><a class="viewcode-back" href="../../package/four.infer.html#four.infer.exact_power_predictions">[docs]</a><span class="nd">@metadata</span><span class="p">(</span><span class="n">equation_template</span><span class="o">=</span><span class="s2">&quot;F(x) ≈ </span><span class="si">{:e}</span><span class="s2"> * x^</span><span class="si">{:e}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">exact_power_predictions</span><span class="p">(</span>
+        <span class="n">X</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">PNumberLike</span><span class="p">],</span> <span class="c1"># noqa</span>
+        <span class="n">a</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">3.8438562337548433e-03</span><span class="p">,</span>
+        <span class="n">b</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">9.952827374375255e-01</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Use power equation :math:`p \\approx ax^b` to predict the number of</span>
+<span class="sd">    periods `p` in the smallest number `n` with a name `x` letters long</span>
+<span class="sd">    for each target length in `X` such that</span>
+<span class="sd">    :math:`n \\approx \\sum_{i=0}^{p} 373 \\times1000^i`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        X: Target name lengths.</span>
+<span class="sd">        a: power equation base coefficient.</span>
+<span class="sd">        b: power equation exponent.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List[float]: Predictions for each target length x in X.</span>
+
+<span class="sd">    Todo:</span>
+<span class="sd">        - See if Decimals will work in place of floats.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="nb">float</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">**</span> <span class="n">b</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">iter_exact_targets</span><span class="p">(</span><span class="n">X</span><span class="p">)]</span></div>
+
+
+<span class="nd">@metadata</span><span class="p">(</span><span class="n">equation_template</span><span class="o">=</span><span class="s2">&quot;F(x) ≈ </span><span class="si">{:e}</span><span class="s2"> * x^</span><span class="si">{:e}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">prototype_predict</span><span class="p">(</span>
+        <span class="n">X</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">PNumberLike</span><span class="p">],</span> <span class="c1"># noqa</span>
+        <span class="n">a</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">b</span><span class="p">:</span> <span class="nb">float</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    todo</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        X: Target name lengths.</span>
+<span class="sd">        a: power equation base coefficient.</span>
+<span class="sd">        b: power equation exponent.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List[float]: Predictions for each target length x in X.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">an</span><span class="p">,</span> <span class="n">ad</span> <span class="o">=</span> <span class="n">_Decimal</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">as_integer_ratio</span><span class="p">()</span>
+    <span class="n">bn</span><span class="p">,</span> <span class="n">bd</span> <span class="o">=</span> <span class="n">_Decimal</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">as_integer_ratio</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">get_n_root</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="o">...</span>  <span class="c1"># todo...</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">iter_exact_targets</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">an</span> <span class="o">*</span> <span class="p">(</span><span class="n">get_n_root</span><span class="p">(</span><span class="n">bd</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span> <span class="o">**</span> <span class="n">bn</span><span class="p">))</span> <span class="o">//</span> <span class="n">ad</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">result</span>
+
+
+<span class="k">def</span> <span class="nf">_infer</span><span class="p">(</span>
+        <span class="n">targets</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="s1">&#39;PNumber&#39;</span><span class="p">],</span>
+        <span class="n">graph_result</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">use_integer_math</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">approximate_targets</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">function</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Entry point for four infer.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        targets: Target number length(s).</span>
+<span class="sd">        graph_result: Graph the resulting prediction(s) when True;</span>
+<span class="sd">            default = False</span>
+<span class="sd">        use_integer_math: Use equations compatible with integer math</span>
+<span class="sd">            when True; default = False.</span>
+<span class="sd">        approximate_targets: Approximate targets by largest period when</span>
+<span class="sd">            True; default = False.</span>
+<span class="sd">        function: Ignore use_integer_math and approximate_targets and</span>
+<span class="sd">            use custom predictive function instead; default None.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">train_y</span> <span class="o">=</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">LENGTH_PERIODS_TO_TARGET_PERIODS</span><span class="p">)</span>
+    <span class="n">train_x</span> <span class="o">=</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_y</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="n">func</span> <span class="o">=</span> <span class="n">function</span> <span class="ow">or</span> <span class="p">{</span>
+        <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span> <span class="n">exact_power_predictions</span><span class="p">,</span>
+        <span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span> <span class="n">quick_power_predictions</span><span class="p">,</span>
+        <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span> <span class="n">exact_quotient_predictions</span><span class="p">,</span>
+        <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span> <span class="n">quick_quotient_predictions</span><span class="p">,</span>
+    <span class="p">}[</span><span class="n">use_integer_math</span><span class="p">,</span> <span class="n">approximate_targets</span><span class="p">]</span>
+
+    <span class="c1"># floats required for training but not prediction</span>
+    <span class="n">train_func</span> <span class="o">=</span> <span class="n">_wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)(</span>
+        <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+            <span class="nb">float</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">))</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)]))</span>
+
+    <span class="n">popt</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span> <span class="o">=</span> <span class="n">_curve_fit</span><span class="p">(</span><span class="n">train_func</span><span class="p">,</span> <span class="n">train_x</span><span class="p">,</span> <span class="n">train_y</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">use_integer_math</span><span class="p">:</span>
+        <span class="n">popt</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">popt</span><span class="p">]</span>
+
+    <span class="n">target_length_periods</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">num_periods</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">targets</span><span class="p">]</span>
+    <span class="n">target_number_periods</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="o">*</span><span class="n">popt</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">target</span><span class="p">,</span> <span class="n">tnp</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">target_number_periods</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The smallest number with a </span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s2">&quot;</span>
+              <span class="sa">f</span><span class="s2">&quot; letter name is ≈[373]</span><span class="se">{{</span><span class="si">{</span><span class="n">tnp</span><span class="si">}</span><span class="se">}}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">graph_result</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">targets</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">target</span><span class="o">.</span><span class="n">num_periods</span> <span class="o">&gt;</span> <span class="n">_NUM_PERIODS_LIMIT</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s2"> may be too large to graph!&quot;</span><span class="p">)</span>
+
+        <span class="n">eq_label</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(x&quot;</span> <span class="o">+</span> <span class="s2">&quot;, </span><span class="si">{}</span><span class="s2">&quot;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">popt</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="s2">&quot;metadata&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">eq_label</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;equation_template&quot;</span><span class="p">,</span> <span class="n">eq_label</span><span class="p">)</span>
+
+        <span class="n">curve_x</span> <span class="o">=</span> <span class="n">_numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">_NUM_PERIODS_LIMIT</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">curve_y</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">curve_x</span><span class="p">,</span> <span class="o">*</span><span class="n">popt</span><span class="p">)</span>
+
+        <span class="n">_plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">curve_x</span><span class="p">,</span> <span class="n">curve_y</span><span class="p">,</span> <span class="s2">&quot;k-&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">eq_label</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">popt</span><span class="p">))</span>
+        <span class="n">_plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">train_x</span><span class="p">,</span> <span class="n">train_y</span><span class="p">,</span> <span class="s2">&quot;ko&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training Data&quot;</span><span class="p">)</span>
+
+        <span class="n">_plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">target_length_periods</span><span class="p">,</span> <span class="n">target_number_periods</span><span class="p">,</span> <span class="s2">&quot;ro&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Estimate(s)&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">target</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">target_length_periods</span><span class="p">,</span> <span class="n">target_number_periods</span><span class="p">):</span>
+            <span class="n">_plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="se">\n</span><span class="s2">(</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">, ≈</span><span class="si">{</span><span class="n">y</span><span class="si">:</span><span class="s2">e</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">xycoords</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">,</span>
+                <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">verticalalignment</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">)</span>
+
+        <span class="n">_plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;# of Periods in Target Number Name Length&quot;</span><span class="p">)</span>
+        <span class="n">_plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;# of Periods in Target Number&quot;</span><span class="p">)</span>
+        <span class="n">_plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+        <span class="n">_plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+        <span class="n">_plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+        <span class="n">_plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">_argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+    <span class="n">prog</span><span class="o">=</span><span class="n">_Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">stem</span><span class="p">,</span>
+    <span class="n">formatter_class</span><span class="o">=</span><span class="n">_argparse</span><span class="o">.</span><span class="n">RawTextHelpFormatter</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;estimate letter-efficient numbers&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">_infer</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+    <span class="s1">&#39;targets&#39;</span><span class="p">,</span>
+    <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span>
+    <span class="nb">type</span><span class="o">=</span><span class="n">PNumber</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Target number length(s)&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+    <span class="s2">&quot;-g&quot;</span><span class="p">,</span> <span class="s2">&quot;--graph&quot;</span><span class="p">,</span>
+    <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+    <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;graph_result&quot;</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;graph the resulting prediction(s)&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+    <span class="s2">&quot;-w&quot;</span><span class="p">,</span> <span class="s2">&quot;--whole&quot;</span><span class="p">,</span>
+    <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+    <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;use_integer_math&quot;</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;use equation with only whole numbers: F(x, a) = T(x) / a</span><span class="se">\n</span><span class="s2">&quot;</span>
+         <span class="s2">&quot;instead of default power equation: F(x, a, b) = a * T(x) ** b&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+    <span class="s2">&quot;-q&quot;</span><span class="p">,</span> <span class="s2">&quot;--quick&quot;</span><span class="p">,</span>
+    <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+    <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;approximate_targets&quot;</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;approximate targets by largest period: T(x) = 373 * 1000 ** x</span><span class="se">\n</span><span class="s2">&quot;</span>
+         <span class="s2">&quot;instead of using entire target value: T(x) = int(x)&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+    <span class="s2">&quot;-f&quot;</span><span class="p">,</span> <span class="s2">&quot;--function&quot;</span><span class="p">,</span>
+    <span class="nb">type</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="nb">globals</span><span class="p">()[</span><span class="n">f</span><span class="p">],</span>
+    <span class="n">help</span><span class="o">=</span><span class="n">_argparse</span><span class="o">.</span><span class="n">SUPPRESS</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c1"># call func with parsed args</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="nb">vars</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">())</span>
+    <span class="n">inputs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;func&#39;</span><span class="p">,</span> <span class="n">parser</span><span class="o">.</span><span class="n">print_help</span><span class="p">)(</span><span class="o">**</span><span class="n">inputs</span><span class="p">)</span>  <span class="c1"># noqa</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

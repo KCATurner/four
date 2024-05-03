@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>four._core &mdash; Four 0.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=44496db0"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Four
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Math</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../math.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../math.html#number-anatomy">Number Anatomy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../math.html#chain-concepts">4-Chain Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../math.html#hunting-for-8-9">Hunting for 8 &amp; 9</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../package.html">Package Contents</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Four</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">four._core</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for four._core</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Common functions and artifacts shared between other submodules.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># annotations</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Generator</span>
+
+<span class="c1"># external</span>
+<span class="kn">import</span> <span class="nn">re</span> <span class="k">as</span> <span class="nn">_re</span>
+<span class="kn">import</span> <span class="nn">math</span> <span class="k">as</span> <span class="nn">_math</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;PERIOD_PATTERN&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;KEY_PERIOD_VALUES&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;KEY_PERIOD_EXCEPTIONS&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;rebase&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;occurs&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;letters&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;status&quot;</span><span class="p">]</span>
+
+
+<span class="n">PERIOD_PATTERN</span> <span class="o">=</span> <span class="n">_re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+    <span class="sa">r</span><span class="s2">&quot;\[?(?P&lt;period&gt;&quot;</span>
+    <span class="sa">r</span><span class="s2">&quot;^\d{1,3}(?=(?:\d</span><span class="si">{3}</span><span class="s2">)*(?:\[\d|$))&quot;</span>
+    <span class="sa">r</span><span class="s2">&quot;|(?&lt;=\d|\})\d</span><span class="si">{3}</span><span class="s2">(?=\[?\d|$)&quot;</span>
+    <span class="sa">r</span><span class="s2">&quot;|(?&lt;=\[)\d</span><span class="si">{3}</span><span class="s2">(?=\]\{\d+\}))&quot;</span>
+    <span class="sa">r</span><span class="s2">&quot;(?:\]\{)?&quot;</span>
+    <span class="sa">r</span><span class="s2">&quot;(?P&lt;repeat&gt;(?&lt;=\[\d</span><span class="si">{3}</span><span class="s2">\]\{)\d+(?=\}))?\}?&quot;</span>
+    <span class="sa">r</span><span class="s2">&quot;|(?P&lt;error&gt;.+)&quot;</span><span class="p">)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Regular expression for parsing string representations of period-lists.</span>
+
+<span class="sd">The pattern is written to iterate over a period-list string and yield</span>
+<span class="sd">matches for each properly formatted period. A properly formatted period</span>
+<span class="sd">either appears as a repetition like &quot;[P]{R}&quot; where R &gt; 0, or as exactly</span>
+<span class="sd">3 digits. A period with fewer than 3 digits may appear, but only at the</span>
+<span class="sd">very beginning of the period-list string.</span>
+
+<span class="sd">Each match has the following named capture groups:</span>
+
+<span class="sd">    period:</span>
+<span class="sd">        Captures the value of each period.</span>
+<span class="sd">    repeat:</span>
+<span class="sd">        Captures the repeat value when the captured period is a</span>
+<span class="sd">        repetition, otherwise None.</span>
+<span class="sd">    error:</span>
+<span class="sd">        Captures any improper formatting; None when the period-list</span>
+<span class="sd">        string is well-formed. If error is captured, period and repeat</span>
+<span class="sd">        will be None.</span>
+
+<span class="sd">Examples:</span>
+<span class="sd">    &gt;&gt;&gt; for match in PERIOD_PATTERN.finditer(&quot;12345[678]{9}000&quot;):</span>
+<span class="sd">    ...     print(match.groupdict())</span>
+<span class="sd">    ...</span>
+<span class="sd">    {&#39;period&#39;: &#39;12&#39;, &#39;repeat&#39;: None, &#39;error&#39;: None}</span>
+<span class="sd">    {&#39;period&#39;: &#39;345&#39;, &#39;repeat&#39;: None, &#39;error&#39;: None}</span>
+<span class="sd">    {&#39;period&#39;: &#39;678&#39;, &#39;repeat&#39;: &#39;9&#39;, &#39;error&#39;: None}</span>
+<span class="sd">    {&#39;period&#39;: &#39;000&#39;, &#39;repeat&#39;: None, &#39;error&#39;: None}</span>
+
+<span class="sd">    &gt;&gt;&gt; for match in PERIOD_PATTERN.finditer(&quot;12345[678]{90}00&quot;):</span>
+<span class="sd">    ...     print(match.groupdict())</span>
+<span class="sd">    ...</span>
+<span class="sd">    {&#39;period&#39;: &#39;12&#39;, &#39;repeat&#39;: None, &#39;error&#39;: None}</span>
+<span class="sd">    {&#39;period&#39;: &#39;345&#39;, &#39;repeat&#39;: None, &#39;error&#39;: None}</span>
+<span class="sd">    {&#39;period&#39;: &#39;678&#39;, &#39;repeat&#39;: &#39;90&#39;, &#39;error&#39;: None}</span>
+<span class="sd">    {&#39;period&#39;: None, &#39;repeat&#39;: None, &#39;error&#39;: &#39;00&#39;}</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="n">KEY_PERIOD_VALUES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">3</span><span class="p">:</span>  <span class="mi">1</span><span class="p">,</span>    <span class="c1"># one</span>
+    <span class="mi">4</span><span class="p">:</span>  <span class="mi">4</span><span class="p">,</span>    <span class="c1"># four</span>
+    <span class="mi">5</span><span class="p">:</span>  <span class="mi">3</span><span class="p">,</span>    <span class="c1"># three</span>
+    <span class="mi">6</span><span class="p">:</span>  <span class="mi">11</span><span class="p">,</span>   <span class="c1"># eleven</span>
+    <span class="mi">7</span><span class="p">:</span>  <span class="mi">15</span><span class="p">,</span>   <span class="c1"># fifteen</span>
+    <span class="mi">8</span><span class="p">:</span>  <span class="mi">13</span><span class="p">,</span>   <span class="c1"># thirteen</span>
+    <span class="mi">9</span><span class="p">:</span>  <span class="mi">17</span><span class="p">,</span>   <span class="c1"># seventeen</span>
+    <span class="mi">10</span><span class="p">:</span> <span class="mi">24</span><span class="p">,</span>   <span class="c1"># twenty-four</span>
+    <span class="mi">11</span><span class="p">:</span> <span class="mi">23</span><span class="p">,</span>   <span class="c1"># twenty-three</span>
+    <span class="mi">12</span><span class="p">:</span> <span class="mi">73</span><span class="p">,</span>   <span class="c1"># seventy-three</span>
+    <span class="mi">13</span><span class="p">:</span> <span class="mi">101</span><span class="p">,</span>  <span class="c1"># one hundred one</span>
+    <span class="mi">14</span><span class="p">:</span> <span class="mi">104</span><span class="p">,</span>  <span class="c1"># one hundred four</span>
+    <span class="mi">15</span><span class="p">:</span> <span class="mi">103</span><span class="p">,</span>  <span class="c1"># one hundred three</span>
+    <span class="mi">16</span><span class="p">:</span> <span class="mi">111</span><span class="p">,</span>  <span class="c1"># one hundred eleven</span>
+    <span class="mi">17</span><span class="p">:</span> <span class="mi">115</span><span class="p">,</span>  <span class="c1"># one hundred fifteen</span>
+    <span class="mi">18</span><span class="p">:</span> <span class="mi">113</span><span class="p">,</span>  <span class="c1"># one hundred thirteen</span>
+    <span class="mi">19</span><span class="p">:</span> <span class="mi">117</span><span class="p">,</span>  <span class="c1"># one hundred seventeen</span>
+    <span class="mi">20</span><span class="p">:</span> <span class="mi">124</span><span class="p">,</span>  <span class="c1"># one hundred twenty-four</span>
+    <span class="mi">21</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span>  <span class="c1"># one hundred twenty-three</span>
+    <span class="mi">22</span><span class="p">:</span> <span class="mi">173</span><span class="p">,</span>  <span class="c1"># one hundred seventy-three</span>
+    <span class="mi">23</span><span class="p">:</span> <span class="mi">323</span><span class="p">,</span>  <span class="c1"># three hundred twenty-three</span>
+    <span class="mi">24</span><span class="p">:</span> <span class="mi">373</span><span class="p">,</span>  <span class="c1"># three hundred seventy-three</span>
+<span class="p">}</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">A dictionary mapping letter-efficient period values by the number of</span>
+<span class="sd">letters in their numerals.</span>
+
+<span class="sd">Examples:</span>
+<span class="sd">    &gt;&gt;&gt; from four import letters</span>
+<span class="sd">    &gt;&gt;&gt; KEY_PERIOD_VALUES[letters(&quot;seventy-three&quot;)]</span>
+<span class="sd">    12</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="n">KEY_PERIOD_EXCEPTIONS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">4</span><span class="p">:</span>   <span class="mi">3</span><span class="p">,</span>    <span class="c1"># four &lt; three</span>
+    <span class="mi">15</span><span class="p">:</span>  <span class="mi">13</span><span class="p">,</span>   <span class="c1"># fifteen &lt; thirteen</span>
+    <span class="mi">24</span><span class="p">:</span>  <span class="mi">23</span><span class="p">,</span>   <span class="c1"># twenty-four &lt; twenty-three</span>
+    <span class="mi">104</span><span class="p">:</span> <span class="mi">103</span><span class="p">,</span>  <span class="c1"># one hundred four &lt; one hundred three</span>
+    <span class="mi">115</span><span class="p">:</span> <span class="mi">113</span><span class="p">,</span>  <span class="c1"># one hundred fifteen &lt; one hundred thirteen</span>
+    <span class="mi">124</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span>  <span class="c1"># one hundred twenty-four &lt; one hundred twenty-three</span>
+<span class="p">}</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Exceptions to KEY_PERIOD_VALUES for numbers with more than two periods.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="rebase"><a class="viewcode-back" href="../../package/four._core.html#four._core.rebase">[docs]</a><span class="k">def</span> <span class="nf">rebase</span><span class="p">(</span><span class="n">decimal</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">base</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get a tuple representation of decimal in the specified base.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        decimal (int): Decimal (base-10) number to rebase.</span>
+<span class="sd">        base (int): New base for decimal value.</span>
+
+<span class="sd">    Yields:</span>
+<span class="sd">        Tuple[int, int]: Tuples of (c, p) pairs representing digits in</span>
+<span class="sd">        the new base, where c is the digit’s coefficient (in decimal)</span>
+<span class="sd">        and p is the power that the new base, b, is raised to. I.e.</span>
+<span class="sd">        (c, p) pairs such that the following equality holds:</span>
+
+<span class="sd">        .. math:: n = \\sum (c \\times b^p \\mid (c, p) \\in R(n, b))</span>
+
+<span class="sd">        Digits are yielded in order of significance, the first being</span>
+<span class="sd">        most significant and last being the least.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; list(rebase(123456789, 16))</span>
+<span class="sd">        [(7, 6), (5, 5), (11, 4), (12, 3), (13, 2), (1, 1), (5, 0)]</span>
+
+<span class="sd">        &gt;&gt;&gt; list(rebase(123456789, 1000))</span>
+<span class="sd">        [(123, 2), (456, 1), (789, 0)]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">digits</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">_math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">decimal</span><span class="p">)</span> <span class="ow">or</span> <span class="mi">1</span><span class="p">,</span> <span class="n">base</span><span class="p">))</span>
+    <span class="k">yield from</span> <span class="p">(</span>
+        <span class="p">((</span><span class="n">decimal</span> <span class="o">//</span> <span class="n">base</span><span class="o">**</span><span class="n">power</span><span class="p">)</span> <span class="o">%</span> <span class="n">base</span><span class="p">,</span> <span class="n">power</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">power</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">digits</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="occurs"><a class="viewcode-back" href="../../package/four._core.html#four._core.occurs">[docs]</a><span class="k">def</span> <span class="nf">occurs</span><span class="p">(</span><span class="n">digit</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">start</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">base</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the number of times digit occurs in the range [start, limit).</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        digit (int): The value of the digit to count in base-10.</span>
+<span class="sd">        limit (int): The upper limit of the search (exclusive).</span>
+<span class="sd">        start (int): The lower limit of the search (inclusive);</span>
+<span class="sd">            default = 0.</span>
+<span class="sd">        base (int): The number system base for digit; default = 10.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        int: The number of times digit occurs within the given range in</span>
+<span class="sd">        a number system with the given base.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; occurs(0, 100)</span>
+<span class="sd">        10</span>
+
+<span class="sd">        &gt;&gt;&gt; occurs(1, 25, start=16)</span>
+<span class="sd">        5</span>
+
+<span class="sd">        &gt;&gt;&gt; occurs(12, 100, base=16)</span>
+<span class="sd">        6</span>
+
+<span class="sd">        &gt;&gt;&gt; occurs(123, 987654321, base=1000)</span>
+<span class="sd">        2975655</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">digit</span> <span class="o">&gt;=</span> <span class="n">base</span> <span class="ow">or</span> <span class="n">limit</span> <span class="o">&lt;=</span> <span class="n">start</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+
+    <span class="k">if</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="n">limit</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">occurs</span><span class="p">(</span><span class="n">digit</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">start</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">limit</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">base</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">limit</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">occurs</span><span class="p">(</span><span class="n">digit</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">base</span><span class="p">)</span> <span class="o">+</span> <span class="n">occurs</span><span class="p">(</span><span class="n">digit</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">start</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">base</span><span class="p">)</span>
+    <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="n">limit</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">occurs</span><span class="p">(</span><span class="n">digit</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">base</span><span class="p">)</span> <span class="o">-</span> <span class="n">occurs</span><span class="p">(</span><span class="n">digit</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">base</span><span class="p">)</span>
+
+    <span class="c1"># count = 0 if digit != 0 else 1</span>
+    <span class="c1"># for coefficient, power in rebase(limit, base):</span>
+    <span class="c1">#     power_of_base = base ** power</span>
+    <span class="c1">#     count += power_of_base * (limit // base ** (power + 1))</span>
+    <span class="c1">#     if coefficient &gt; digit &gt; 0:</span>
+    <span class="c1">#         count += power_of_base</span>
+    <span class="c1">#     elif coefficient == digit:</span>
+    <span class="c1">#         count += limit % power_of_base</span>
+    <span class="c1">#</span>
+    <span class="c1"># return count</span>
+
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">digit</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">coefficient</span><span class="p">,</span> <span class="n">power</span> <span class="ow">in</span> <span class="n">rebase</span><span class="p">(</span><span class="n">limit</span><span class="p">,</span> <span class="n">base</span><span class="p">):</span>
+        <span class="n">power_of_base</span> <span class="o">=</span> <span class="n">base</span> <span class="o">**</span> <span class="n">power</span>
+        <span class="n">count</span> <span class="o">+=</span> <span class="n">power_of_base</span> <span class="o">*</span> <span class="p">(</span><span class="n">limit</span> <span class="o">//</span> <span class="n">base</span> <span class="o">**</span> <span class="p">(</span><span class="n">power</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">digit</span> <span class="o">&lt;</span> <span class="n">coefficient</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="n">power_of_base</span>
+        <span class="k">if</span> <span class="n">digit</span> <span class="o">==</span> <span class="n">coefficient</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="n">limit</span> <span class="o">%</span> <span class="n">power_of_base</span>
+        <span class="k">if</span> <span class="n">digit</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">-=</span> <span class="n">power_of_base</span>
+
+    <span class="k">return</span> <span class="n">count</span></div>
+
+    <span class="c1"># return sum((</span>
+    <span class="c1">#     sum((</span>
+    <span class="c1">#         base**power * (limit // base**(power+1)),</span>
+    <span class="c1">#         base**power if coefficient &gt; digit else 0,</span>
+    <span class="c1">#         limit % base**power if coefficient == digit else 0,</span>
+    <span class="c1">#         -1 * base**power if digit == 0 else 0</span>
+    <span class="c1">#     )) for coefficient, power in rebase(limit, base)</span>
+    <span class="c1"># )) + (1 if digit == 0 else 0)</span>
+
+
+<span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="n">digit</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">re</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">position</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">limit</span><span class="p">):</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">digit</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">))))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">limit</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">limit</span><span class="p">)))[</span><span class="n">position</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">digit</span><span class="p">):</span>
+                <span class="n">total</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">total</span>
+
+
+<div class="viewcode-block" id="letters"><a class="viewcode-back" href="../../package/four._core.html#four._core.letters">[docs]</a><span class="k">def</span> <span class="nf">letters</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the number of letters in the given string.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        string: The string to count letters in.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        int: The number of letters in string.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; letters(&quot;hello world!&quot;)</span>
+<span class="sd">        10</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">_re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[a-zA-Z]&quot;</span><span class="p">,</span> <span class="n">string</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="status"><a class="viewcode-back" href="../../package/four._core.html#four._core.status">[docs]</a><span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="n">number</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">letters</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Print a status message with number and letters.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        number: The number to report on.</span>
+<span class="sd">        letters: The number of letters in number.</span>
+<span class="sd">        **kwargs: Additional keyword arguments to pass to print().</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; status(1, 3)</span>
+<span class="sd">        There are 3 letters in 1</span>
+
+<span class="sd">        &gt;&gt;&gt; status(1, 3, end=&quot;!&quot;)</span>
+<span class="sd">        There are 3 letters in 1!</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;There are </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">letters</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot; letters in </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">number</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\b</span><span class="s2">&quot;</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

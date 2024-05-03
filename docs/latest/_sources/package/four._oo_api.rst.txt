@@ -1,0 +1,36 @@
+﻿four.\_oo\_api
+==============
+
+.. automodule:: four._oo_api
+
+   
+   
+   
+
+   
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      C
+   
+   
+
+   
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      PNumber
+      RPeriod
+   
+   
+
+   
+   
+   
+
+
+

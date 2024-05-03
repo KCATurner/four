@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>four._core &mdash; Four 0.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=44496db0"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="four._fp_api" href="four._fp_api.html" />
+    <link rel="prev" title="four.infer" href="four.infer.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Four
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Math</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../math.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../math.html#number-anatomy">Number Anatomy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../math.html#chain-concepts">4-Chain Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../math.html#hunting-for-8-9">Hunting for 8 &amp; 9</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../package.html">Package Contents</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="four.chain.html">four.chain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="four.graph.html">four.graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="four.infer.html">four.infer</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">four._core</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#four._core.PERIOD_PATTERN"><code class="docutils literal notranslate"><span class="pre">PERIOD_PATTERN</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#four._core.KEY_PERIOD_VALUES"><code class="docutils literal notranslate"><span class="pre">KEY_PERIOD_VALUES</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#four._core.KEY_PERIOD_EXCEPTIONS"><code class="docutils literal notranslate"><span class="pre">KEY_PERIOD_EXCEPTIONS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#four._core.rebase"><code class="docutils literal notranslate"><span class="pre">rebase()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#four._core.occurs"><code class="docutils literal notranslate"><span class="pre">occurs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#four._core.letters"><code class="docutils literal notranslate"><span class="pre">letters()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#four._core.status"><code class="docutils literal notranslate"><span class="pre">status()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="four._fp_api.html">four._fp_api</a></li>
+<li class="toctree-l2"><a class="reference internal" href="four._oo_api.html">four._oo_api</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Four</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../package.html">Package Contents</a></li>
+      <li class="breadcrumb-item active">four._core</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/package/four._core.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-four._core">
+<span id="four-core"></span><h1>four._core<a class="headerlink" href="#module-four._core" title="Permalink to this heading"></a></h1>
+<p>Common functions and artifacts shared between other submodules.</p>
+<p class="rubric">Module Attributes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#four._core.PERIOD_PATTERN" title="four._core.PERIOD_PATTERN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PERIOD_PATTERN</span></code></a></p></td>
+<td><p>Regular expression for parsing string representations of period-lists.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#four._core.KEY_PERIOD_VALUES" title="four._core.KEY_PERIOD_VALUES"><code class="xref py py-obj docutils literal notranslate"><span class="pre">KEY_PERIOD_VALUES</span></code></a></p></td>
+<td><p>A dictionary mapping letter-efficient period values by the number of letters in their numerals.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#four._core.KEY_PERIOD_EXCEPTIONS" title="four._core.KEY_PERIOD_EXCEPTIONS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">KEY_PERIOD_EXCEPTIONS</span></code></a></p></td>
+<td><p>Exceptions to KEY_PERIOD_VALUES for numbers with more than two periods.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">count</span></code>(digit, limit[, position])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#four._core.letters" title="four._core.letters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">letters</span></code></a>(string)</p></td>
+<td><p>Get the number of letters in the given string.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#four._core.occurs" title="four._core.occurs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">occurs</span></code></a>(digit, limit[, start, base])</p></td>
+<td><p>Get the number of times digit occurs in the range [start, limit).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#four._core.rebase" title="four._core.rebase"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rebase</span></code></a>(decimal, base)</p></td>
+<td><p>Get a tuple representation of decimal in the specified base.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#four._core.status" title="four._core.status"><code class="xref py py-obj docutils literal notranslate"><span class="pre">status</span></code></a>(number, letters, **kwargs)</p></td>
+<td><p>Print a status message with number and letters.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py data">
+<dt class="sig sig-object py" id="four._core.PERIOD_PATTERN">
+<span class="sig-prename descclassname"><span class="pre">four._core.</span></span><span class="sig-name descname"><span class="pre">PERIOD_PATTERN</span></span><a class="headerlink" href="#four._core.PERIOD_PATTERN" title="Permalink to this definition"></a></dt>
+<dd><p>Regular expression for parsing string representations of period-lists.</p>
+<p>The pattern is written to iterate over a period-list string and yield
+matches for each properly formatted period. A properly formatted period
+either appears as a repetition like “[P]{R}” where R &gt; 0, or as exactly
+3 digits. A period with fewer than 3 digits may appear, but only at the
+very beginning of the period-list string.</p>
+<p>Each match has the following named capture groups:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>period:</dt><dd><p>Captures the value of each period.</p>
+</dd>
+<dt>repeat:</dt><dd><p>Captures the repeat value when the captured period is a
+repetition, otherwise None.</p>
+</dd>
+<dt>error:</dt><dd><p>Captures any improper formatting; None when the period-list
+string is well-formed. If error is captured, period and repeat
+will be None.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">PERIOD_PATTERN</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="s2">&quot;12345[678]</span><span class="si">{9}</span><span class="s2">000&quot;</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">())</span>
+<span class="gp">...</span>
+<span class="go">{&#39;period&#39;: &#39;12&#39;, &#39;repeat&#39;: None, &#39;error&#39;: None}</span>
+<span class="go">{&#39;period&#39;: &#39;345&#39;, &#39;repeat&#39;: None, &#39;error&#39;: None}</span>
+<span class="go">{&#39;period&#39;: &#39;678&#39;, &#39;repeat&#39;: &#39;9&#39;, &#39;error&#39;: None}</span>
+<span class="go">{&#39;period&#39;: &#39;000&#39;, &#39;repeat&#39;: None, &#39;error&#39;: None}</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">PERIOD_PATTERN</span><span class="o">.</span><span class="n">finditer</span><span class="p">(</span><span class="s2">&quot;12345[678]</span><span class="si">{90}</span><span class="s2">00&quot;</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">())</span>
+<span class="gp">...</span>
+<span class="go">{&#39;period&#39;: &#39;12&#39;, &#39;repeat&#39;: None, &#39;error&#39;: None}</span>
+<span class="go">{&#39;period&#39;: &#39;345&#39;, &#39;repeat&#39;: None, &#39;error&#39;: None}</span>
+<span class="go">{&#39;period&#39;: &#39;678&#39;, &#39;repeat&#39;: &#39;90&#39;, &#39;error&#39;: None}</span>
+<span class="go">{&#39;period&#39;: None, &#39;repeat&#39;: None, &#39;error&#39;: &#39;00&#39;}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="four._core.KEY_PERIOD_VALUES">
+<span class="sig-prename descclassname"><span class="pre">four._core.</span></span><span class="sig-name descname"><span class="pre">KEY_PERIOD_VALUES</span></span><a class="headerlink" href="#four._core.KEY_PERIOD_VALUES" title="Permalink to this definition"></a></dt>
+<dd><p>A dictionary mapping letter-efficient period values by the number of
+letters in their numerals.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">four</span> <span class="kn">import</span> <span class="n">letters</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">KEY_PERIOD_VALUES</span><span class="p">[</span><span class="n">letters</span><span class="p">(</span><span class="s2">&quot;seventy-three&quot;</span><span class="p">)]</span>
+<span class="go">12</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="four._core.KEY_PERIOD_EXCEPTIONS">
+<span class="sig-prename descclassname"><span class="pre">four._core.</span></span><span class="sig-name descname"><span class="pre">KEY_PERIOD_EXCEPTIONS</span></span><a class="headerlink" href="#four._core.KEY_PERIOD_EXCEPTIONS" title="Permalink to this definition"></a></dt>
+<dd><p>Exceptions to KEY_PERIOD_VALUES for numbers with more than two periods.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="four._core.rebase">
+<span class="sig-prename descclassname"><span class="pre">four._core.</span></span><span class="sig-name descname"><span class="pre">rebase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">decimal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/four/_core.html#rebase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#four._core.rebase" title="Permalink to this definition"></a></dt>
+<dd><p>Get a tuple representation of decimal in the specified base.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>decimal</strong> (<em>int</em>) – Decimal (base-10) number to rebase.</p></li>
+<li><p><strong>base</strong> (<em>int</em>) – New base for decimal value.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Yields<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Tuple[int, int]</em> – Tuples of (c, p) pairs representing digits in
+the new base, where c is the digit’s coefficient (in decimal)
+and p is the power that the new base, b, is raised to. I.e.
+(c, p) pairs such that the following equality holds:</p>
+<div class="math">
+<p><img src="../_images/math/072d83ee286e337856176a62305a77a40958a553.svg" alt="n = \sum (c \times b^p \mid (c, p) \in R(n, b))"/></p>
+</div><p>Digits are yielded in order of significance, the first being
+most significant and last being the least.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Generator</em>[<em>Tuple</em>[int, int], None, None]</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">rebase</span><span class="p">(</span><span class="mi">123456789</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
+<span class="go">[(7, 6), (5, 5), (11, 4), (12, 3), (13, 2), (1, 1), (5, 0)]</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">rebase</span><span class="p">(</span><span class="mi">123456789</span><span class="p">,</span> <span class="mi">1000</span><span class="p">))</span>
+<span class="go">[(123, 2), (456, 1), (789, 0)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="four._core.occurs">
+<span class="sig-prename descclassname"><span class="pre">four._core.</span></span><span class="sig-name descname"><span class="pre">occurs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">digit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../_modules/four/_core.html#occurs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#four._core.occurs" title="Permalink to this definition"></a></dt>
+<dd><p>Get the number of times digit occurs in the range [start, limit).</p>
+<div class="math">
+<p><img src="../_images/math/1d999351f27a7cb3f63f68ba032a9716299c2a4c.svg" alt=""/></p>
+</div><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>digit</strong> (<em>int</em>) – The value of the digit to count in base-10.</p></li>
+<li><p><strong>limit</strong> (<em>int</em>) – The upper limit of the search (exclusive).</p></li>
+<li><p><strong>start</strong> (<em>int</em>) – The lower limit of the search (inclusive);
+default = 0.</p></li>
+<li><p><strong>base</strong> (<em>int</em>) – The number system base for digit; default = 10.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The number of times digit occurs within the given range in
+a number system with the given base.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">occurs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="go">10</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">occurs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="go">5</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">occurs</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="go">6</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">occurs</span><span class="p">(</span><span class="mi">123</span><span class="p">,</span> <span class="mi">987654321</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="go">2975655</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="four._core.letters">
+<span class="sig-prename descclassname"><span class="pre">four._core.</span></span><span class="sig-name descname"><span class="pre">letters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../_modules/four/_core.html#letters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#four._core.letters" title="Permalink to this definition"></a></dt>
+<dd><p>Get the number of letters in the given string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>string</strong> (<em>str</em>) – The string to count letters in.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The number of letters in string.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">letters</span><span class="p">(</span><span class="s2">&quot;hello world!&quot;</span><span class="p">)</span>
+<span class="go">10</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="four._core.status">
+<span class="sig-prename descclassname"><span class="pre">four._core.</span></span><span class="sig-name descname"><span class="pre">status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">letters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/four/_core.html#status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#four._core.status" title="Permalink to this definition"></a></dt>
+<dd><p>Print a status message with number and letters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>number</strong> (<em>Any</em>) – The number to report on.</p></li>
+<li><p><strong>letters</strong> (<em>Any</em>) – The number of letters in number.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to print().</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">status</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="go">There are 3 letters in 1</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">status</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;!&quot;</span><span class="p">)</span>
+<span class="go">There are 3 letters in 1!</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="four.infer.html" class="btn btn-neutral float-left" title="four.infer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="four._fp_api.html" class="btn btn-neutral float-right" title="four._fp_api" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Developer’s Note &mdash; Four 0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=44496db0"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Introduction" href="math.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            Four
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Math</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="math.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="math.html#number-anatomy">Number Anatomy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="math.html#chain-concepts">4-Chain Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="math.html#hunting-for-8-9">Hunting for 8 &amp; 9</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="package.html">Package Contents</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Four</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Developer’s Note</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>This is draft documentation, still being proofread and peer-reviewed.</p>
+</div>
+<section id="developer-s-note">
+<h1>Developer’s Note<a class="headerlink" href="#developer-s-note" title="Permalink to this heading"></a></h1>
+<p>Welcome to the bottom of the rabbit hole, fellow traveler!</p>
+<p>Four started as a script I wrote to automate my search for the longest calculable 4-chain. What is a 4-chain you might ask… Well, if you enjoy those sequence puzzles we used to solve in math class then take a look at these numbers and try to figure out what comes next:</p>
+<div class="math">
+<p><img src="_images/math/28e98ee43ae917e33692b4e4fd502bc4d0ddfc5a.svg" alt="123,456,789 \to 77 \to 12 \to 6 \to 3 \to \ ?"/></p>
+</div><p>Did you get? If you don’t get it, don’t worry. It’s one of the most useless and obscure patterns in English numerals. I would’ve lived the rest of my life in blissful ignorance if not for Matt Parker’s YouTube <a class="reference external" href="https://www.youtube.com/watch?v=LYKn0yUTIU4">video</a> about these. He does an excellent job explaining them, so instead of transcribing the video here, I’m just going to tell you to give it a watch. I’ll save the break-downs for later.</p>
+<p>Anyway, the script quickly grew in scope. I took a detour to write <a class="reference external" href="https://kcaturner.github.io/conwech/docs/latest/">conwech</a> (which also took on a life of its own) because I <em>thought</em> I needed the number-spelling package to end all number-spelling, at least for the English Short Scale, and I figured that maybe that portion of this work might find <em>some</em> practical use-case one day, though I still doubt it. At the end of the day, I used almost none of it, only a few members of the lexicon:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://kcaturner.github.io/conwech/docs/latest/package/conwech.lexicon.html#conwech.lexicon.NATURAL_NUMBERS_LT_1000">NATURAL_NUMBERS_LT_1000</a></p></li>
+<li><p><a class="reference external" href="https://kcaturner.github.io/conwech/docs/latest/package/conwech.lexicon.html#conwech.lexicon.ZILLION_PERIOD_PREFIXES">ZILLION_PERIOD_PREFIXES</a></p></li>
+</ul>
+</div></blockquote>
+<p>Eventually Four grew enough that I decided to make an effort to refactor the thing into a somewhat cohesive package, parameterizing, decoupling and organizing things into something I wasn’t completely embarrassed to publish. Even if it never finds a practical application out in the wild (it won’t), I think I just wanted to be able to say “I found it first.” Ego… That’s what this is. So without further adieu, here’s my pseudo-paper/love letter to Matt Parker on the 4-chains he introduced me to.</p>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<section id="indices-tables">
+<h2>Indices &amp; Tables<a class="headerlink" href="#indices-tables" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Modules</span></a></p></li>
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="math.html" class="btn btn-neutral float-right" title="Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

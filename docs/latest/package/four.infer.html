@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>four.infer &mdash; Four 0.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=44496db0"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="four._core" href="four._core.html" />
+    <link rel="prev" title="four.graph" href="four.graph.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Four
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Math</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../math.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../math.html#number-anatomy">Number Anatomy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../math.html#chain-concepts">4-Chain Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../math.html#hunting-for-8-9">Hunting for 8 &amp; 9</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../package.html">Package Contents</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="four.chain.html">four.chain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="four.graph.html">four.graph</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">four.infer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cli-subcommand">CLI Subcommand</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">four infer</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#four.infer.metadata"><code class="docutils literal notranslate"><span class="pre">metadata()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#four.infer.LENGTH_PERIODS_TO_TARGET_PERIODS"><code class="docutils literal notranslate"><span class="pre">LENGTH_PERIODS_TO_TARGET_PERIODS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#four.infer.iter_quick_targets"><code class="docutils literal notranslate"><span class="pre">iter_quick_targets()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#four.infer.iter_exact_targets"><code class="docutils literal notranslate"><span class="pre">iter_exact_targets()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#four.infer.quick_quotient_predictions"><code class="docutils literal notranslate"><span class="pre">quick_quotient_predictions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#four.infer.quick_power_predictions"><code class="docutils literal notranslate"><span class="pre">quick_power_predictions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#four.infer.exact_quotient_predictions"><code class="docutils literal notranslate"><span class="pre">exact_quotient_predictions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#four.infer.exact_power_predictions"><code class="docutils literal notranslate"><span class="pre">exact_power_predictions()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="four._core.html">four._core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="four._fp_api.html">four._fp_api</a></li>
+<li class="toctree-l2"><a class="reference internal" href="four._oo_api.html">four._oo_api</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Four</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../package.html">Package Contents</a></li>
+      <li class="breadcrumb-item active">four.infer</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/package/four.infer.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-four.infer">
+<span id="four-infer"></span><h1>four.infer<a class="headerlink" href="#module-four.infer" title="Permalink to this heading"></a></h1>
+<p>Estimate the number of periods in letter-efficient numbers given a
+target name length.</p>
+<section id="cli-subcommand">
+<h2>CLI Subcommand<a class="headerlink" href="#cli-subcommand" title="Permalink to this heading"></a></h2>
+<section id="id1">
+<h3>four infer<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
+<p>estimate letter-efficient numbers</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">usage: four infer [-h] [-g] [-w] [-q] targets [targets ...]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-four-infer-arg-targets">
+<span class="sig-name descname"><span class="pre">targets</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-four-infer-arg-targets" title="Permalink to this definition"></a></dt>
+<dd><p>Target number length(s)</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-four-infer-h">
+<span id="cmdoption-four-infer-help"></span><span class="sig-name descname"><span class="pre">-h</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--help</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-four-infer-h" title="Permalink to this definition"></a></dt>
+<dd><p>show this help message and exit</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-four-infer-g">
+<span id="cmdoption-four-infer-graph"></span><span class="sig-name descname"><span class="pre">-g</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--graph</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-four-infer-g" title="Permalink to this definition"></a></dt>
+<dd><p>graph the resulting prediction(s)</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-four-infer-w">
+<span id="cmdoption-four-infer-whole"></span><span class="sig-name descname"><span class="pre">-w</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--whole</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-four-infer-w" title="Permalink to this definition"></a></dt>
+<dd><p>use equation with only whole numbers: F(x, a) = T(x) / a   
+instead of default power equation: F(x, a, b) = a * T(x) ** b</p>
+</dd></dl>
+
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-four-infer-q">
+<span id="cmdoption-four-infer-quick"></span><span class="sig-name descname"><span class="pre">-q</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">--quick</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-four-infer-q" title="Permalink to this definition"></a></dt>
+<dd><p>approximate targets by largest period: T(x) = 373 * 1000 ** x   
+instead of using entire target value: T(x) = int(x)</p>
+</dd></dl>
+
+</section>
+</section>
+<p class="rubric">Module Attributes</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#four.infer.LENGTH_PERIODS_TO_TARGET_PERIODS" title="four.infer.LENGTH_PERIODS_TO_TARGET_PERIODS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LENGTH_PERIODS_TO_TARGET_PERIODS</span></code></a></p></td>
+<td><p>Tuple mapping the number of periods <cite>P</cite> in the length <cite>L</cite> of a number <cite>N</cite>'s name, to the number of periods in <cite>N</cite> for the first 32 most letter-efficient numbers with names of length <cite>L</cite>, where <img class="math" src="../_images/math/ecbd331eea4a7f5cea46acacfaad9bc79b53c5fb.svg" alt="L = \sum_{x=0}^{P} 373 \times 1000^x"/> when <img class="math" src="../_images/math/eb878496a63fbc177934d7e606993cfdb60e9394.svg" alt="P \ne 0"/>.</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#four.infer.exact_power_predictions" title="four.infer.exact_power_predictions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">exact_power_predictions</span></code></a>(X[, a, b])</p></td>
+<td><p>Use power equation <img class="math" src="../_images/math/9abfa206ac8aac83f80aaceaa660aa2e544fdc3c.svg" alt="p \approx ax^b"/> to predict the number of periods <cite>p</cite> in the smallest number <cite>n</cite> with a name <cite>x</cite> letters long for each target length in <cite>X</cite> such that <img class="math" src="../_images/math/6ffbfc89dd3bc70255eabf3739dc71978d0c704d.svg" alt="n \approx \sum_{i=0}^{p} 373 \times1000^i"/>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#four.infer.exact_quotient_predictions" title="four.infer.exact_quotient_predictions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">exact_quotient_predictions</span></code></a>(X[, a])</p></td>
+<td><p>Use integer division <img class="math" src="../_images/math/52a6239c034a36342526e19c29a63e5af2cf47fa.svg" alt="p \approx x \div a"/> to predict the number of periods <cite>p</cite> in the smallest number <cite>n</cite> with a name <cite>x</cite> letters long for each target length in <cite>X</cite> such that <img class="math" src="../_images/math/179b485c03ef8b041055582568e1d1339b6e4832.svg" alt="n \approx \sum_{i=0}^{p} 373 \times 1000^i"/>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#four.infer.iter_exact_targets" title="four.infer.iter_exact_targets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iter_exact_targets</span></code></a>(X)</p></td>
+<td><p>Iterate over X yielding the exact value of each PNumber.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#four.infer.iter_quick_targets" title="four.infer.iter_quick_targets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">iter_quick_targets</span></code></a>(X)</p></td>
+<td><p>Iterate over X yielding the approximate value of each PNumber.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#four.infer.metadata" title="four.infer.metadata"><code class="xref py py-obj docutils literal notranslate"><span class="pre">metadata</span></code></a>(**attributes)</p></td>
+<td><p>Add a metadata dict with the given attributes to a function.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">prototype_predict</span></code>(X, a, b)</p></td>
+<td><p>todo</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#four.infer.quick_power_predictions" title="four.infer.quick_power_predictions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">quick_power_predictions</span></code></a>(X[, a, b])</p></td>
+<td><p>Use power equation <img class="math" src="../_images/math/9abfa206ac8aac83f80aaceaa660aa2e544fdc3c.svg" alt="p \approx ax^b"/> to predict the number of periods <cite>p</cite> in the smallest number <cite>n</cite> with a name <cite>x</cite> letters long for each target length in <cite>X</cite> such that <img class="math" src="../_images/math/a6cae34913638f908b7426b280eea288207268ad.svg" alt="n \approx\ 373 \times 1000^{p}"/>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#four.infer.quick_quotient_predictions" title="four.infer.quick_quotient_predictions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">quick_quotient_predictions</span></code></a>(X[, a])</p></td>
+<td><p>Use integer division <img class="math" src="../_images/math/52a6239c034a36342526e19c29a63e5af2cf47fa.svg" alt="p \approx x \div a"/> to predict the number of periods <cite>p</cite> in the smallest number <cite>n</cite> with a name <cite>x</cite> letters long for each target length in <cite>X</cite> such that <img class="math" src="../_images/math/88a1545346fe94f428a58abcb5f6e88001e800dd.svg" alt="n \approx 373 \times 1000^p"/>.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="four.infer.metadata">
+<span class="sig-prename descclassname"><span class="pre">four.infer.</span></span><span class="sig-name descname"><span class="pre">metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">attributes</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span></span></span><a class="reference internal" href="../_modules/four/infer.html#metadata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#four.infer.metadata" title="Permalink to this definition"></a></dt>
+<dd><p>Add a metadata dict with the given attributes to a function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>**attributes</strong> – keyword arguments for the metadata dict to
+be added to any functions decorated by the resulting
+decorator.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A function decorator.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Callable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="four.infer.LENGTH_PERIODS_TO_TARGET_PERIODS">
+<span class="sig-prename descclassname"><span class="pre">four.infer.</span></span><span class="sig-name descname"><span class="pre">LENGTH_PERIODS_TO_TARGET_PERIODS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#four.infer.LENGTH_PERIODS_TO_TARGET_PERIODS" title="Permalink to this definition"></a></dt>
+<dd><p>Tuple mapping the number of periods <cite>P</cite> in the length <cite>L</cite> of a
+number <cite>N</cite>’s name, to the number of periods in <cite>N</cite> for the first
+32 most letter-efficient numbers with names of length <cite>L</cite>, where
+<img class="math" src="../_images/math/ecbd331eea4a7f5cea46acacfaad9bc79b53c5fb.svg" alt="L = \sum_{x=0}^{P} 373 \times 1000^x"/> when <img class="math" src="../_images/math/eb878496a63fbc177934d7e606993cfdb60e9394.svg" alt="P \ne 0"/>.
+When <cite>P = 0</cite>, <cite>L = 1</cite> since no number can have fewer than 1 period.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span> <span class="o">=</span> <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;1113323[373]</span><span class="si">{6813}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n</span><span class="o">.</span><span class="n">name_length</span> <span class="o">==</span> <span class="n">PNumber</span><span class="p">(</span><span class="s2">&quot;[373]</span><span class="si">{2}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">LENGTH_PERIODS_TO_TARGET_PERIODS</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">n</span><span class="o">.</span><span class="n">num_periods</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="four.infer.iter_quick_targets">
+<span class="sig-prename descclassname"><span class="pre">four.infer.</span></span><span class="sig-name descname"><span class="pre">iter_quick_targets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="four._oo_api.html#four._oo_api.RPeriod" title="four._oo_api.RPeriod"><span class="pre">RPeriod</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/four/infer.html#iter_quick_targets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#four.infer.iter_quick_targets" title="Permalink to this definition"></a></dt>
+<dd><p>Iterate over X yielding the approximate value of each PNumber.</p>
+<p>Each PNumber x in X is approximated by multiplying the value of the
+leading period by the power of 1000 equal to the total number of
+periods in the number x.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>Iterable</em><em>[</em><em>int</em><em> | </em><em>str</em><em> | </em><em>Iterable</em><em>[</em><em>int</em><em> | </em><em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>] </em><em>| </em><a class="reference internal" href="four._oo_api.html#four._oo_api.RPeriod" title="four._oo_api.RPeriod"><em>RPeriod</em></a><em>]</em><em>]</em>) – todo</p>
+</dd>
+<dt class="field-even">Yields<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>int</em> – Approximation for the value of each PNumber in X.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Generator</em>[int, None, None]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="four.infer.iter_exact_targets">
+<span class="sig-prename descclassname"><span class="pre">four.infer.</span></span><span class="sig-name descname"><span class="pre">iter_exact_targets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="four._oo_api.html#four._oo_api.RPeriod" title="four._oo_api.RPeriod"><span class="pre">RPeriod</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/four/infer.html#iter_exact_targets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#four.infer.iter_exact_targets" title="Permalink to this definition"></a></dt>
+<dd><p>Iterate over X yielding the exact value of each PNumber.</p>
+<p>While the exact value of a PNumber is calculated using string
+multiplication and concatenations for performance reasons,
+mathematically it is a nested summation:</p>
+<div class="math">
+<p><img src="../_images/math/af895379cbfe0a6e81d01cbe98475d1c67f3adcb.svg" alt="x = \sum_{i=0}^{L}\sum_{j=L-R}^{R}"/></p>
+</div><p>int(‘’.join(str(value).zfill(3) * repeat for value, repeat in self))</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>Iterable</em><em>[</em><em>int</em><em> | </em><em>str</em><em> | </em><em>Iterable</em><em>[</em><em>int</em><em> | </em><em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>] </em><em>| </em><a class="reference internal" href="four._oo_api.html#four._oo_api.RPeriod" title="four._oo_api.RPeriod"><em>RPeriod</em></a><em>]</em><em>]</em>) – todo</p>
+</dd>
+<dt class="field-even">Yields<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>int</em> – The Exact value of each PNumber in X.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Generator</em>[int, None, None]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="four.infer.quick_quotient_predictions">
+<span class="sig-prename descclassname"><span class="pre">four.infer.</span></span><span class="sig-name descname"><span class="pre">quick_quotient_predictions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="four._oo_api.html#four._oo_api.RPeriod" title="four._oo_api.RPeriod"><span class="pre">RPeriod</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">712275</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/four/infer.html#quick_quotient_predictions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#four.infer.quick_quotient_predictions" title="Permalink to this definition"></a></dt>
+<dd><p>Use integer division <img class="math" src="../_images/math/52a6239c034a36342526e19c29a63e5af2cf47fa.svg" alt="p \approx x \div a"/> to predict the
+number of periods <cite>p</cite> in the smallest number <cite>n</cite> with a name <cite>x</cite>
+letters long for each target length in <cite>X</cite> such that
+<img class="math" src="../_images/math/88a1545346fe94f428a58abcb5f6e88001e800dd.svg" alt="n \approx 373 \times 1000^p"/>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>Iterable</em><em>[</em><em>int</em><em> | </em><em>str</em><em> | </em><em>Iterable</em><em>[</em><em>int</em><em> | </em><em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>] </em><em>| </em><a class="reference internal" href="four._oo_api.html#four._oo_api.RPeriod" title="four._oo_api.RPeriod"><em>RPeriod</em></a><em>]</em><em>]</em>) – Target name lengths.</p></li>
+<li><p><strong>a</strong> (<em>int</em>) – Integer division denominator.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Predictions for each target length x in X.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="four.infer.quick_power_predictions">
+<span class="sig-prename descclassname"><span class="pre">four.infer.</span></span><span class="sig-name descname"><span class="pre">quick_power_predictions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="four._oo_api.html#four._oo_api.RPeriod" title="four._oo_api.RPeriod"><span class="pre">RPeriod</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3.964551835037818e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.9952827374375254</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/four/infer.html#quick_power_predictions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#four.infer.quick_power_predictions" title="Permalink to this definition"></a></dt>
+<dd><p>Use power equation <img class="math" src="../_images/math/9abfa206ac8aac83f80aaceaa660aa2e544fdc3c.svg" alt="p \approx ax^b"/> to predict the number of
+periods <cite>p</cite> in the smallest number <cite>n</cite> with a name <cite>x</cite> letters long
+for each target length in <cite>X</cite> such that
+<img class="math" src="../_images/math/a6cae34913638f908b7426b280eea288207268ad.svg" alt="n \approx\ 373 \times 1000^{p}"/>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>Iterable</em><em>[</em><em>int</em><em> | </em><em>str</em><em> | </em><em>Iterable</em><em>[</em><em>int</em><em> | </em><em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>] </em><em>| </em><a class="reference internal" href="four._oo_api.html#four._oo_api.RPeriod" title="four._oo_api.RPeriod"><em>RPeriod</em></a><em>]</em><em>]</em>) – Target name lengths.</p></li>
+<li><p><strong>a</strong> (<em>float</em>) – power equation base coefficient.</p></li>
+<li><p><strong>b</strong> (<em>float</em>) – power equation exponent.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Predictions for each target length x in X.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[float]</p>
+</dd>
+</dl>
+<div class="admonition-todo admonition" id="id2">
+<p class="admonition-title">Todo</p>
+<ul class="simple">
+<li><p>See if Decimals will work in place of floats.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="four.infer.exact_quotient_predictions">
+<span class="sig-prename descclassname"><span class="pre">four.infer.</span></span><span class="sig-name descname"><span class="pre">exact_quotient_predictions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="four._oo_api.html#four._oo_api.RPeriod" title="four._oo_api.RPeriod"><span class="pre">RPeriod</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">711</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/four/infer.html#exact_quotient_predictions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#four.infer.exact_quotient_predictions" title="Permalink to this definition"></a></dt>
+<dd><p>Use integer division <img class="math" src="../_images/math/52a6239c034a36342526e19c29a63e5af2cf47fa.svg" alt="p \approx x \div a"/> to predict the
+number of periods <cite>p</cite> in the smallest number <cite>n</cite> with a name <cite>x</cite>
+letters long for each target length in <cite>X</cite> such that
+<img class="math" src="../_images/math/179b485c03ef8b041055582568e1d1339b6e4832.svg" alt="n \approx \sum_{i=0}^{p} 373 \times 1000^i"/>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>Iterable</em><em>[</em><em>int</em><em> | </em><em>str</em><em> | </em><em>Iterable</em><em>[</em><em>int</em><em> | </em><em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>] </em><em>| </em><a class="reference internal" href="four._oo_api.html#four._oo_api.RPeriod" title="four._oo_api.RPeriod"><em>RPeriod</em></a><em>]</em><em>]</em>) – Target name lengths.</p></li>
+<li><p><strong>a</strong> (<em>int</em>) – integer division denominator.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Predictions for each target length x in X.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="four.infer.exact_power_predictions">
+<span class="sig-prename descclassname"><span class="pre">four.infer.</span></span><span class="sig-name descname"><span class="pre">exact_power_predictions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="four._oo_api.html#four._oo_api.RPeriod" title="four._oo_api.RPeriod"><span class="pre">RPeriod</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0038438562337548433</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.9952827374375255</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/four/infer.html#exact_power_predictions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#four.infer.exact_power_predictions" title="Permalink to this definition"></a></dt>
+<dd><p>Use power equation <img class="math" src="../_images/math/9abfa206ac8aac83f80aaceaa660aa2e544fdc3c.svg" alt="p \approx ax^b"/> to predict the number of
+periods <cite>p</cite> in the smallest number <cite>n</cite> with a name <cite>x</cite> letters long
+for each target length in <cite>X</cite> such that
+<img class="math" src="../_images/math/6ffbfc89dd3bc70255eabf3739dc71978d0c704d.svg" alt="n \approx \sum_{i=0}^{p} 373 \times1000^i"/>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>Iterable</em><em>[</em><em>int</em><em> | </em><em>str</em><em> | </em><em>Iterable</em><em>[</em><em>int</em><em> | </em><em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>] </em><em>| </em><a class="reference internal" href="four._oo_api.html#four._oo_api.RPeriod" title="four._oo_api.RPeriod"><em>RPeriod</em></a><em>]</em><em>]</em>) – Target name lengths.</p></li>
+<li><p><strong>a</strong> (<em>float</em>) – power equation base coefficient.</p></li>
+<li><p><strong>b</strong> (<em>float</em>) – power equation exponent.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Predictions for each target length x in X.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[float]</p>
+</dd>
+</dl>
+<div class="admonition-todo admonition" id="id3">
+<p class="admonition-title">Todo</p>
+<ul class="simple">
+<li><p>See if Decimals will work in place of floats.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="four.graph.html" class="btn btn-neutral float-left" title="four.graph" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="four._core.html" class="btn btn-neutral float-right" title="four._core" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

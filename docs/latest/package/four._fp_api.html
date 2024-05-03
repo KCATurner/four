@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>four._fp_api &mdash; Four 0.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=44496db0"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="four._oo_api" href="four._oo_api.html" />
+    <link rel="prev" title="four._core" href="four._core.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Four
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Math</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../math.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../math.html#number-anatomy">Number Anatomy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../math.html#chain-concepts">4-Chain Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../math.html#hunting-for-8-9">Hunting for 8 &amp; 9</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Code</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../package.html">Package Contents</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="four.chain.html">four.chain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="four.graph.html">four.graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="four.infer.html">four.infer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="four._core.html">four._core</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">four._fp_api</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#four._fp_api.number_to_periods"><code class="docutils literal notranslate"><span class="pre">number_to_periods()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#four._fp_api.periods_to_number"><code class="docutils literal notranslate"><span class="pre">periods_to_number()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#four._fp_api.parse_abbreviation"><code class="docutils literal notranslate"><span class="pre">parse_abbreviation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#four._fp_api.write_abbreviation"><code class="docutils literal notranslate"><span class="pre">write_abbreviation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#four._fp_api.letters_in_period_values"><code class="docutils literal notranslate"><span class="pre">letters_in_period_values()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#four._fp_api.letters_in_period_names"><code class="docutils literal notranslate"><span class="pre">letters_in_period_names()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#four._fp_api.letters_in_number_name"><code class="docutils literal notranslate"><span class="pre">letters_in_number_name()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="four._oo_api.html">four._oo_api</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Four</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../package.html">Package Contents</a></li>
+      <li class="breadcrumb-item active">four._fp_api</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/package/four._fp_api.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-four._fp_api">
+<span id="four-fp-api"></span><h1>four._fp_api<a class="headerlink" href="#module-four._fp_api" title="Permalink to this heading"></a></h1>
+<p>A purely functional programming approach to the 4-chain search
+algorithm.</p>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#four._fp_api.letters_in_number_name" title="four._fp_api.letters_in_number_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">letters_in_number_name</span></code></a>(number)</p></td>
+<td><p>Count all the letters in number's numeral.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#four._fp_api.letters_in_period_names" title="four._fp_api.letters_in_period_names"><code class="xref py py-obj docutils literal notranslate"><span class="pre">letters_in_period_names</span></code></a>(number)</p></td>
+<td><p>Count the letters attributed to period names in number's numeral.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#four._fp_api.letters_in_period_values" title="four._fp_api.letters_in_period_values"><code class="xref py py-obj docutils literal notranslate"><span class="pre">letters_in_period_values</span></code></a>(number)</p></td>
+<td><p>Count the letters attributed to period values in number's numeral.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#four._fp_api.number_to_periods" title="four._fp_api.number_to_periods"><code class="xref py py-obj docutils literal notranslate"><span class="pre">number_to_periods</span></code></a>(number)</p></td>
+<td><p>Convert a number to a list of (P, R) tuples.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#four._fp_api.parse_abbreviation" title="four._fp_api.parse_abbreviation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_abbreviation</span></code></a>(abbreviation)</p></td>
+<td><p>Retrieve a number from its given string abbreviation.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#four._fp_api.periods_to_number" title="four._fp_api.periods_to_number"><code class="xref py py-obj docutils literal notranslate"><span class="pre">periods_to_number</span></code></a>(periods)</p></td>
+<td><p>Convert a sequence of (P, R) tuples to an integer.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#four._fp_api.write_abbreviation" title="four._fp_api.write_abbreviation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_abbreviation</span></code></a>(number)</p></td>
+<td><p>Get a more legible abbreviation of the given number.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="four._fp_api.number_to_periods">
+<span class="sig-prename descclassname"><span class="pre">four._fp_api.</span></span><span class="sig-name descname"><span class="pre">number_to_periods</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/four/_fp_api.html#number_to_periods"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#four._fp_api.number_to_periods" title="Permalink to this definition"></a></dt>
+<dd><p>Convert a number to a list of (P, R) tuples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>number</strong> (<em>int</em><em> | </em><em>float</em>) – A number to convert.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of (P, R) tuples representing the given number, where P
+is a period value to be repeated R number of times before moving
+on to the next tuple in the list.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>List</em>[<em>Tuple</em>[int, int]]</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">number_to_periods</span><span class="p">(</span><span class="mi">123000000000</span><span class="p">)</span>
+<span class="go">[(123, 1), (0, 3)]</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">number_to_periods</span><span class="p">(</span><span class="mf">1.23e17</span><span class="p">)</span>
+<span class="go">[(123, 1), (0, 3)]</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#four._fp_api.periods_to_number" title="four._fp_api.periods_to_number"><code class="xref py py-func docutils literal notranslate"><span class="pre">periods_to_number()</span></code></a></p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="four._fp_api.periods_to_number">
+<span class="sig-prename descclassname"><span class="pre">four._fp_api.</span></span><span class="sig-name descname"><span class="pre">periods_to_number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">periods</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../_modules/four/_fp_api.html#periods_to_number"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#four._fp_api.periods_to_number" title="Permalink to this definition"></a></dt>
+<dd><p>Convert a sequence of (P, R) tuples to an integer.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Does not scale well with large R values!</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>periods</strong> (<em>Sequence</em><em>[</em><em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em><em>]</em>) – A sequence of tuples like (P, R) representing a number,
+where P is a period value to be repeated R number of times
+before moving on to the next tuple in the sequence.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The integer representation of periods.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">periods_to_number</span><span class="p">([(</span><span class="mi">123</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)])</span>
+<span class="go">123000000000</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#four._fp_api.number_to_periods" title="four._fp_api.number_to_periods"><code class="xref py py-func docutils literal notranslate"><span class="pre">number_to_periods()</span></code></a></p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="four._fp_api.parse_abbreviation">
+<span class="sig-prename descclassname"><span class="pre">four._fp_api.</span></span><span class="sig-name descname"><span class="pre">parse_abbreviation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">abbreviation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/four/_fp_api.html#parse_abbreviation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#four._fp_api.parse_abbreviation" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieve a number from its given string abbreviation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>abbreviation</strong> (<em>str</em>) – A pseudo-numeric string in which repeated periods
+are represented like “[P]{R}” where P is the period value
+and R is the number of times the period is repeated.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of (P, R) tuples representing a number, where P is a
+period value to be repeated R number of times before moving on
+to the next tuple in the list.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>List</em>[<em>Tuple</em>[int, int]]</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">parse_abbreviation</span><span class="p">(</span><span class="s2">&quot;123[456]</span><span class="si">{2}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="go">[(123, 1), (456, 2)]</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">parse_abbreviation</span><span class="p">(</span><span class="s2">&quot;[987]</span><span class="si">{6}</span><span class="s2">543543&quot;</span><span class="p">)</span>
+<span class="go">[(987, 6), (543, 2)]</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#four._fp_api.write_abbreviation" title="four._fp_api.write_abbreviation"><code class="xref py py-func docutils literal notranslate"><span class="pre">write_abbreviation()</span></code></a></p></li>
+<li><p><a class="reference internal" href="four._core.html#four._core.PERIOD_PATTERN" title="four._core.PERIOD_PATTERN"><code class="xref py py-attr docutils literal notranslate"><span class="pre">four._core.PERIOD_PATTERN</span></code></a></p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="four._fp_api.write_abbreviation">
+<span class="sig-prename descclassname"><span class="pre">four._fp_api.</span></span><span class="sig-name descname"><span class="pre">write_abbreviation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/four/_fp_api.html#write_abbreviation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#four._fp_api.write_abbreviation" title="Permalink to this definition"></a></dt>
+<dd><p>Get a more legible abbreviation of the given number.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>number</strong> (<em>Sequence</em><em>[</em><em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em><em>]</em>) – A sequence of tuples like (P, R) representing a number,
+where P is a period value to be repeated R number of times
+before moving on to the next tuple in the sequence.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A pseudo-numeric string in which repeated periods are
+represented like “[P]{R}” where P is the period value and R is
+the number of times the period is repeated.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">write_abbreviation</span><span class="p">([(</span><span class="mi">123</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">456</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">789</span><span class="p">,</span> <span class="mi">3</span><span class="p">)])</span>
+<span class="go">&#39;123[456]{2}[789]{3}&#39;</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#four._fp_api.parse_abbreviation" title="four._fp_api.parse_abbreviation"><code class="xref py py-func docutils literal notranslate"><span class="pre">parse_abbreviation()</span></code></a></p></li>
+<li><p><a class="reference internal" href="four._core.html#four._core.PERIOD_PATTERN" title="four._core.PERIOD_PATTERN"><code class="xref py py-attr docutils literal notranslate"><span class="pre">four._core.PERIOD_PATTERN</span></code></a></p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="four._fp_api.letters_in_period_values">
+<span class="sig-prename descclassname"><span class="pre">four._fp_api.</span></span><span class="sig-name descname"><span class="pre">letters_in_period_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../_modules/four/_fp_api.html#letters_in_period_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#four._fp_api.letters_in_period_values" title="Permalink to this definition"></a></dt>
+<dd><p>Count the letters attributed to period values in number’s numeral.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>number</strong> (<em>Sequence</em><em>[</em><em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em><em>]</em>) – A sequence of tuples like (P, R) representing a number,
+where P is a period value to be repeated R number of times
+before moving on to the next tuple in the sequence.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The number of letters attributed to period values in number’s
+numeral.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># &quot;one ... one ... one&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">letters_in_period_values</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">])</span>
+<span class="go">9</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="four._fp_api.letters_in_period_names">
+<span class="sig-prename descclassname"><span class="pre">four._fp_api.</span></span><span class="sig-name descname"><span class="pre">letters_in_period_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../_modules/four/_fp_api.html#letters_in_period_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#four._fp_api.letters_in_period_names" title="Permalink to this definition"></a></dt>
+<dd><p>Count the letters attributed to period names in number’s numeral.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>number</strong> (<em>Sequence</em><em>[</em><em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em><em>]</em>) – A sequence of tuples like (P, R) representing a number,
+where P is a period value to be repeated R number of times
+before moving on to the next tuple in the sequence.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The number of letters attributed to period names in number’s
+numeral.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># &quot;... million ... thousand ...&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">letters_in_period_names</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">])</span>
+<span class="go">15</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="four._fp_api.letters_in_number_name">
+<span class="sig-prename descclassname"><span class="pre">four._fp_api.</span></span><span class="sig-name descname"><span class="pre">letters_in_number_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../_modules/four/_fp_api.html#letters_in_number_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#four._fp_api.letters_in_number_name" title="Permalink to this definition"></a></dt>
+<dd><p>Count all the letters in number’s numeral.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>number</strong> (<em>Sequence</em><em>[</em><em>Tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em><em>]</em>) – A sequence of tuples like (P, R) representing a number,
+where P is a period value to be repeated R number of times
+before moving on to the next tuple in the sequence.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The number of letters in number’s numeral.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># &quot;one million one thousand one&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">letters_in_number_name</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">])</span>
+<span class="go">24</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#four._fp_api.letters_in_period_values" title="four._fp_api.letters_in_period_values"><code class="xref py py-func docutils literal notranslate"><span class="pre">letters_in_period_values()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#four._fp_api.letters_in_period_names" title="four._fp_api.letters_in_period_names"><code class="xref py py-func docutils literal notranslate"><span class="pre">letters_in_period_names()</span></code></a></p></li>
+</ul>
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="four._core.html" class="btn btn-neutral float-left" title="four._core" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="four._oo_api.html" class="btn btn-neutral float-right" title="four._oo_api" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
