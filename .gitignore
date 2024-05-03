@@ -21,8 +21,3 @@
 # documentation
 /docs/source/package
 /docs/build
-
-# images
-*.jpeg
-*.png
-*.svg
