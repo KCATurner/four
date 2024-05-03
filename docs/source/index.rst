@@ -1,8 +1,10 @@
+.. attention:: This is draft documentation, still being proofread and peer-reviewed.
+
 ################
 Developer's Note
 ################
 
-Wellcome to the bottom of the rabbit hole, fellow traveller!
+Welcome to the bottom of the rabbit hole, fellow traveler!
 
 Four started as a script I wrote to automate my search for the longest calculable 4-chain. What is a 4-chain you might ask... Well, if you enjoy those sequence puzzles we used to solve in math class then take a look at these numbers and try to figure out what comes next:
 
