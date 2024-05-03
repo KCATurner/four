@@ -327,7 +327,7 @@ Notice too that since we're using `S(x)` to define `N`, and we only want the len
 
 .. centered:: Digits! We have digits!
 
-Each of these composite prefixes is no more than a unique digit in a base-1000 number system. As an example, take the number 10\ :sup:`370370370`. The zillion value for this number is 123456789, and the Conway-Wechsler name for this number is *one tresviginticentillisesquinquagintaquadringentillinovemoctogintaseptingentillion*. We can see the relationship clearly by breaking the name down into each of it's composite prefixes.
+Each of these composite prefixes is no more than a unique digit in a base-1000 number system. As an example, take the number 10\ :sup:`370370370`. The zillion value for this number is 123456789, and the Conway-Wechsler name for this number is *one tresviginticentilli-sesquinquagintaquadringentilli-novemoctogintaseptingentillion*. We can see the relationship clearly by breaking the name down into each of it's composite prefixes.
 
 .. math::
     10^{370370370} = \text{one }\
